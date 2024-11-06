@@ -18,7 +18,7 @@ namespace GameDevProject
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            _graphics.PreferredBackBufferHeight = 1080;
+            _graphics.PreferredBackBufferHeight = 960;
             _graphics.PreferredBackBufferWidth = 720;
         }
 
@@ -27,6 +27,7 @@ namespace GameDevProject
             // TODO: Add your initialization logic here
             _airplanePart = new Rectangle(30, 30, 200, 200);
             _bulletPart = new Rectangle(1340, 160, 70,70);
+            movementVector = new Vector2(300, 640);
             base.Initialize();
         }
 
@@ -46,14 +47,36 @@ namespace GameDevProject
                 Exit();
 
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
-                movementVector.X+=5;
-
+            {
+                if (movementVector.X<550)
+                {
+                    movementVector.X += 5;
+                }
+           
+            }
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
-                movementVector.X-=5;
+            {
+                if (movementVector.X > 0)
+                {
+                    movementVector.X -= 5;
+                }
+            }
             if (Keyboard.GetState().IsKeyDown(Keys.Up))
-                movementVector.Y-=3;
+            {
+                if (movementVector.Y>0)
+                {
+                    movementVector.Y -= 3;
+                }
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.Down))
-                movementVector.Y+=3;
+            {
+                if (movementVector.Y<760)
+                {
+                    movementVector.Y += 3;
+                }
+            }
+
 
             base.Update(gameTime);
         }
