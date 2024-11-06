@@ -23,11 +23,12 @@ namespace GameDevProject
             base.Initialize();
         }
 
+        private Texture2D _texture;
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            _texture = Content.Load<Texture2D>("airplaneSprite");
         }
 
         protected override void Update(GameTime gameTime)
@@ -45,7 +46,9 @@ namespace GameDevProject
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(_texture, new Vector2(0, 0), Color.AntiqueWhite);
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }
