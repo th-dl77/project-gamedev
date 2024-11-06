@@ -8,9 +8,12 @@ namespace GameDevProject
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private Vector2 movementVector;
+        private Texture2D _background;
         private Vector2 bulletVector;
         private Rectangle _airplanePart;
+        private Vector2 movementVector;
+        Movement movement = new Movement();
+        private Rectangle _backgroundRectangle;
         private Rectangle _bulletPart;
         private int timePressed;
         public Game1()
@@ -27,7 +30,7 @@ namespace GameDevProject
             // TODO: Add your initialization logic here
             _airplanePart = new Rectangle(30, 30, 200, 200);
             _bulletPart = new Rectangle(1340, 160, 70,70);
-            movementVector = new Vector2(300, 640);
+            _backgroundRectangle = new Rectangle(0, 0, 720, 960);
             base.Initialize();
         }
 
@@ -39,6 +42,7 @@ namespace GameDevProject
 
             _airplaneTexture = Content.Load<Texture2D>("airplaneSprite2");
             _bulletTexture = Content.Load<Texture2D>("airplaneSprite2");
+            _background = Content.Load<Texture2D>("skybackground");
         }
 
         protected override void Update(GameTime gameTime)
@@ -46,38 +50,8 @@ namespace GameDevProject
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
-            {
-                if (movementVector.X<550)
-                {
-                    movementVector.X += 5;
-                }
-           
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                if (movementVector.X > 0)
-                {
-                    movementVector.X -= 5;
-                }
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Up))
-            {
-                if (movementVector.Y>0)
-                {
-                    movementVector.Y -= 3;
-                }
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Down))
-            {
-                if (movementVector.Y<760)
-                {
-                    movementVector.Y += 3;
-                }
-            }
-
-
+            movementVector = movement.CheckHorizontal();
+            movementVector = movement.CheckVertical();
             base.Update(gameTime);
         }
 
@@ -87,6 +61,7 @@ namespace GameDevProject
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
+            _spriteBatch.Draw(_background, _backgroundRectangle, Color.White);
             _spriteBatch.Draw(_airplaneTexture, movementVector, _airplanePart, Color.AntiqueWhite);
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
