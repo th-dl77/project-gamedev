@@ -8,7 +8,10 @@ namespace GameDevProject
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private Vector2 movementVector = new Vector2(0,0);
+        private Vector2 movementVector;
+        private Vector2 bulletVector;
+        private Rectangle _airplanePart;
+        private int timePressed;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -19,7 +22,8 @@ namespace GameDevProject
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            _airplanePart = new Rectangle(30, 30, 200, 200);
+            timePressed = 1;
             base.Initialize();
         }
 
@@ -29,7 +33,8 @@ namespace GameDevProject
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _airplaneTexture = Content.Load<Texture2D>("airplaneSprite");
+            _airplaneTexture = Content.Load<Texture2D>("airplaneSprite2");
+            _bulletTexture = Content.Load<Texture2D>("bulletSprite");
         }
 
         protected override void Update(GameTime gameTime)
@@ -39,19 +44,20 @@ namespace GameDevProject
 
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
-                movementVector.X++;
+                movementVector.X+=5;
+
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-                movementVector.X--;
+                movementVector.X-=5;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Up))
             {
-                movementVector.Y--;
+                movementVector.Y-=3;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Down))
             {
-                movementVector.Y++;
+                movementVector.Y+=3;
             }
             // TODO: Add your update logic here
 
@@ -60,11 +66,17 @@ namespace GameDevProject
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
-            _spriteBatch.Draw(_airplaneTexture, movementVector, Color.AntiqueWhite);
+            _spriteBatch.Draw(_airplaneTexture, movementVector, _airplanePart, Color.AntiqueWhite);
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                bulletVector.X = movementVector.X;
+                bulletVector.Y = movementVector.Y-2;
+                _spriteBatch.Draw(_bulletTexture, bulletVector, Color.White);
+            }
             _spriteBatch.End();
             base.Draw(gameTime);
         }
