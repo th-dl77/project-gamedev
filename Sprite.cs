@@ -22,9 +22,9 @@ namespace GameDevProject
             Position = position;
         }
 
-        public virtual void LoadContent(ContentManager content)
+        public virtual void LoadContent(ContentManager content, string textureName)
         {
-
+            _texture = content.Load<Texture2D>(textureName);
         }
         public virtual void Update(GameTime gameTime)
         {

@@ -14,9 +14,5 @@ namespace GameDevProject
         public Background(Rectangle rectangle, Vector2 position) : base(rectangle, position)
         {
         }
-        public override void LoadContent(ContentManager content)
-        {
-            content.Load<Texture2D>("skybackground");
-        }
     }
 }

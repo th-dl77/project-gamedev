@@ -40,8 +40,8 @@ namespace GameDevProject
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _player.LoadContent(Content);
-            _background.LoadContent(Content);
+            _player.LoadContent(Content, "airplaneSprite2");
+            _background.LoadContent(Content, "skybackground");
             //_bulletTexture = Content.Load<Texture2D>("airplaneSprite2");
             //_bulletTexture2 = Content.Load<Texture2D>("airplaneSprite2");
         }
@@ -59,8 +59,8 @@ namespace GameDevProject
             GraphicsDevice.Clear(Color.Black);
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
-            _player.Draw(_spriteBatch);
             _background.Draw(_spriteBatch);
+            _player.Draw(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);
         }

@@ -20,11 +20,6 @@ namespace GameDevProject
         public Player(Rectangle rectangle, Vector2 position) : base(rectangle, position)
         {
         }
-        public override void LoadContent(ContentManager content)
-        {
-            _texture = content.Load<Texture2D>("airplaneSprite2");
-
-        }
         public override void Update(GameTime gameTime)
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
