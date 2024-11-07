@@ -12,7 +12,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace GameDevProject
 {
-    internal class Movement
+    internal class Player
     {
         private Vector2 movementVector = new Vector2(300,640);
         public Vector2 CheckHorizontal()
