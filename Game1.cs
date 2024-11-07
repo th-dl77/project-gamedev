@@ -8,14 +8,16 @@ namespace GameDevProject
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private Texture2D _background;
         private Vector2 bulletVector;
         private Vector2 bulletVector2;
         private Rectangle _airplanePart;
-        private Vector2 movementVector;
-        Player movement = new Player();
+        private Vector2 position;
         private Rectangle _backgroundRectangle;
         private Rectangle _bulletPart;
+
+        private Player _player;
+        private Background _background;
+
         private int timePressed;
         public Game1()
         {
@@ -28,34 +30,27 @@ namespace GameDevProject
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-            _airplanePart = new Rectangle(30, 30, 200, 200);
-            _bulletPart = new Rectangle(1340, 160, 70,70);
-            _backgroundRectangle = new Rectangle(0, 0, 720, 960);
+            //_bulletPart = new Rectangle(1340, 160, 70,70);
+            //_backgroundRectangle = new Rectangle(0, 0, 720, 960);
+            _player = new Player(new Rectangle(30,30,200,200), new Vector2(200, 200));
+            _background = new Background(new Rectangle(0, 0, 720, 960), new Vector2(0, 0));
             base.Initialize();
         }
-
-        private Texture2D _airplaneTexture;
-        private Texture2D _bulletTexture;
-        private Texture2D _bulletTexture2;
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            _airplaneTexture = Content.Load<Texture2D>("airplaneSprite2");
-            _bulletTexture = Content.Load<Texture2D>("airplaneSprite2");
-            _bulletTexture2 = Content.Load<Texture2D>("airplaneSprite2");
-            _background = Content.Load<Texture2D>("skybackground");
+            _player.LoadContent(Content);
+            _background.LoadContent(Content);
+            //_bulletTexture = Content.Load<Texture2D>("airplaneSprite2");
+            //_bulletTexture2 = Content.Load<Texture2D>("airplaneSprite2");
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            movementVector = movement.CheckHorizontal();
-            movementVector = movement.CheckVertical();
+            _player.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -64,17 +59,8 @@ namespace GameDevProject
             GraphicsDevice.Clear(Color.Black);
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
-            _spriteBatch.Draw(_background, _backgroundRectangle, Color.White);
-            _spriteBatch.Draw(_airplaneTexture, movementVector, _airplanePart, Color.AntiqueWhite);
-            if (Keyboard.GetState().IsKeyDown(Keys.Space))
-            {
-                bulletVector.X = movementVector.X;
-                bulletVector.Y = movementVector.Y;
-                bulletVector2.X = movementVector.X + 120;
-                bulletVector2.Y = movementVector.Y;
-                _spriteBatch.Draw(_bulletTexture, bulletVector, _bulletPart, Color.White);
-                _spriteBatch.Draw(_bulletTexture2, bulletVector2, _bulletPart, Color.White);
-            }
+            _player.Draw(_spriteBatch);
+            _background.Draw(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);
         }

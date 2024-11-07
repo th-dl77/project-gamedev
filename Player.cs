@@ -8,49 +8,43 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.Xna.Framework.Content;
+using System.Reflection.Metadata;
 
 
 namespace GameDevProject
 {
-    internal class Player
+    internal class Player : Sprite
     {
-        private Vector2 movementVector = new Vector2(300,640);
-        public Vector2 CheckHorizontal()
+        private float Speed = 200f;
+        public Player(Rectangle rectangle, Vector2 position) : base(rectangle, position)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
-            {
-                if (movementVector.X < 550)
-                {
-                    return new Vector2(movementVector.X += 5, movementVector.Y);
-                }
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                if (movementVector.X > 0)
-                {
-                    return new Vector2(movementVector.X -= 5, movementVector.Y);
-                }
-            }
-            return new Vector2(movementVector.X, movementVector.Y);
         }
-        public Vector2 CheckVertical()
+        public override void LoadContent(ContentManager content)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            _texture = content.Load<Texture2D>("airplaneSprite2");
+
+        }
+        public override void Update(GameTime gameTime)
+        {
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (Keyboard.GetState().IsKeyDown(Keys.Right) && Position.X <550)
             {
-                if (movementVector.Y > 0)
-                {
-                    return new Vector2(movementVector.X, movementVector.Y -= 3);
-                }
+                Position.X += Speed * deltaTime;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Left) && Position.X > 0)
+            {
+                Position.X -= Speed * deltaTime;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Up) && Position.Y > 0)
+            {
+                Position.Y -= Speed * deltaTime;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Down) && Position.Y < 760)
+            {
+                Position.Y += Speed * deltaTime;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Down))
-            {
-                if (movementVector.Y < 760)
-                {
-                    return new Vector2(movementVector.X, movementVector.Y += 3);
-                }
-            }
-            return new Vector2(movementVector.X, movementVector.Y);
         }
     }
 }
