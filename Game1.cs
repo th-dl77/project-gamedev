@@ -24,16 +24,16 @@ namespace GameDevProject
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            _graphics.PreferredBackBufferHeight = 960;
-            _graphics.PreferredBackBufferWidth = 720;
+            _graphics.PreferredBackBufferHeight = 780;
+            _graphics.PreferredBackBufferWidth = 780;
         }
 
         protected override void Initialize()
         {
             //_bulletPart = new Rectangle(1340, 160, 70,70);
             //_backgroundRectangle = new Rectangle(0, 0, 720, 960);
+            _background = new Background(new Rectangle(0, 0, 700, 700), new Vector2(0, 0));
             _player = new Player(new Rectangle(30,30,200,200), new Vector2(200, 200));
-            _background = new Background(new Rectangle(0, 0, 720, 960), new Vector2(0, 0));
             base.Initialize();
         }
 
@@ -41,7 +41,7 @@ namespace GameDevProject
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _player.LoadContent(Content, "airplaneSprite2");
-            _background.LoadContent(Content, "skybackground");
+            _background.LoadContent(Content, "skybackground3");
             //_bulletTexture = Content.Load<Texture2D>("airplaneSprite2");
             //_bulletTexture2 = Content.Load<Texture2D>("airplaneSprite2");
         }

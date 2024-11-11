@@ -14,5 +14,12 @@ namespace GameDevProject
         public Background(Rectangle rectangle, Vector2 position) : base(rectangle, position)
         {
         }
+        public override void Draw(SpriteBatch _spritebatch)
+        {
+            if (_texture != null)
+            {
+                _spritebatch.Draw(_texture, Position, null, Color.White, 0f, Vector2.Zero,1.5f,SpriteEffects.None,0f);
+            }
+        }
     }
 }
