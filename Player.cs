@@ -16,8 +16,8 @@ namespace GameDevProject
     public class Player
     {
         private Animation animation; 
-        private Vector2 position;    
-        private float speed;        
+        private Vector2 position;
+        private float speed;
 
         public Player(Animation animation, Vector2 startPosition, float speed = 200f)
         {

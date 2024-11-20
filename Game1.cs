@@ -30,7 +30,7 @@ namespace GameDevProject
 
             Texture2D spritesheetTexture = Content.Load<Texture2D>("player-spritesheet");
 
-            SpriteSheet spriteSheet = new SpriteSheet(spritesheetTexture, 55, 37);
+            SpriteSheet spriteSheet = new SpriteSheet(spritesheetTexture, 50, 37);
             Animation fightAnimation = new Animation(spriteSheet, new int[] { 0, 1, 2, 3, 4, 5, 6, 7 }, 0.2f);
             player = new Player(fightAnimation, new Vector2(200,200),100f);
         }
