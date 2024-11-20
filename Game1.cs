@@ -8,14 +8,8 @@ namespace GameDevProject
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private Vector2 bulletVector;
-        private Vector2 bulletVector2;
-        private Rectangle _airplanePart;
-        private Vector2 position;
-        private Rectangle _backgroundRectangle;
-        private Rectangle _bulletPart;
 
-        private Player _player;
+        private Player player;
 
         private int timePressed;
         public Game1()
@@ -23,31 +17,29 @@ namespace GameDevProject
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            _graphics.PreferredBackBufferHeight = 780;
-            _graphics.PreferredBackBufferWidth = 780;
         }
 
         protected override void Initialize()
         {
-            //_bulletPart = new Rectangle(1340, 160, 70,70);
-            //_backgroundRectangle = new Rectangle(0, 0, 720, 960);
-            _player = new Player(new Rectangle(0,0,55,37), new Vector2(100, 100));
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _player.LoadContent(Content, "player-spritesheet");
-            //_bulletTexture = Content.Load<Texture2D>("airplaneSprite2");
-            //_bulletTexture2 = Content.Load<Texture2D>("airplaneSprite2");
+
+            Texture2D spritesheetTexture = Content.Load<Texture2D>("player-spritesheet");
+
+            SpriteSheet spriteSheet = new SpriteSheet(spritesheetTexture, 55, 37);
+            Animation fightAnimation = new Animation(spriteSheet, new int[] { 0, 1, 2, 3, 4, 5, 6, 7 }, 0.2f);
+            player = new Player(fightAnimation, new Vector2(200,200),100f);
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            _player.Update(gameTime);
+            player.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -56,7 +48,7 @@ namespace GameDevProject
             GraphicsDevice.Clear(Color.Black);
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
-            _player.Draw(_spriteBatch);
+            player.Draw(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);
         }

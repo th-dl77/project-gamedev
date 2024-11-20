@@ -11,39 +11,45 @@ using System.Security.Cryptography.X509Certificates;
 using Microsoft.Xna.Framework.Content;
 using System.Reflection.Metadata;
 
-
 namespace GameDevProject
 {
-    internal class Player : Sprite
+    public class Player
     {
-        private float Speed = 200f;
-        public Player(Rectangle rectangle, Vector2 position) : base(rectangle, position)
-        {
-        }
-        public override void Update(GameTime gameTime)
-        {
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (Keyboard.GetState().IsKeyDown(Keys.Right) && Position.X <550)
-            {
-                Position.X += Speed * deltaTime;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Left) && Position.X > 0)
-            {
-                Position.X -= Speed * deltaTime;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Up) && Position.Y > 0)
-            {
-                Position.Y -= Speed * deltaTime;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Down) && Position.Y < 760)
-            {
-                Position.Y += Speed * deltaTime;
-            }
+        private Animation animation; 
+        private Vector2 position;    
+        private float speed;        
 
-        }
-        public override void Draw(SpriteBatch _spritebatch)
+        public Player(Animation animation, Vector2 startPosition, float speed = 200f)
         {
-            _spritebatch.Draw(_texture, Position, sourceRectangle, Color.White, 0f, new Vector2(0, 0), 2.5f, SpriteEffects.None, 0f);
+            this.animation = animation;
+            this.position = startPosition;
+            this.speed = speed;
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            HandleInput(gameTime);
+            animation.Update(gameTime);
+        }
+
+        private void HandleInput(GameTime gameTime)
+        {
+            KeyboardState state = Keyboard.GetState();
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (state.IsKeyDown(Keys.Up) || state.IsKeyDown(Keys.W)) // Move up
+                position.Y -= speed * deltaTime;
+            if (state.IsKeyDown(Keys.S)|| state.IsKeyDown(Keys.Down)) // Move down
+                position.Y += speed * deltaTime;
+            if (state.IsKeyDown(Keys.Q) || state.IsKeyDown(Keys.Left)) // Move left
+                position.X -= speed * deltaTime;
+            if (state.IsKeyDown(Keys.D) || state.IsKeyDown(Keys.Right)) // Move right
+                position.X += speed * deltaTime;
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(animation.SpriteSheet.Texture,position,animation.GetCurrentFrame(),Color.White);
         }
     }
 }
