@@ -28,11 +28,13 @@ namespace GameDevProject
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            Texture2D spritesheetTexture = Content.Load<Texture2D>("player-spritesheet");
+            Texture2D spritesheetTexture = Content.Load<Texture2D>("char_red_1");
 
-            SpriteSheet spriteSheet = new SpriteSheet(spritesheetTexture, 50, 37);
-            Animation fightAnimation = new Animation(spriteSheet, new int[] { 0, 1, 2, 3, 4, 5, 6, 7 }, 0.2f);
-            player = new Player(fightAnimation, new Vector2(200,200),100f);
+            SpriteSheet spriteSheet = new SpriteSheet(spritesheetTexture, 56, 56,112);
+            Animation animation;
+            Animation fighting = new Animation(spriteSheet, new int[] { 6, 7, 8, 9, 10 }, 0.2f);
+            Animation idle = new Animation(spriteSheet, new int[] { 0, 1, 2, 3, 4, 5 }, 0.2f);
+            player = new Player(idle, new Vector2(200,200),100f);
         }
 
         protected override void Update(GameTime gameTime)

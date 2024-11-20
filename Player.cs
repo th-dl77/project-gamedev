@@ -18,6 +18,7 @@ namespace GameDevProject
         private Animation animation; 
         private Vector2 position;
         private float speed;
+        private bool isFacingLeft = false;
 
         public Player(Animation animation, Vector2 startPosition, float speed = 200f)
         {
@@ -41,15 +42,31 @@ namespace GameDevProject
                 position.Y -= speed * deltaTime;
             if (state.IsKeyDown(Keys.S)|| state.IsKeyDown(Keys.Down)) // Move down
                 position.Y += speed * deltaTime;
-            if (state.IsKeyDown(Keys.Q) || state.IsKeyDown(Keys.Left)) // Move left
+            if (state.IsKeyDown(Keys.Q) || state.IsKeyDown(Keys.Left))// Move left
+            {
                 position.X -= speed * deltaTime;
-            if (state.IsKeyDown(Keys.D) || state.IsKeyDown(Keys.Right)) // Move right
+                isFacingLeft = true;
+            }
+
+            if (state.IsKeyDown(Keys.D) || state.IsKeyDown(Keys.Right))            // Move right
+            {
                 position.X += speed * deltaTime;
+                isFacingLeft = false;
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(animation.SpriteSheet.Texture,position,animation.GetCurrentFrame(),Color.White);
+            SpriteEffects flip;
+            if (isFacingLeft)
+            {
+                flip = SpriteEffects.FlipHorizontally;
+            }
+            else
+            {
+                flip = SpriteEffects.None;
+            }
+            spriteBatch.Draw(animation.SpriteSheet.Texture,position,animation.GetCurrentFrame(),Color.White,0f,new Vector2(0,0),2f,flip,0f);
         }
     }
 }
