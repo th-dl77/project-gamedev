@@ -4,17 +4,9 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/delae/OneDrive/Documenten/AP/J2_S1/Game_Development/GameDevProject/GameDevProject/Content/airplaneSprite.png</File>
-    <File>C:/Users/delae/OneDrive/Documenten/AP/J2_S1/Game_Development/GameDevProject/GameDevProject/Content/airplaneSprite2.png</File>
-    <File>C:/Users/delae/OneDrive/Documenten/AP/J2_S1/Game_Development/GameDevProject/GameDevProject/Content/bulletSprite.png</File>
-    <File>C:/Users/delae/OneDrive/Documenten/AP/J2_S1/Game_Development/GameDevProject/GameDevProject/Content/skybackground.png</File>
-    <File>C:/Users/delae/OneDrive/Documenten/AP/J2_S1/Game_Development/GameDevProject/GameDevProject/Content/skybackground3.jpg</File>
+    <File>C:/Users/delae/OneDrive/Documenten/AP/J2_S1/Game_Development/GameDevProject/GameDevProject/Content/player-spritesheet.png</File>
   </SourceFiles>
   <DestFiles>
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>
 </SourceFileCollection>

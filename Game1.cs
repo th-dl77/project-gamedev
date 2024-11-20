@@ -16,7 +16,6 @@ namespace GameDevProject
         private Rectangle _bulletPart;
 
         private Player _player;
-        private Background _background;
 
         private int timePressed;
         public Game1()
@@ -32,16 +31,14 @@ namespace GameDevProject
         {
             //_bulletPart = new Rectangle(1340, 160, 70,70);
             //_backgroundRectangle = new Rectangle(0, 0, 720, 960);
-            _background = new Background(new Rectangle(0, 0, 700, 700), new Vector2(0, 0));
-            _player = new Player(new Rectangle(30,30,200,200), new Vector2(200, 200));
+            _player = new Player(new Rectangle(0,0,55,37), new Vector2(100, 100));
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _player.LoadContent(Content, "airplaneSprite2");
-            _background.LoadContent(Content, "skybackground3");
+            _player.LoadContent(Content, "player-spritesheet");
             //_bulletTexture = Content.Load<Texture2D>("airplaneSprite2");
             //_bulletTexture2 = Content.Load<Texture2D>("airplaneSprite2");
         }
@@ -59,7 +56,6 @@ namespace GameDevProject
             GraphicsDevice.Clear(Color.Black);
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
-            _background.Draw(_spriteBatch);
             _player.Draw(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);

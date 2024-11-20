@@ -41,5 +41,9 @@ namespace GameDevProject
             }
 
         }
+        public override void Draw(SpriteBatch _spritebatch)
+        {
+            _spritebatch.Draw(_texture, Position, sourceRectangle, Color.White, 0f, new Vector2(0, 0), 2.5f, SpriteEffects.None, 0f);
+        }
     }
 }

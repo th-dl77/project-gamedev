@@ -24,8 +24,4 @@ C:\Users\delae\OneDrive\Documenten\AP\J2_S1\Game_Development\GameDevProject\Game
 C:\Users\delae\OneDrive\Documenten\AP\J2_S1\Game_Development\GameDevProject\GameDevProject\obj\Debug\net6.0\GameDevProject.genruntimeconfig.cache
 C:\Users\delae\OneDrive\Documenten\AP\J2_S1\Game_Development\GameDevProject\GameDevProject\obj\Debug\net6.0\ref\GameDevProject.dll
 C:\Users\delae\OneDrive\Documenten\AP\J2_S1\Game_Development\GameDevProject\GameDevProject\obj\Debug\net6.0\GameDevProject.sourcelink.json
-C:\Users\delae\OneDrive\Documenten\AP\J2_S1\Game_Development\GameDevProject\GameDevProject\bin\Debug\net6.0\Content\airplaneSprite.xnb
-C:\Users\delae\OneDrive\Documenten\AP\J2_S1\Game_Development\GameDevProject\GameDevProject\bin\Debug\net6.0\Content\bulletSprite.xnb
-C:\Users\delae\OneDrive\Documenten\AP\J2_S1\Game_Development\GameDevProject\GameDevProject\bin\Debug\net6.0\Content\airplaneSprite2.xnb
-C:\Users\delae\OneDrive\Documenten\AP\J2_S1\Game_Development\GameDevProject\GameDevProject\bin\Debug\net6.0\Content\skybackground.xnb
-C:\Users\delae\OneDrive\Documenten\AP\J2_S1\Game_Development\GameDevProject\GameDevProject\bin\Debug\net6.0\Content\skybackground3.xnb
+C:\Users\delae\OneDrive\Documenten\AP\J2_S1\Game_Development\GameDevProject\GameDevProject\bin\Debug\net6.0\Content\player-spritesheet.xnb
