@@ -10,6 +10,8 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:C:\Users\delae\OneDrive\Documenten\AP\J2_S1\Game_Development\GameDevProject\GameDevProject\MonoGame.Extended.Content.Pipeline.dll
+/reference:C:\Users\delae\OneDrive\Documenten\AP\J2_S1\Game_Development\GameDevProject\GameDevProject\MonoGame.Extended.dll
 
 #---------------------------------- Content ---------------------------------#
 
@@ -24,4 +26,9 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:char_red_1.png
+
+#begin map.tmx
+/importer:
+/processor:
+/build:map.tmx
 

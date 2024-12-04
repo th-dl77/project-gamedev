@@ -7,7 +7,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameDevProject
+namespace GameDevProject.PlayerFiles
 {
     public class GameCharacter
     {
@@ -16,7 +16,7 @@ namespace GameDevProject
         public GameCharacter(Animation animation, Microsoft.Xna.Framework.Vector2 startPosition)
         {
             this.animation = animation;
-            this.position = startPosition;
+            position = startPosition;
         }
         public void Update(GameTime gameTime)
         {

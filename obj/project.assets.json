@@ -9,6 +9,25 @@
           "build/MonoGame.Content.Builder.Task.targets": {}
         }
       },
+      "MonoGame.Extended/4.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/MonoGame.Extended.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/MonoGame.Extended.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "MonoGame.Extended.Content.Pipeline/4.0.3": {
+        "type": "package",
+        "build": {
+          "build/MonoGame.Extended.Content.Pipeline.targets": {}
+        }
+      },
       "MonoGame.Framework.DesktopGL/3.8.1.303": {
         "type": "package",
         "compile": {
@@ -72,6 +91,40 @@
         "monogame.content.builder.task.nuspec"
       ]
     },
+    "MonoGame.Extended/4.0.0": {
+      "sha512": "d6lNAv30Jq19/6akwRfVPTlJnUktCFD5DSpzyC4LZr3hVtlKouzCzz0C351HgFm8hLLNpW4U7qOuboyEYpZgAA==",
+      "type": "package",
+      "path": "monogame.extended/4.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net6.0/MonoGame.Extended.dll",
+        "lib/net6.0/MonoGame.Extended.xml",
+        "logo-nuget-128.png",
+        "monogame.extended.4.0.0.nupkg.sha512",
+        "monogame.extended.nuspec"
+      ]
+    },
+    "MonoGame.Extended.Content.Pipeline/4.0.3": {
+      "sha512": "ztVpBNoUuGiE7EgF8MsBx0dPh0hFqY5Hf8Rf+77LC6H6VvtoTPBJljo8cz4xWU9qf1ZWm5Eqmgf/qsHVbIzmCw==",
+      "type": "package",
+      "path": "monogame.extended.content.pipeline/4.0.3",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "build/MonoGame.Extended.Content.Pipeline.targets",
+        "lib/net8.0/MonoGame.Extended.Content.Pipeline.dll",
+        "lib/net8.0/MonoGame.Extended.Content.Pipeline.xml",
+        "logo-nuget-128.png",
+        "monogame.extended.content.pipeline.4.0.3.nupkg.sha512",
+        "monogame.extended.content.pipeline.nuspec",
+        "tools/MonoGame.Extended.Content.Pipeline.dll",
+        "tools/MonoGame.Extended.dll"
+      ]
+    },
     "MonoGame.Framework.DesktopGL/3.8.1.303": {
       "sha512": "eGYhqn0n1olk8MNYeE9EuBmoNNECN1T18rPMaQpkzsEQ0H3nVyFPXC+uCo78v5pi5juQpJ3PSFnSkjzZJ1U58A==",
       "type": "package",
@@ -98,6 +151,8 @@
   "projectFileDependencyGroups": {
     "net6.0": [
       "MonoGame.Content.Builder.Task >= 3.8.1.303",
+      "MonoGame.Extended >= 4.0.0",
+      "MonoGame.Extended.Content.Pipeline >= 4.0.3",
       "MonoGame.Framework.DesktopGL >= 3.8.1.303"
     ]
   },
@@ -154,6 +209,14 @@
           "MonoGame.Content.Builder.Task": {
             "target": "Package",
             "version": "[3.8.1.303, )"
+          },
+          "MonoGame.Extended": {
+            "target": "Package",
+            "version": "[4.0.0, )"
+          },
+          "MonoGame.Extended.Content.Pipeline": {
+            "target": "Package",
+            "version": "[4.0.3, )"
           },
           "MonoGame.Framework.DesktopGL": {
             "target": "Package",

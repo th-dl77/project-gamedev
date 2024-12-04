@@ -11,22 +11,24 @@ using System.Security.Cryptography.X509Certificates;
 using Microsoft.Xna.Framework.Content;
 using System.Reflection.Metadata;
 
-namespace GameDevProject
+namespace GameDevProject.PlayerFiles
 {
     public class Player
     {
         private Animation runningAnimation;
         private Animation idleAnimation;
+        private Animation fightingAnimation;
         private Animation currentAnimation;
         private Vector2 position;
         private float speed;
         private bool isFacingLeft = false;
 
-        public Player(Animation runningAnimation, Animation idleAnimation, Vector2 startPosition, float speed = 200f)
+        public Player(Animation runningAnimation, Animation idleAnimation, Animation fightingAnimation, Vector2 startPosition, float speed = 200f)
         {
             this.runningAnimation = runningAnimation;
             this.idleAnimation = idleAnimation;
-            this.position = startPosition;
+            this.fightingAnimation = fightingAnimation;
+            position = startPosition;
             this.speed = speed;
         }
 
@@ -45,7 +47,7 @@ namespace GameDevProject
             {
                 velocity.Y -= 1;
             }
-            if (state.IsKeyDown(Keys.S)|| state.IsKeyDown(Keys.Down))
+            if (state.IsKeyDown(Keys.S) || state.IsKeyDown(Keys.Down))
             {
                 velocity.Y += 1;
             }
@@ -59,12 +61,15 @@ namespace GameDevProject
                 velocity.X += 1;
                 isFacingLeft = false;
             }
-
             //if velocity is not zero: apply the running animation
             if (velocity != Vector2.Zero)
             {
-                velocity.Normalize(); //used to fix diagional movement
+                velocity.Normalize(); //used to fix diagonal movement, otherwise way too fast
                 currentAnimation = runningAnimation;
+            }
+            else if (state.IsKeyDown(Keys.Space))
+            {
+                currentAnimation = fightingAnimation;
             }
             else
             {

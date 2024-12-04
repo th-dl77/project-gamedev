@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameDevProject
+namespace GameDevProject.PlayerFiles
 {
     public class Animation
     {
@@ -20,12 +20,12 @@ namespace GameDevProject
 
         public Animation(SpriteSheet spriteSheet, int[] frames, float frameTime, bool isLooping = true)
         {
-            this.SpriteSheet = spriteSheet;
+            SpriteSheet = spriteSheet;
             this.frames = frames;
             this.frameTime = frameTime;
-            this.IsLooping = isLooping;
-            this.timer = 0f;
-            this.currentFrame = 0;
+            IsLooping = isLooping;
+            timer = 0f;
+            currentFrame = 0;
         }
 
         public void Update(GameTime gameTime)
