@@ -28,7 +28,7 @@
 /build:char_red_1.png
 
 #begin map.tmx
-/importer:
-/processor:
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
 /build:map.tmx
 

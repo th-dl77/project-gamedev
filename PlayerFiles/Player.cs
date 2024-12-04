@@ -19,7 +19,7 @@ namespace GameDevProject.PlayerFiles
         private Animation idleAnimation;
         private Animation fightingAnimation;
         private Animation currentAnimation;
-        private Vector2 position;
+        public Vector2 position { get; private set; }
         private float speed;
         private bool isFacingLeft = false;
 
@@ -45,22 +45,38 @@ namespace GameDevProject.PlayerFiles
 
             if (state.IsKeyDown(Keys.W) || state.IsKeyDown(Keys.Up))
             {
-                velocity.Y -= 1;
+                if (position.Y > 0)
+                {
+                    velocity.Y -= 1;
+                }
+
             }
             if (state.IsKeyDown(Keys.S) || state.IsKeyDown(Keys.Down))
             {
-                velocity.Y += 1;
+                if (position.Y < 800)
+                {
+                    velocity.Y += 1;
+                }
             }
             if (state.IsKeyDown(Keys.Q) || state.IsKeyDown(Keys.Left))
             {
-                velocity.X -= 1;
+                if (position.X > 0)
+                {
+                    velocity.X -= 1;
+                }
                 isFacingLeft = true;
+
             }
             if (state.IsKeyDown(Keys.D) || state.IsKeyDown(Keys.Right))
             {
-                velocity.X += 1;
+                if (position.X < 800)
+                {
+                    velocity.X += 1;
+                }
                 isFacingLeft = false;
             }
+
+
             //if velocity is not zero: apply the running animation
             if (velocity != Vector2.Zero)
             {
