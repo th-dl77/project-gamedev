@@ -62,29 +62,34 @@ namespace GameDevProject.Collisions
             return proposedPosition;
         }
 
-        public Vector2 ResolveCollision(Rectangle playerBounds, Rectangle collidableBounds, Vector2 currentPosition)
+        private Vector2 ResolveCollision(Rectangle playerBounds, Rectangle collidableBounds, Vector2 currentPosition)
         {
+            // Check for overlap
             var overlapX = Math.Min(playerBounds.Right, collidableBounds.Right) - Math.Max(playerBounds.Left, collidableBounds.Left);
             var overlapY = Math.Min(playerBounds.Bottom, collidableBounds.Bottom) - Math.Max(playerBounds.Top, collidableBounds.Top);
+
             if (overlapX > 0 && overlapY > 0)
             {
+                // Resolve based on smaller overlap
                 if (Math.Abs(overlapX) < Math.Abs(overlapY))
                 {
                     if (playerBounds.Center.X < collidableBounds.Center.X)
-                        return new Vector2(collidableBounds.Left - playerBounds.Width, currentPosition.Y);
+                        return new Vector2(collidableBounds.Left - playerBounds.Width, currentPosition.Y); // Push left
                     else
-                        return new Vector2(collidableBounds.Right, currentPosition.Y);
+                        return new Vector2(collidableBounds.Right, currentPosition.Y); // Push right
                 }
                 else
                 {
                     if (playerBounds.Center.Y < collidableBounds.Center.Y)
-                        return new Vector2(currentPosition.X, collidableBounds.Top - playerBounds.Height);
+                        return new Vector2(currentPosition.X, collidableBounds.Top - playerBounds.Height); // Push up
                     else
-                        return new Vector2(currentPosition.X, collidableBounds.Bottom);
+                        return new Vector2(currentPosition.X, collidableBounds.Bottom); // Push down
                 }
             }
-            return currentPosition;
+
+            return currentPosition; // No collision, allow movement
         }
+
 
 
         public void DrawCollidables(SpriteBatch spriteBatch)

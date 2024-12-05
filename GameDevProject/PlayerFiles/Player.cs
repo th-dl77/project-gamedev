@@ -91,7 +91,6 @@ namespace GameDevProject.PlayerFiles
             {
                 currentAnimation = idleAnimation;
             }
-            Velocity = velocity;
             Position += Velocity * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
