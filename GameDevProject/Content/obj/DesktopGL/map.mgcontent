@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>C:/Users/delae/OneDrive/Documenten/AP/J2_S1/Game_Development/GameDevProject/GameDevProject/Content/map.tmx</SourceFile>
-  <SourceTime>2024-12-04T16:52:52.6296221+01:00</SourceTime>
+  <SourceTime>2024-12-05T15:19:10.2873015+01:00</SourceTime>
   <DestFile>C:/Users/delae/OneDrive/Documenten/AP/J2_S1/Game_Development/GameDevProject/GameDevProject/Content/bin/DesktopGL/map.xnb</DestFile>
-  <DestTime>2024-12-04T16:53:02.0111533+01:00</DestTime>
+  <DestTime>2024-12-05T15:19:25.612873+01:00</DestTime>
   <Importer>TiledMapImporter</Importer>
   <ImporterTime>2024-07-09T21:47:10+02:00</ImporterTime>
   <Processor>TiledMapProcessor</Processor>
