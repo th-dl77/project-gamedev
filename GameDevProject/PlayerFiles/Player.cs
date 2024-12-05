@@ -27,6 +27,11 @@ namespace GameDevProject.PlayerFiles
         public Vector2 Velocity;
         public Vector2 Position { get; private set; }
 
+        private float Speed { get; } = 100f;
+
+        private Camera _camera;
+        public float Scale { get; private set; } = 2f;
+        private bool isFacingLeft = false;
         public Rectangle Bounds
         {
             get
@@ -40,26 +45,20 @@ namespace GameDevProject.PlayerFiles
             }
         }
 
-
-        public float Scale { get; private set; } = 2f; 
-        private float speed;
-        private bool isFacingLeft = false;
-
-        public Player(Animation runningAnimation, Animation idleAnimation, Animation fightingAnimation, Vector2 startPosition, float speed = 200f)
+        public Player(Animation runningAnimation, Animation idleAnimation, Animation fightingAnimation, Vector2 startPosition, Camera _camera)
         {
             this.runningAnimation = runningAnimation;
             this.idleAnimation = idleAnimation;
             this.fightingAnimation = fightingAnimation;
             Position = startPosition;
-            this.speed = speed;
-            Velocity = Vector2.Zero;
+            this._camera = _camera;
         }
 
         public void Update(GameTime gameTime, CollisionManager collisionManager)
         {
             HandleInput(gameTime);
-            var proposedPosition = Position + Velocity;
-            var resolvedPosition = collisionManager.ResolveCollisions(this, proposedPosition);
+            Vector2 proposedPosition = Position + Velocity * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Vector2 resolvedPosition = collisionManager.ResolveCollisions(this, proposedPosition);
             Position = resolvedPosition;
             currentAnimation.Update(gameTime);
         }
@@ -71,30 +70,30 @@ namespace GameDevProject.PlayerFiles
 
             if (state.IsKeyDown(Keys.W) || state.IsKeyDown(Keys.Up))
             {
-                Velocity.Y -= 1;
+                velocity.Y -= 1;
 
             }
             if (state.IsKeyDown(Keys.S) || state.IsKeyDown(Keys.Down))
             {
-                Velocity.Y += 1;
+                velocity.Y += 1;
             }
             if (state.IsKeyDown(Keys.Q) || state.IsKeyDown(Keys.Left))
             {
-                Velocity.X -= 1;
+                velocity.X -= 1;
                 isFacingLeft = true;
 
             }
             if (state.IsKeyDown(Keys.D) || state.IsKeyDown(Keys.Right))
             {
-                Velocity.X += 1;
+                velocity.X += 1;
                 isFacingLeft = false;
             }
 
 
             //if velocity is not zero: apply the running animation
-            if (Velocity != Vector2.Zero)
+            if (velocity != Vector2.Zero)
             {
-                Velocity.Normalize(); //used to fix diagonal movement, otherwise way too fast
+                velocity.Normalize(); //used to fix diagonal movement, otherwise way too fast
                 currentAnimation = runningAnimation;
             }
             else if (state.IsKeyDown(Keys.Space))
@@ -105,7 +104,7 @@ namespace GameDevProject.PlayerFiles
             {
                 currentAnimation = idleAnimation;
             }
-            Position += Velocity * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Velocity = velocity;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -117,17 +116,17 @@ namespace GameDevProject.PlayerFiles
             else
                 flip = SpriteEffects.None;
 
-            //draw player on screen
             spriteBatch.Draw(
                 currentAnimation.SpriteSheet.Texture,
-                Position, 
-                currentAnimation.GetCurrentFrame(), 
-                Color.White, 
-                0f, 
-                new Vector2(0, 0), 
-                Scale, 
-                flip, 
-                0f);
+                Position,
+                currentAnimation.GetCurrentFrame(),
+                Color.White,
+                0f,
+                new Vector2(0, 0),
+                Scale,
+                flip,
+                0f
+            );
         }
 
         public void DrawBounds(SpriteBatch spriteBatch, Texture2D debugTexture)

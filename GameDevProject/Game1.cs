@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using GameDevProject.PlayerFiles;
 using GameDevProject.Collisions;
+using MonoGame.Extended;
 
 namespace GameDevProject
 {
@@ -14,6 +15,8 @@ namespace GameDevProject
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        private List<CollidableObject> collidableObjects;
 
         private Player player;
 
@@ -40,7 +43,9 @@ namespace GameDevProject
             _graphics.PreferredBackBufferHeight = 800;
             _graphics.ApplyChanges();
             tiledmap = Content.Load<TiledMap>("map");
-            collisionManager = new CollisionManager(new RectangleCollisionHandler());
+            //collisionManager = new CollisionManager(new RectangleCollisionHandler());
+            collidableObjects = new List<CollidableObject>();
+            collisionManager = new CollisionManager(collidableObjects);
             LoadCollidableObjectsFromTiledMap(tiledmap);
 
             camera = new Camera(GraphicsDevice.Viewport);  
@@ -69,16 +74,15 @@ namespace GameDevProject
             Animation running = new Animation(spriteSheetRunning, new int[] { 0, 1, 2, 3, 4, 5 }, 0.2f);
             Animation fighting = new Animation(spriteSheetFighting, new int[] { 0, 1, 2, 3, 4, 5, 6, 7 },0.2f);
 
-            player = new Player(running, idle, fighting, new Vector2(200,200), 100f);
+            player = new Player(running, idle, fighting, new Vector2(200,200), camera);
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            collisionManager.CheckCollisions(player);
             player.Update(gameTime, collisionManager);
-            camera.Update(player.Position,800,800);
+            camera.Update(player.Position, 800, 800);
             base.Update(gameTime);
         }
 
@@ -88,16 +92,16 @@ namespace GameDevProject
             GraphicsDevice.Clear(Color.Gray);
 
             //draw the map
-            //_spriteBatch.Begin(transformMatrix: camera.Transform);
-            _spriteBatch.Begin();
-            //tiledMapRenderer.Draw(camera.Transform);
-            tiledMapRenderer.Draw();
-            collisionManager.DrawCollidables(_spriteBatch);
+            _spriteBatch.Begin(transformMatrix: camera.Transform);
+            tiledMapRenderer.Draw(camera.Transform);
+            /*used to draw outline around the collidables
+            collisionManager.DrawCollidables(_spriteBatch);*/
             _spriteBatch.End();
 
             //draw the player
             _spriteBatch.Begin();
-            player.DrawBounds(_spriteBatch, _debugTexture);
+            /* used to draw textures around the bounds of the playerchar
+            player.DrawBounds(_spriteBatch, _debugTexture);*/
             player.Draw(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);
@@ -117,13 +121,11 @@ namespace GameDevProject
                         collisionProperty == "true")
                     {
                         // Add the object as a collidable rectangle
-                        var bounds = new Rectangle((int)obj.Position.X, (int)obj.Position.Y, (int)obj.Size.Width, (int)obj.Size.Height);
-                        collisionManager.AddCollidableObject(new CollidableObject(bounds,GraphicsDevice));
+                        Rectangle bounds = new Rectangle((int)obj.Position.X, (int)obj.Position.Y, (int)obj.Size.Width, (int)obj.Size.Height);
+                        collidableObjects.Add(new CollidableObject(bounds, GraphicsDevice));
                     }
                 }
             }
         }
-
-
     }
 }
