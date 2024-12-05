@@ -71,8 +71,8 @@ namespace GameDevProject
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            player.Update(gameTime);
             collisionManager.CheckCollisions(player);
+            player.Update(gameTime, collisionManager);
             camera.Update(player.Position,800,800);
             base.Update(gameTime);
         }
@@ -83,8 +83,11 @@ namespace GameDevProject
             GraphicsDevice.Clear(Color.Gray);
 
             //draw the map
-            _spriteBatch.Begin(transformMatrix: camera.Transform);
-            tiledMapRenderer.Draw(camera.Transform);
+            //_spriteBatch.Begin(transformMatrix: camera.Transform);
+            _spriteBatch.Begin();
+            //tiledMapRenderer.Draw(camera.Transform);
+            tiledMapRenderer.Draw();
+            collisionManager.DrawCollidables(_spriteBatch);
             _spriteBatch.End();
 
             //draw the player
@@ -109,7 +112,7 @@ namespace GameDevProject
                     {
                         // Add the object as a collidable rectangle
                         var bounds = new Rectangle((int)obj.Position.X, (int)obj.Position.Y, (int)obj.Size.Width, (int)obj.Size.Height);
-                        collisionManager.AddCollidableObject(new CollidableObject(bounds));
+                        collisionManager.AddCollidableObject(new CollidableObject(bounds,GraphicsDevice));
                     }
                 }
             }

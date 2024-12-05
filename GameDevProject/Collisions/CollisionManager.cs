@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevProject.Collisions
 {
@@ -48,7 +49,51 @@ namespace GameDevProject.Collisions
         {
             return _collidableObjects;
         }
+        public Vector2 ResolveCollisions(Player player, Vector2 proposedPosition)
+        {
+            var playerBounds = new Rectangle((int)proposedPosition.X, (int)proposedPosition.Y, player.Bounds.Width, player.Bounds.Height);
+            foreach (var collidable in _collidableObjects)
+            {
+                if (collidable.IsCollidable && _collisionHandler.CheckCollision(playerBounds,collidable.Bounds))
+                {
+                    return ResolveCollision(player.Bounds, collidable.Bounds, player.Position);
+                }
+            }
+            return proposedPosition;
+        }
 
+        public Vector2 ResolveCollision(Rectangle playerBounds, Rectangle collidableBounds, Vector2 currentPosition)
+        {
+            var overlapX = Math.Min(playerBounds.Right, collidableBounds.Right) - Math.Max(playerBounds.Left, collidableBounds.Left);
+            var overlapY = Math.Min(playerBounds.Bottom, collidableBounds.Bottom) - Math.Max(playerBounds.Top, collidableBounds.Top);
+            if (overlapX > 0 && overlapY > 0)
+            {
+                if (Math.Abs(overlapX) < Math.Abs(overlapY))
+                {
+                    if (playerBounds.Center.X < collidableBounds.Center.X)
+                        return new Vector2(collidableBounds.Left - playerBounds.Width, currentPosition.Y);
+                    else
+                        return new Vector2(collidableBounds.Right, currentPosition.Y);
+                }
+                else
+                {
+                    if (playerBounds.Center.Y < collidableBounds.Center.Y)
+                        return new Vector2(currentPosition.X, collidableBounds.Top - playerBounds.Height);
+                    else
+                        return new Vector2(currentPosition.X, collidableBounds.Bottom);
+                }
+            }
+            return currentPosition;
+        }
+
+
+        public void DrawCollidables(SpriteBatch spriteBatch)
+        {
+            foreach (var collidable in _collidableObjects)
+            {
+                collidable.Draw(spriteBatch);
+            }
+        }
     }
 
 }

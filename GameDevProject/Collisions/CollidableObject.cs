@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevProject.Collisions
 {
@@ -12,10 +13,18 @@ namespace GameDevProject.Collisions
         public Rectangle Bounds { get; set; }
         public bool IsCollidable { get; set; }
 
-        public CollidableObject(Rectangle bounds, bool isCollidable = true)
+        private Texture2D _texture;
+
+        public CollidableObject(Rectangle bounds, GraphicsDevice graphicsDevice, bool isCollidable = true)
         {
             Bounds = bounds;
             IsCollidable = isCollidable;
+            _texture = new Texture2D(graphicsDevice, 1, 1);
+            _texture.SetData(new[] { Color.Green });
+        }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(_texture, Bounds, Color.White);
         }
     }
 

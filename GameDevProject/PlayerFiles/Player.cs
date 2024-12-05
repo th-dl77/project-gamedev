@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.Xna.Framework.Content;
 using System.Reflection.Metadata;
+using GameDevProject.Collisions;
 
 namespace GameDevProject.PlayerFiles
 {
@@ -39,48 +40,39 @@ namespace GameDevProject.PlayerFiles
             Velocity = Vector2.Zero;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, CollisionManager collisionManager)
         {
             HandleInput(gameTime);
+            var proposedPosition = Position + Velocity;
+            var resolvedPosition = collisionManager.ResolveCollisions(this, proposedPosition);
+            Position = resolvedPosition;
             Bounds = new Rectangle((int)Position.X, (int)Position.Y, Bounds.Width, Bounds.Height);
             currentAnimation.Update(gameTime);
         }
 
         private void HandleInput(GameTime gameTime)
         {
-            Velocity = Vector2.Zero;
+            Vector2 velocity = Vector2.Zero;
             KeyboardState state = Keyboard.GetState();
 
             if (state.IsKeyDown(Keys.W) || state.IsKeyDown(Keys.Up))
             {
-                if (Position.Y > 0)
-                {
-                    Velocity.Y -= 1;
-                }
+                Velocity.Y -= 1;
 
             }
             if (state.IsKeyDown(Keys.S) || state.IsKeyDown(Keys.Down))
             {
-                if (Position.Y < 800)
-                {
-                    Velocity.Y += 1;
-                }
+                Velocity.Y += 1;
             }
             if (state.IsKeyDown(Keys.Q) || state.IsKeyDown(Keys.Left))
             {
-                if (Position.X > 0)
-                {
-                    Velocity.X -= 1;
-                }
+                Velocity.X -= 1;
                 isFacingLeft = true;
 
             }
             if (state.IsKeyDown(Keys.D) || state.IsKeyDown(Keys.Right))
             {
-                if (Position.X < 800)
-                {
-                    Velocity.X += 1;
-                }
+                Velocity.X += 1;
                 isFacingLeft = false;
             }
 
@@ -99,6 +91,7 @@ namespace GameDevProject.PlayerFiles
             {
                 currentAnimation = idleAnimation;
             }
+            Velocity = velocity;
             Position += Velocity * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
