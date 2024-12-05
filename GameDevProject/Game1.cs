@@ -23,6 +23,8 @@ namespace GameDevProject
 
         private CollisionManager collisionManager;
 
+        private Texture2D _debugTexture;
+
         private TiledMap tiledmap;
         private TiledMapRenderer tiledMapRenderer;
         public Game1()
@@ -55,6 +57,9 @@ namespace GameDevProject
             tiledMapRenderer = new TiledMapRenderer(GraphicsDevice);
 
             tiledMapRenderer.LoadMap(tiledmap);
+
+            _debugTexture = new Texture2D(GraphicsDevice, 1, 1);
+            _debugTexture.SetData(new[] { Color.White });
 
             //animations
             SpriteSheet spriteSheetRunning = new SpriteSheet(spriteSheetTexture, 56, 56, 112);
@@ -92,6 +97,7 @@ namespace GameDevProject
 
             //draw the player
             _spriteBatch.Begin();
+            player.DrawBounds(_spriteBatch, _debugTexture);
             player.Draw(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);

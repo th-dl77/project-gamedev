@@ -21,11 +21,27 @@ namespace GameDevProject.PlayerFiles
         private Animation fightingAnimation;
         private Animation currentAnimation;
 
+        public int SpriteHeight { get; private set; } = 56;
+        public int SpriteWidth { get; private set; } = 56;
+
         public Vector2 Velocity;
         public Vector2 Position { get; private set; }
 
-        public Rectangle Bounds { get; private set; }
+        public Rectangle Bounds
+        {
+            get
+            {
+                return new Rectangle(
+                    (int)Position.X + 25,
+                    (int)Position.Y+45, 
+                    (int)((SpriteWidth -25) * Scale),                    
+                    (int)((SpriteHeight - 20)* Scale)                    
+                );
+            }
+        }
 
+
+        public float Scale { get; private set; } = 2f; 
         private float speed;
         private bool isFacingLeft = false;
 
@@ -36,7 +52,6 @@ namespace GameDevProject.PlayerFiles
             this.fightingAnimation = fightingAnimation;
             Position = startPosition;
             this.speed = speed;
-            Bounds = new Rectangle((int)Position.X, (int)Position.Y, 56, 56);
             Velocity = Vector2.Zero;
         }
 
@@ -46,7 +61,6 @@ namespace GameDevProject.PlayerFiles
             var proposedPosition = Position + Velocity;
             var resolvedPosition = collisionManager.ResolveCollisions(this, proposedPosition);
             Position = resolvedPosition;
-            Bounds = new Rectangle((int)Position.X, (int)Position.Y, Bounds.Width, Bounds.Height);
             currentAnimation.Update(gameTime);
         }
 
@@ -104,7 +118,21 @@ namespace GameDevProject.PlayerFiles
                 flip = SpriteEffects.None;
 
             //draw player on screen
-            spriteBatch.Draw(currentAnimation.SpriteSheet.Texture, Position, currentAnimation.GetCurrentFrame(), Color.White, 0f, new Vector2(0, 0), 2f, flip, 0f);
+            spriteBatch.Draw(
+                currentAnimation.SpriteSheet.Texture,
+                Position, 
+                currentAnimation.GetCurrentFrame(), 
+                Color.White, 
+                0f, 
+                new Vector2(0, 0), 
+                Scale, 
+                flip, 
+                0f);
+        }
+
+        public void DrawBounds(SpriteBatch spriteBatch, Texture2D debugTexture)
+        {
+            spriteBatch.Draw(debugTexture, Bounds, Color.Blue * 0.5f);
         }
     }
 }
