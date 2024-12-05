@@ -19,7 +19,12 @@ namespace GameDevProject.PlayerFiles
         private Animation idleAnimation;
         private Animation fightingAnimation;
         private Animation currentAnimation;
-        public Vector2 position { get; private set; }
+
+        public Vector2 Velocity;
+        public Vector2 Position { get; private set; }
+
+        public Rectangle Bounds { get; private set; }
+
         private float speed;
         private bool isFacingLeft = false;
 
@@ -28,59 +33,62 @@ namespace GameDevProject.PlayerFiles
             this.runningAnimation = runningAnimation;
             this.idleAnimation = idleAnimation;
             this.fightingAnimation = fightingAnimation;
-            position = startPosition;
+            Position = startPosition;
             this.speed = speed;
+            Bounds = new Rectangle((int)Position.X, (int)Position.Y, 56, 56);
+            Velocity = Vector2.Zero;
         }
 
         public void Update(GameTime gameTime)
         {
             HandleInput(gameTime);
+            Bounds = new Rectangle((int)Position.X, (int)Position.Y, Bounds.Width, Bounds.Height);
             currentAnimation.Update(gameTime);
         }
 
         private void HandleInput(GameTime gameTime)
         {
-            Vector2 velocity = Vector2.Zero;
+            Velocity = Vector2.Zero;
             KeyboardState state = Keyboard.GetState();
 
             if (state.IsKeyDown(Keys.W) || state.IsKeyDown(Keys.Up))
             {
-                if (position.Y > 0)
+                if (Position.Y > 0)
                 {
-                    velocity.Y -= 1;
+                    Velocity.Y -= 1;
                 }
 
             }
             if (state.IsKeyDown(Keys.S) || state.IsKeyDown(Keys.Down))
             {
-                if (position.Y < 800)
+                if (Position.Y < 800)
                 {
-                    velocity.Y += 1;
+                    Velocity.Y += 1;
                 }
             }
             if (state.IsKeyDown(Keys.Q) || state.IsKeyDown(Keys.Left))
             {
-                if (position.X > 0)
+                if (Position.X > 0)
                 {
-                    velocity.X -= 1;
+                    Velocity.X -= 1;
                 }
                 isFacingLeft = true;
 
             }
             if (state.IsKeyDown(Keys.D) || state.IsKeyDown(Keys.Right))
             {
-                if (position.X < 800)
+                if (Position.X < 800)
                 {
-                    velocity.X += 1;
+                    Velocity.X += 1;
                 }
                 isFacingLeft = false;
             }
 
 
             //if velocity is not zero: apply the running animation
-            if (velocity != Vector2.Zero)
+            if (Velocity != Vector2.Zero)
             {
-                velocity.Normalize(); //used to fix diagonal movement, otherwise way too fast
+                Velocity.Normalize(); //used to fix diagonal movement, otherwise way too fast
                 currentAnimation = runningAnimation;
             }
             else if (state.IsKeyDown(Keys.Space))
@@ -91,7 +99,7 @@ namespace GameDevProject.PlayerFiles
             {
                 currentAnimation = idleAnimation;
             }
-            position += velocity * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Position += Velocity * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -104,7 +112,7 @@ namespace GameDevProject.PlayerFiles
                 flip = SpriteEffects.None;
 
             //draw player on screen
-            spriteBatch.Draw(currentAnimation.SpriteSheet.Texture, position, currentAnimation.GetCurrentFrame(), Color.White, 0f, new Vector2(0, 0), 2f, flip, 0f);
+            spriteBatch.Draw(currentAnimation.SpriteSheet.Texture, Position, currentAnimation.GetCurrentFrame(), Color.White, 0f, new Vector2(0, 0), 2f, flip, 0f);
         }
     }
 }

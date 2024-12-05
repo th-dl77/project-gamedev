@@ -6,6 +6,7 @@ using MonoGame.Extended.Tiled.Renderers;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using GameDevProject.PlayerFiles;
+using GameDevProject.Collisions;
 
 namespace GameDevProject
 {
@@ -17,6 +18,10 @@ namespace GameDevProject
         private Player player;
 
         private Camera camera;
+
+        private Texture2D spriteSheetTexture;
+
+        private CollisionManager collisionManager;
 
         private TiledMap tiledmap;
         private TiledMapRenderer tiledMapRenderer;
@@ -32,6 +37,10 @@ namespace GameDevProject
             _graphics.PreferredBackBufferWidth = 800;
             _graphics.PreferredBackBufferHeight = 800;
             _graphics.ApplyChanges();
+            tiledmap = Content.Load<TiledMap>("map");
+            collisionManager = new CollisionManager(new RectangleCollisionHandler());
+            LoadCollidableObjectsFromTiledMap(tiledmap);
+
             camera = new Camera(GraphicsDevice.Viewport);  
             base.Initialize();
         }
@@ -41,8 +50,7 @@ namespace GameDevProject
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //load the tiledmap and playerchar
-            Texture2D spriteSheetTexture = Content.Load<Texture2D>("char_red_1");
-            tiledmap = Content.Load<TiledMap>("map");
+            spriteSheetTexture = Content.Load<Texture2D>("char_red_1");
 
             tiledMapRenderer = new TiledMapRenderer(GraphicsDevice);
 
@@ -64,7 +72,8 @@ namespace GameDevProject
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             player.Update(gameTime);
-            camera.Update(player.position,800,800);
+            collisionManager.CheckCollisions(player);
+            camera.Update(player.Position,800,800);
             base.Update(gameTime);
         }
 
@@ -84,6 +93,28 @@ namespace GameDevProject
             _spriteBatch.End();
             base.Draw(gameTime);
         }
+
+        private void LoadCollidableObjectsFromTiledMap(TiledMap map)
+        {
+            // Retrieve the object layer named "Collision"
+            var objectLayer = map.GetLayer<TiledMapObjectLayer>("Collisions");
+
+            if (objectLayer != null)
+            {
+                foreach (var obj in objectLayer.Objects)
+                {
+                    // Check if the object has the "collisions" property set to "true"
+                    if (obj.Properties.TryGetValue("collisions", out var collisionProperty) &&
+                        collisionProperty == "true")
+                    {
+                        // Add the object as a collidable rectangle
+                        var bounds = new Rectangle((int)obj.Position.X, (int)obj.Position.Y, (int)obj.Size.Width, (int)obj.Size.Height);
+                        collisionManager.AddCollidableObject(new CollidableObject(bounds));
+                    }
+                }
+            }
+        }
+
 
     }
 }
