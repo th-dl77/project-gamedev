@@ -14,14 +14,9 @@ namespace GameDevProject
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private Texture2D tilesheet;
-
         private Player player;
 
         private Camera camera;
-        private Texture2D fogTexture;
-
-        private int timePressed;
 
         private TiledMap tiledmap;
         private TiledMapRenderer tiledMapRenderer;
