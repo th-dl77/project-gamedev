@@ -22,6 +22,8 @@ namespace GameDevProject
 
         private CollisionManager _collisionManager;
 
+        private RenderingManager _renderingManager;
+
         private Texture2D _debugTexture;
 
         private TiledMapRenderer _tiledMapRenderer;
@@ -48,14 +50,14 @@ namespace GameDevProject
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+
             TiledMap _tiledMap = Content.Load<TiledMap>("map");
+
             _collisionManager.AddCollidableObjects(CollisionLoader.LoadCollidableObjectsFromTiledMap(_tiledMap, GraphicsDevice));
 
+            _renderingManager = new RenderingManager(GraphicsDevice, _tiledMap, _camera);
+
             Texture2D spriteSheetTexture = Content.Load<Texture2D>("char_red_1");
-
-            _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice);
-
-            _tiledMapRenderer.LoadMap(_tiledMap);
 
             _debugTexture = new Texture2D(GraphicsDevice, 1, 1);
             _debugTexture.SetData(new[] { Color.White });
@@ -87,9 +89,9 @@ namespace GameDevProject
 
             //draw the map
             _spriteBatch.Begin(transformMatrix: _camera.Transform);
-            _tiledMapRenderer.Draw(_camera.Transform);
-            /*used to draw outline around the collidables
-            collisionManager.DrawCollidables(_spriteBatch);*/
+            _renderingManager.DrawMap(_spriteBatch);
+            /* Debug draw for collisions
+            _collisionManager.DrawCollidables(_spriteBatch);*/
             _spriteBatch.End();
 
             //draw the player
@@ -100,25 +102,5 @@ namespace GameDevProject
             _spriteBatch.End();
             base.Draw(gameTime);
         }
-        //private void LoadCollidableObjectsFromTiledMap(TiledMap map)
-        //{
-        //    // Retrieve the object layer named "Collision"
-        //    var objectLayer = map.GetLayer<TiledMapObjectLayer>("Collisions");
-
-        //    if (objectLayer != null)
-        //    {
-        //        foreach (var obj in objectLayer.Objects)
-        //        {
-        //            // Check if the object has the "collisions" property set to "true"
-        //            if (obj.Properties.TryGetValue("collisions", out var collisionProperty) &&
-        //                collisionProperty == "true")
-        //            {
-        //                // Add the object as a collidable rectangle
-        //                Rectangle bounds = new Rectangle((int)obj.Position.X, (int)obj.Position.Y, (int)obj.Size.Width, (int)obj.Size.Height);
-        //                collidableObjects.Add(new CollidableObject(bounds, GraphicsDevice));
-        //            }
-        //        }
-        //    }
-        //}
     }
 }
