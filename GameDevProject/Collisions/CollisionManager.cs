@@ -9,9 +9,9 @@ namespace GameDevProject.Collisions
     {
         private List<CollidableObject> collidableObjects; // List of all objects that the player can collide with (e.g., walls, barriers)
 
-        public CollisionManager(List<CollidableObject> collidableObjects)
+        public CollisionManager()
         {
-            this.collidableObjects = collidableObjects;
+            this.collidableObjects = new List<CollidableObject>();
         }
         public Vector2 ResolveCollisions(Player player, Vector2 proposedPosition)
         {
@@ -44,6 +44,11 @@ namespace GameDevProject.Collisions
             {
                 collidable.Draw(spriteBatch);
             }
+        }
+
+        public void AddCollidableObjects(List<CollidableObject> collidableObjects)
+        {
+            this.collidableObjects = collidableObjects;
         }
     }
 }

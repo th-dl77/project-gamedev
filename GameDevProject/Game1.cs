@@ -16,20 +16,15 @@ namespace GameDevProject
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private List<CollidableObject> collidableObjects;
-
         private Player player;
 
-        private Camera camera;
+        private Camera _camera;
 
-        private Texture2D spriteSheetTexture;
-
-        private CollisionManager collisionManager;
+        private CollisionManager _collisionManager;
 
         private Texture2D _debugTexture;
 
-        private TiledMap tiledmap;
-        private TiledMapRenderer tiledMapRenderer;
+        private TiledMapRenderer _tiledMapRenderer;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -42,26 +37,25 @@ namespace GameDevProject
             _graphics.PreferredBackBufferWidth = 800;
             _graphics.PreferredBackBufferHeight = 800;
             _graphics.ApplyChanges();
-            tiledmap = Content.Load<TiledMap>("map");
-            //collisionManager = new CollisionManager(new RectangleCollisionHandler());
-            collidableObjects = new List<CollidableObject>();
-            collisionManager = new CollisionManager(collidableObjects);
-            LoadCollidableObjectsFromTiledMap(tiledmap);
 
-            camera = new Camera(GraphicsDevice.Viewport);  
+            _camera = new Camera(GraphicsDevice.Viewport);
+
+            _collisionManager = new CollisionManager();
+
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            TiledMap _tiledMap = Content.Load<TiledMap>("map");
+            _collisionManager.AddCollidableObjects(CollisionLoader.LoadCollidableObjectsFromTiledMap(_tiledMap, GraphicsDevice));
 
-            //load the tiledmap and playerchar
-            spriteSheetTexture = Content.Load<Texture2D>("char_red_1");
+            Texture2D spriteSheetTexture = Content.Load<Texture2D>("char_red_1");
 
-            tiledMapRenderer = new TiledMapRenderer(GraphicsDevice);
+            _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice);
 
-            tiledMapRenderer.LoadMap(tiledmap);
+            _tiledMapRenderer.LoadMap(_tiledMap);
 
             _debugTexture = new Texture2D(GraphicsDevice, 1, 1);
             _debugTexture.SetData(new[] { Color.White });
@@ -74,15 +68,15 @@ namespace GameDevProject
             Animation running = new Animation(spriteSheetRunning, new int[] { 0, 1, 2, 3, 4, 5 }, 0.2f);
             Animation fighting = new Animation(spriteSheetFighting, new int[] { 0, 1, 2, 3, 4, 5, 6, 7 },0.2f);
 
-            player = new Player(running, idle, fighting, new Vector2(200,200), camera);
+            player = new Player(running, idle, fighting, new Vector2(200,200), _camera);
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            player.Update(gameTime, collisionManager);
-            camera.Update(player.Position, 800, 800);
+            player.Update(gameTime, _collisionManager);
+            _camera.Update(player.Position, 800, 800);
             base.Update(gameTime);
         }
 
@@ -92,8 +86,8 @@ namespace GameDevProject
             GraphicsDevice.Clear(Color.Gray);
 
             //draw the map
-            _spriteBatch.Begin(transformMatrix: camera.Transform);
-            tiledMapRenderer.Draw(camera.Transform);
+            _spriteBatch.Begin(transformMatrix: _camera.Transform);
+            _tiledMapRenderer.Draw(_camera.Transform);
             /*used to draw outline around the collidables
             collisionManager.DrawCollidables(_spriteBatch);*/
             _spriteBatch.End();
@@ -106,26 +100,25 @@ namespace GameDevProject
             _spriteBatch.End();
             base.Draw(gameTime);
         }
+        //private void LoadCollidableObjectsFromTiledMap(TiledMap map)
+        //{
+        //    // Retrieve the object layer named "Collision"
+        //    var objectLayer = map.GetLayer<TiledMapObjectLayer>("Collisions");
 
-        private void LoadCollidableObjectsFromTiledMap(TiledMap map)
-        {
-            // Retrieve the object layer named "Collision"
-            var objectLayer = map.GetLayer<TiledMapObjectLayer>("Collisions");
-
-            if (objectLayer != null)
-            {
-                foreach (var obj in objectLayer.Objects)
-                {
-                    // Check if the object has the "collisions" property set to "true"
-                    if (obj.Properties.TryGetValue("collisions", out var collisionProperty) &&
-                        collisionProperty == "true")
-                    {
-                        // Add the object as a collidable rectangle
-                        Rectangle bounds = new Rectangle((int)obj.Position.X, (int)obj.Position.Y, (int)obj.Size.Width, (int)obj.Size.Height);
-                        collidableObjects.Add(new CollidableObject(bounds, GraphicsDevice));
-                    }
-                }
-            }
-        }
+        //    if (objectLayer != null)
+        //    {
+        //        foreach (var obj in objectLayer.Objects)
+        //        {
+        //            // Check if the object has the "collisions" property set to "true"
+        //            if (obj.Properties.TryGetValue("collisions", out var collisionProperty) &&
+        //                collisionProperty == "true")
+        //            {
+        //                // Add the object as a collidable rectangle
+        //                Rectangle bounds = new Rectangle((int)obj.Position.X, (int)obj.Position.Y, (int)obj.Size.Width, (int)obj.Size.Height);
+        //                collidableObjects.Add(new CollidableObject(bounds, GraphicsDevice));
+        //            }
+        //        }
+        //    }
+        //}
     }
 }
