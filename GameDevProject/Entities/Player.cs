@@ -12,9 +12,9 @@ using Microsoft.Xna.Framework.Content;
 using System.Reflection.Metadata;
 using GameDevProject.Collisions;
 
-namespace GameDevProject.PlayerFiles
+namespace GameDevProject.Entities
 {
-    public class Player
+    public class Player : IEntity
     {
         private Animation runningAnimation;
         private Animation idleAnimation;
@@ -38,9 +38,9 @@ namespace GameDevProject.PlayerFiles
             {
                 return new Rectangle(
                     (int)Position.X + 25,
-                    (int)Position.Y+45, 
-                    (int)((SpriteWidth -25) * Scale),                    
-                    (int)((SpriteHeight - 20)* Scale)                    
+                    (int)Position.Y + 45,
+                    (int)((SpriteWidth - 25) * Scale),
+                    (int)((SpriteHeight - 20) * Scale)
                 );
             }
         }

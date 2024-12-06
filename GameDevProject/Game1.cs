@@ -5,9 +5,9 @@ using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using GameDevProject.PlayerFiles;
 using GameDevProject.Collisions;
 using MonoGame.Extended;
+using GameDevProject.Entities;
 
 namespace GameDevProject
 {

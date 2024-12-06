@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameDevProject.PlayerFiles
+namespace GameDevProject.Entities
 {
     public class Animation
     {
