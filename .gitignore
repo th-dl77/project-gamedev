@@ -1,26 +1,26 @@
 # User-specific files
 .vs/
 .idea/
-*.suo
-*.user
-*.userosscache
-*.sln.docstates
+GameDevProject/*.suo
+GameDevProject/*.user
+GameDevProject/*.userosscache
+GameDevProject/*.sln.docstates
 
 # Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Dd]ist/
-[Dd]ebugx86/
-[Dd]ebugx64/
-[Dd]ebugAnyCPU/
-[Dd]istx86/
-[Dd]istx64/
-[Dd]istAnyCPU/
-bin/
-obj/
+GameDevProject/[Dd]ebug/
+GameDevProject/[Dd]ebugPublic/
+GameDevProject/[Dd]ist/
+GameDevProject/[Dd]ebugx86/
+GameDevProject/[Dd]ebugx64/
+GameDevProject/[Dd]ebugAnyCPU/
+GameDevProject/[Dd]istx86/
+GameDevProject/[Dd]istx64/
+GameDevProject/[Dd]istAnyCPU/
+GameDevProject/bin/
+GameDevProject/*.obj/
 
 # Package files
-*.nupkg
+GameDevProject/*.nupkg
 
 # User-specific VS configuration files
 .vsconfig
