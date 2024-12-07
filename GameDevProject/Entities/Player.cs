@@ -11,6 +11,7 @@ using System.Security.Cryptography.X509Certificates;
 using Microsoft.Xna.Framework.Content;
 using System.Reflection.Metadata;
 using GameDevProject.Collisions;
+using GameDevProject.Input;
 
 namespace GameDevProject.Entities
 {
@@ -20,6 +21,8 @@ namespace GameDevProject.Entities
         private Animation idleAnimation;
         private Animation fightingAnimation;
         private Animation currentAnimation;
+
+        private IInputStrategy _inputStrategy;
 
         public int SpriteHeight { get; private set; } = 56;
         public int SpriteWidth { get; private set; } = 56;
@@ -45,8 +48,9 @@ namespace GameDevProject.Entities
             }
         }
 
-        public Player(Animation runningAnimation, Animation idleAnimation, Animation fightingAnimation, Vector2 startPosition, Camera _camera)
+        public Player(IInputStrategy inputStrategy, Animation runningAnimation, Animation idleAnimation, Animation fightingAnimation, Vector2 startPosition, Camera _camera)
         {
+            this._inputStrategy = inputStrategy;
             this.runningAnimation = runningAnimation;
             this.idleAnimation = idleAnimation;
             this.fightingAnimation = fightingAnimation;
@@ -65,38 +69,13 @@ namespace GameDevProject.Entities
 
         private void HandleInput(GameTime gameTime)
         {
-            Vector2 velocity = Vector2.Zero;
-            KeyboardState state = Keyboard.GetState();
-
-            if (state.IsKeyDown(Keys.W) || state.IsKeyDown(Keys.Up))
-            {
-                velocity.Y -= 1;
-
-            }
-            if (state.IsKeyDown(Keys.S) || state.IsKeyDown(Keys.Down))
-            {
-                velocity.Y += 1;
-            }
-            if (state.IsKeyDown(Keys.Q) || state.IsKeyDown(Keys.Left))
-            {
-                velocity.X -= 1;
-                isFacingLeft = true;
-
-            }
-            if (state.IsKeyDown(Keys.D) || state.IsKeyDown(Keys.Right))
-            {
-                velocity.X += 1;
-                isFacingLeft = false;
-            }
-
-
-            //if velocity is not zero: apply the running animation
+            Vector2 velocity = _inputStrategy.GetMovementInput();
             if (velocity != Vector2.Zero)
             {
                 velocity.Normalize(); //used to fix diagonal movement, otherwise way too fast
                 currentAnimation = runningAnimation;
             }
-            else if (state.IsKeyDown(Keys.Space))
+            else if (_inputStrategy.IsActionPressed("fight"))
             {
                 currentAnimation = fightingAnimation;
             }
@@ -109,7 +88,7 @@ namespace GameDevProject.Entities
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (isFacingLeft)
+            if (_inputStrategy.CheckFlip())
             {
                 currentAnimation.Draw(spriteBatch, Position, SpriteEffects.FlipHorizontally);
             }

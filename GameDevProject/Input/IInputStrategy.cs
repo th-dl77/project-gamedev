@@ -11,5 +11,6 @@ namespace GameDevProject.Input
     {
         Vector2 GetMovementInput();
         bool IsActionPressed(string action);
+        bool CheckFlip();
     }
 }

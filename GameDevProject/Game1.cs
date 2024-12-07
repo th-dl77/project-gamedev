@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using GameDevProject.Collisions;
 using MonoGame.Extended;
 using GameDevProject.Entities;
+using GameDevProject.Input;
 
 namespace GameDevProject
 {
@@ -59,7 +60,9 @@ namespace GameDevProject
 
             Texture2D spriteSheetTexture = Content.Load<Texture2D>("char_red_1");
 
-            player = PlayerFactory.CreatePlayer(spriteSheetTexture, _camera, new Vector2(200,200));
+            IInputStrategy inputStrategy = new KeyboardInputStrategy();
+
+            player = PlayerFactory.CreatePlayer(inputStrategy, spriteSheetTexture, _camera, new Vector2(200,200));
 
             #region debug 
             //_debugTexture = new Texture2D(GraphicsDevice, 1, 1);
