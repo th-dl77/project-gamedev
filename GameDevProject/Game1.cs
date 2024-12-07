@@ -16,17 +16,17 @@ namespace GameDevProject
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private Player player;
-
         private Camera _camera;
 
         private CollisionManager _collisionManager;
-
         private RenderingManager _renderingManager;
-
-        private Texture2D _debugTexture;
-
         private TiledMapRenderer _tiledMapRenderer;
+
+        private Player player;
+
+        #region debug
+        //private Texture2D _debugTexture;
+        #endregion
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -59,18 +59,12 @@ namespace GameDevProject
 
             Texture2D spriteSheetTexture = Content.Load<Texture2D>("char_red_1");
 
-            _debugTexture = new Texture2D(GraphicsDevice, 1, 1);
-            _debugTexture.SetData(new[] { Color.White });
+            player = PlayerFactory.CreatePlayer(spriteSheetTexture, _camera, new Vector2(200,200));
 
-            //animations
-            SpriteSheet spriteSheetRunning = new SpriteSheet(spriteSheetTexture, 56, 56, 112);
-            SpriteSheet spriteSheetIdle = new SpriteSheet(spriteSheetTexture, 56, 56);
-            SpriteSheet spriteSheetFighting = new SpriteSheet(spriteSheetTexture, 56, 56, 56);
-            Animation idle = new Animation(spriteSheetIdle, new int[] { 0, 1, 2, 3, 4, 5 }, 0.2f);
-            Animation running = new Animation(spriteSheetRunning, new int[] { 0, 1, 2, 3, 4, 5 }, 0.2f);
-            Animation fighting = new Animation(spriteSheetFighting, new int[] { 0, 1, 2, 3, 4, 5, 6, 7 },0.2f);
-
-            player = new Player(running, idle, fighting, new Vector2(200,200), _camera);
+            #region debug 
+            //_debugTexture = new Texture2D(GraphicsDevice, 1, 1);
+            //_debugTexture.SetData(new[] { Color.White });
+            #endregion
         }
 
         protected override void Update(GameTime gameTime)
@@ -90,7 +84,7 @@ namespace GameDevProject
             //draw the map
             _spriteBatch.Begin(transformMatrix: _camera.Transform);
             _renderingManager.DrawMap(_spriteBatch);
-            /* Debug draw for collisions
+            /* Debug draw for collidables
             _collisionManager.DrawCollidables(_spriteBatch);*/
             _spriteBatch.End();
 
