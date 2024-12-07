@@ -1,1 +1,31 @@
-.vs
+# User-specific files
+.vs/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Dd]ist/
+[Dd]ebugx86/
+[Dd]ebugx64/
+[Dd]ebugAnyCPU/
+[Dd]istx86/
+[Dd]istx64/
+[Dd]istAnyCPU/
+bin/
+obj/
+
+# Package files
+*.nupkg
+
+# User-specific VS configuration files
+.vsconfig
+
+# ASP.NET temporary files
+.vs/
+.vscode/
+.idea/
