@@ -109,24 +109,14 @@ namespace GameDevProject.Entities
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            //used to flip the animation when walking left
-            SpriteEffects flip;
             if (isFacingLeft)
-                flip = SpriteEffects.FlipHorizontally;
+            {
+                currentAnimation.Draw(spriteBatch, Position, SpriteEffects.FlipHorizontally);
+            }
             else
-                flip = SpriteEffects.None;
-
-            spriteBatch.Draw(
-                currentAnimation.SpriteSheet.Texture,
-                Position,
-                currentAnimation.GetCurrentFrame(),
-                Color.White,
-                0f,
-                new Vector2(0, 0),
-                Scale,
-                flip,
-                0f
-            );
+            {
+                currentAnimation.Draw(spriteBatch, Position);
+            }
         }
 
         public void DrawBounds(SpriteBatch spriteBatch, Texture2D debugTexture)

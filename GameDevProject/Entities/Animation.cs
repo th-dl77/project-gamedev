@@ -10,7 +10,7 @@ namespace GameDevProject.Entities
 {
     public class Animation
     {
-        public SpriteSheet SpriteSheet { get; }
+        public SpriteSheet _spriteSheet;
 
         private int[] frames;
         private float frameTime;
@@ -20,7 +20,7 @@ namespace GameDevProject.Entities
 
         public Animation(SpriteSheet spriteSheet, int[] frames, float frameTime, bool isLooping = true)
         {
-            SpriteSheet = spriteSheet;
+            _spriteSheet = spriteSheet;
             this.frames = frames;
             this.frameTime = frameTime;
             IsLooping = isLooping;
@@ -44,9 +44,9 @@ namespace GameDevProject.Entities
             }
         }
 
-        public Rectangle GetCurrentFrame()
+        public void Draw(SpriteBatch spriteBatch, Vector2 position, SpriteEffects flip = SpriteEffects.None)
         {
-            return SpriteSheet.GetFrame(frames[currentFrame]);
+            _spriteSheet.DrawFrame(spriteBatch, frames[currentFrame], position, flip);
         }
     }
 }
