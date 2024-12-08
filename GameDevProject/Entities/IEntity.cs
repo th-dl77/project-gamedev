@@ -11,6 +11,7 @@ namespace GameDevProject.Entities
 {
     public interface IEntity
     {
+        Vector2 Position { get; }
         void Update(GameTime gameTime, CollisionManager collisionManager);
         void Draw(SpriteBatch spriteBatch);
     }

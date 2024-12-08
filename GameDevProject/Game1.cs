@@ -23,7 +23,7 @@ namespace GameDevProject
         private RenderingManager _renderingManager;
         private TiledMapRenderer _tiledMapRenderer;
 
-        private Player player;
+        private IEntity player;
 
         #region debug
         //private Texture2D _debugTexture;
