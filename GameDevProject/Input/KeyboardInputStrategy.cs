@@ -22,16 +22,6 @@ namespace GameDevProject.Input
             return velocity;
         }
 
-        public bool CheckFlip()
-        {
-            KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Left) ||state.IsKeyDown(Keys.A))
-            {
-                return true;
-            }
-            return false;
-        }
-
         public bool IsActionPressed(string action)
         {
             if (action == "fight")

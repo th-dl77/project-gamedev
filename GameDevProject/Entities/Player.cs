@@ -17,9 +17,11 @@ namespace GameDevProject.Entities
 {
     public class Player : IEntity
     {
-        private Animation runningAnimation;
-        private Animation idleAnimation;
-        private Animation fightingAnimation;
+
+        private readonly Dictionary<string, Animation> animations;
+        //private Animation runningAnimation;
+        //private Animation idleAnimation;
+        //private Animation fightingAnimation;
         private Animation currentAnimation;
 
         private IInputStrategy _inputStrategy;
@@ -48,12 +50,11 @@ namespace GameDevProject.Entities
             }
         }
 
-        public Player(IInputStrategy inputStrategy, Animation runningAnimation, Animation idleAnimation, Animation fightingAnimation, Vector2 startPosition, Camera _camera)
+        public Player(IInputStrategy inputStrategy, Dictionary<string, Animation> animations, Vector2 startPosition, Camera _camera)
         {
             this._inputStrategy = inputStrategy;
-            this.runningAnimation = runningAnimation;
-            this.idleAnimation = idleAnimation;
-            this.fightingAnimation = fightingAnimation;
+            this.animations = animations;
+            currentAnimation = animations["idle"];
             Position = startPosition;
             this._camera = _camera;
         }
@@ -69,26 +70,35 @@ namespace GameDevProject.Entities
 
         private void HandleInput(GameTime gameTime)
         {
-            Vector2 velocity = _inputStrategy.GetMovementInput();
-            if (velocity != Vector2.Zero)
+            Vector2 inputVelocity = _inputStrategy.GetMovementInput();
+            if (inputVelocity != Vector2.Zero)
             {
-                velocity.Normalize(); //used to fix diagonal movement, otherwise way too fast
-                currentAnimation = runningAnimation;
+                inputVelocity.Normalize(); //used to fix diagonal movement, otherwise way too fast
+                currentAnimation = animations["running"];
+
+                if (inputVelocity.X < 0)
+                {
+                    isFacingLeft = true; // Player is moving left
+                }
+                else if (inputVelocity.X > 0)
+                {
+                    isFacingLeft = false; // Player is moving right
+                }
             }
             else if (_inputStrategy.IsActionPressed("fight"))
             {
-                currentAnimation = fightingAnimation;
+                currentAnimation = animations["fighting"];
             }
             else
             {
-                currentAnimation = idleAnimation;
+                currentAnimation = animations["idle"];
             }
-            Velocity = velocity;
+            Velocity = inputVelocity;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (_inputStrategy.CheckFlip())
+            if (isFacingLeft)
             {
                 currentAnimation.Draw(spriteBatch, Position, SpriteEffects.FlipHorizontally);
             }
