@@ -76,15 +76,6 @@ namespace GameDevProject.Entities
             {
                 inputVelocity.Normalize(); //used to fix diagonal movement, otherwise way too fast
                 currentAnimation = animations["running"];
-
-                if (inputVelocity.X < 0)
-                {
-                    isFacingLeft = true; // Player is moving left
-                }
-                else if (inputVelocity.X > 0)
-                {
-                    isFacingLeft = false; // Player is moving right
-                }
             }
             else if (_inputStrategy.IsActionPressed("fight"))
             {
@@ -94,19 +85,13 @@ namespace GameDevProject.Entities
             {
                 currentAnimation = animations["idle"];
             }
+            currentAnimation.SetDirection(inputVelocity);
             Velocity = inputVelocity;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (isFacingLeft)
-            {
-                currentAnimation.Draw(spriteBatch, Position, SpriteEffects.FlipHorizontally);
-            }
-            else
-            {
-                currentAnimation.Draw(spriteBatch, Position);
-            }
+            currentAnimation.Draw(spriteBatch, Position);
         }
 
         public void DrawBounds(SpriteBatch spriteBatch, Texture2D debugTexture)

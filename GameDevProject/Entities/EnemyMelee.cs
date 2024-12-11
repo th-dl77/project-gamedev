@@ -20,11 +20,16 @@ namespace GameDevProject.Entities
             if (direction.Length() >0)
             {
                 direction.Normalize();
-            }
-            Position += direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            _currentAnimation = _animations["walk"];
-            _currentAnimation.Update(gameTime);
+                Position += direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+                _currentAnimation.SetDirection(direction);
+                _currentAnimation = _animations["walk"];
+            }
+            else
+            {
+                _currentAnimation = _animations["idle"];
+            }
+            _currentAnimation.Update(gameTime);
         }
     }
 }
