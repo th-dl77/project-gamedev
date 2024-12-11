@@ -23,6 +23,9 @@ namespace GameDevProject
         private RenderingManager _renderingManager;
         private TiledMapRenderer _tiledMapRenderer;
 
+        private List<Enemy> enemies;
+        private EnemyFactory enemyFactory;
+
         private IEntity player;
 
         #region debug
@@ -43,6 +46,8 @@ namespace GameDevProject
 
             _camera = new Camera(GraphicsDevice.Viewport);
 
+            enemies = new List<Enemy>();
+
             _collisionManager = new CollisionManager();
 
             base.Initialize();
@@ -51,6 +56,9 @@ namespace GameDevProject
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            enemyFactory = new EnemyFactory(Content);
+            enemies.Add(enemyFactory.CreateEnemy(new Vector2(300, 400)));
 
             TiledMap _tiledMap = Content.Load<TiledMap>("map");
 
@@ -75,6 +83,10 @@ namespace GameDevProject
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             player.Update(gameTime, _collisionManager);
+            foreach (var enemy in enemies)
+            {
+                enemy.Update(gameTime, _collisionManager);
+            }
             _camera.Update(player.Position, 800, 800);
             base.Update(gameTime);
         }
@@ -96,6 +108,10 @@ namespace GameDevProject
             /* used to draw textures around the bounds of the playerchar
             player.DrawBounds(_spriteBatch, _debugTexture);*/
             player.Draw(_spriteBatch);
+            foreach (var enemy in enemies)
+            {
+                enemy.Draw(_spriteBatch);
+            }
             _spriteBatch.End();
             base.Draw(gameTime);
         }
