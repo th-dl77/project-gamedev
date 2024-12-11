@@ -12,26 +12,26 @@ namespace GameDevProject
     public class SpriteSheet
     {
         public Texture2D _texture;
-        private int frameWidth;
-        private int frameHeight;
+        public int FrameWidth;
+        public int FrameHeight;
         private int yOffset;
 
         public SpriteSheet(Texture2D texture, int frameWidth, int frameHeight, int yOffset = 0)
         {
             this._texture = texture;
-            this.frameWidth = frameWidth;
-            this.frameHeight = frameHeight;
+            this.FrameWidth = frameWidth;
+            this.FrameHeight = frameHeight;
             this.yOffset = yOffset;
         }
 
         public void DrawFrame(SpriteBatch spriteBatch, int index, Vector2 position, SpriteEffects flip = SpriteEffects.None)
         {
-            int columns = _texture.Width / frameWidth;
+            int columns = _texture.Width / FrameWidth;
             Rectangle sourceRectangle = new Rectangle(
-                (index % columns) * frameWidth,
-                (index / columns) * frameHeight + yOffset,
-                frameWidth,
-                frameHeight
+                (index % columns) * FrameWidth,
+                (index / columns) * FrameHeight + yOffset,
+                FrameWidth,
+                FrameHeight
             );
 
 
