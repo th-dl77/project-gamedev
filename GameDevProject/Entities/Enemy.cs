@@ -22,6 +22,14 @@ namespace GameDevProject.Entities
             (int)_currentAnimation._spriteSheet.FrameHeight
         );
         public abstract void Update(GameTime gameTime, CollisionManager collisionManager);
+        
+        public Enemy(Dictionary<string, Animation> animations, Vector2 startPosition, float speed)
+        {
+            _animations = animations;
+            _currentAnimation = _animations["idle"];
+            Position = startPosition;
+            Speed = speed;
+        }
 
         public void Draw(SpriteBatch spriteBatch)
         {
