@@ -21,7 +21,7 @@ namespace GameDevProject.Entities
             (int)_currentAnimation._spriteSheet.FrameWidth,
             (int)_currentAnimation._spriteSheet.FrameHeight
         );
-        public abstract void Update(GameTime gameTime, Player player);
+        public abstract void Update(GameTime gameTime, CollisionManager collisionManager);
         
         public Enemy(Dictionary<string, Animation> animations, Vector2 startPosition, float speed)
         {

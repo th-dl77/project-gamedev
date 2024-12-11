@@ -62,8 +62,9 @@ namespace GameDevProject.Entities
         public void Update(GameTime gameTime, CollisionManager collisionManager)
         {
             HandleInput(gameTime);
+            collisionManager.Player = this;
             Vector2 proposedPosition = Position + Velocity * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Vector2 resolvedPosition = collisionManager.ResolveCollisions(this, proposedPosition);
+            Vector2 resolvedPosition = collisionManager.ResolveCollisions(proposedPosition);
             Position = resolvedPosition;
             currentAnimation.Update(gameTime);
         }

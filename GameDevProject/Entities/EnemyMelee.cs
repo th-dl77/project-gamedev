@@ -13,9 +13,10 @@ namespace GameDevProject.Entities
         public EnemyMelee(Dictionary<string, Animation> animations, Vector2 startPosition, float speed) : base(animations, startPosition, speed)
         {
         }
-        public override void Update(GameTime gameTime, Player player)
+        public override void Update(GameTime gameTime, CollisionManager collisionManager)
         {
-            Vector2 direction = player.Position - Position;
+            Vector2 playerPosition = collisionManager.Player.Position;
+            Vector2 direction = playerPosition - Position;
             if (direction.Length() >0)
             {
                 direction.Normalize();

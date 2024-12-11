@@ -7,16 +7,24 @@ namespace GameDevProject.Collisions
 {
     public class CollisionManager
     {
+        private Player player;
+
+        public Player Player
+        {
+            get { return player; }
+            set { player = value; }
+        }
+
         private List<CollidableObject> collidableObjects; // List of all objects that the player can collide with (e.g., walls, barriers)
 
         public CollisionManager()
         {
             this.collidableObjects = new List<CollidableObject>();
         }
-        public Vector2 ResolveCollisions(Player player, Vector2 proposedPosition)
+        public Vector2 ResolveCollisions(Vector2 proposedPosition)
         {
             // predict position of proposedposition, if it collides with something then return original playerpos, nullifying the movement
-            if (WillCollideWithObjects(player, proposedPosition))
+            if (WillCollideWithObjects(proposedPosition))
             {
                 return player.Position;
             }
@@ -25,7 +33,7 @@ namespace GameDevProject.Collisions
         }
 
         //method for prediction
-        private bool WillCollideWithObjects(Player player, Vector2 proposedPosition)
+        private bool WillCollideWithObjects(Vector2 proposedPosition)
         {
             Rectangle playerBounds = new Rectangle((int)proposedPosition.X, (int)proposedPosition.Y, player.Bounds.Width, player.Bounds.Height);
 
