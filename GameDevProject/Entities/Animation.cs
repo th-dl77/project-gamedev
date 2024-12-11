@@ -13,9 +13,9 @@ namespace GameDevProject.Entities
     public class Animation
     {
         public SpriteSheet _spriteSheet;
-        private SpriteEffects flip = SpriteEffects.None;
         private int[] frames;
         private float frameTime;
+        private SpriteEffects flip = SpriteEffects.None;
         private float timer;
         private int currentFrame;
         public bool IsLooping { get; set; }
@@ -45,19 +45,11 @@ namespace GameDevProject.Entities
                 }
             }
         }
-
-        public void SetDirection(Vector2 direction)
-        {
-            if (direction.X< 0)
-            {
-                flip = SpriteEffects.FlipHorizontally;
-            }
-            else if(direction.X > 0 )
-            {
-                flip = SpriteEffects.None;
-            }
-        }
         public void Draw(SpriteBatch spriteBatch, Vector2 position)
+        {
+            _spriteSheet.DrawFrame(spriteBatch, frames[currentFrame], position);
+        }
+        public void Draw(SpriteBatch spriteBatch, Vector2 position, SpriteEffects flip)
         {
             _spriteSheet.DrawFrame(spriteBatch, frames[currentFrame], position, flip);
         }

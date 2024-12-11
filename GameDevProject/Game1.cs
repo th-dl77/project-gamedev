@@ -23,7 +23,7 @@ namespace GameDevProject
         private RenderingManager _renderingManager;
         private TiledMapRenderer _tiledMapRenderer;
 
-        private List<Enemy> enemies;
+        private List<IEntity> entities;
         private EnemyFactory enemyFactory;
 
         private IEntity player;
@@ -46,7 +46,7 @@ namespace GameDevProject
 
             _camera = new Camera(GraphicsDevice.Viewport);
 
-            enemies = new List<Enemy>();
+            entities = new List<IEntity>();
 
             _collisionManager = new CollisionManager();
 
@@ -60,7 +60,7 @@ namespace GameDevProject
             enemyFactory = new EnemyFactory(Content);
             for (int i = 0; i < 1000; i+=100)
             {
-                enemies.Add(enemyFactory.CreateEnemy(new Vector2(300+i, 400+i)));
+                entities.Add(enemyFactory.CreateEnemy(new Vector2(300+i, 400+i)));
             }
             TiledMap _tiledMap = Content.Load<TiledMap>("map");
 
@@ -85,9 +85,9 @@ namespace GameDevProject
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             player.Update(gameTime, _collisionManager);
-            foreach (var enemy in enemies)
+            foreach (var entity in entities)
             {
-                enemy.Update(gameTime, _collisionManager);
+                entity.Update(gameTime, _collisionManager);
             }
             _camera.Update(player.Position, 800, 800);
             base.Update(gameTime);
@@ -110,9 +110,9 @@ namespace GameDevProject
             /* used to draw textures around the bounds of the playerchar
             player.DrawBounds(_spriteBatch, _debugTexture);*/
             player.Draw(_spriteBatch);
-            foreach (var enemy in enemies)
+            foreach (var entity in entities)
             {
-                enemy.Draw(_spriteBatch);
+                entity.Draw(_spriteBatch);
             }
             _spriteBatch.End();
             base.Draw(gameTime);

@@ -11,6 +11,7 @@ namespace GameDevProject.Entities
 {
     public abstract class Enemy : IEntity
     {
+        private SpriteEffects flip = SpriteEffects.None;
         protected Animation _currentAnimation;
         protected Dictionary<string, Animation> _animations;
         public Vector2 Position { get; protected set; }
@@ -31,9 +32,6 @@ namespace GameDevProject.Entities
             Speed = speed;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            _currentAnimation.Draw(spriteBatch, Position);
-        }
+        public abstract void Draw(SpriteBatch spriteBatch);
     }
 }

@@ -24,6 +24,8 @@ namespace GameDevProject.Entities
         //private Animation fightingAnimation;
         private Animation currentAnimation;
 
+        private SpriteEffects _currentFlipEffect = SpriteEffects.None;
+
         private IInputStrategy _inputStrategy;
 
         public int SpriteHeight { get; private set; } = 56;
@@ -72,26 +74,35 @@ namespace GameDevProject.Entities
         private void HandleInput(GameTime gameTime)
         {
             Vector2 inputVelocity = _inputStrategy.GetMovementInput();
-            if (inputVelocity != Vector2.Zero)
+
+            if (_inputStrategy.IsActionPressed("fight"))
+            {
+                currentAnimation = animations["fighting"];
+            }
+            else if (inputVelocity != Vector2.Zero)
             {
                 inputVelocity.Normalize(); //used to fix diagonal movement, otherwise way too fast
                 currentAnimation = animations["running"];
-            }
-            else if (_inputStrategy.IsActionPressed("fight"))
-            {
-                currentAnimation = animations["fighting"];
+                if (inputVelocity.X < 0)
+                {
+                    _currentFlipEffect = SpriteEffects.FlipHorizontally; // Player is moving left
+                }
+                else if (inputVelocity.X > 0)
+                {
+                    _currentFlipEffect = SpriteEffects.None; // Player is moving right
+                }
             }
             else
             {
                 currentAnimation = animations["idle"];
             }
-            currentAnimation.SetDirection(inputVelocity);
+
             Velocity = inputVelocity;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            currentAnimation.Draw(spriteBatch, Position);
+            currentAnimation.Draw(spriteBatch, Position, _currentFlipEffect);
         }
 
         public void DrawBounds(SpriteBatch spriteBatch, Texture2D debugTexture)

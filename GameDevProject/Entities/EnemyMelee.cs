@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevProject.Entities
 {
     public class EnemyMelee : Enemy
     {
+        private SpriteEffects flip = SpriteEffects.None;
         public EnemyMelee(Dictionary<string, Animation> animations, Vector2 startPosition, float speed) : base(animations, startPosition, speed)
         {
         }
@@ -20,16 +22,22 @@ namespace GameDevProject.Entities
             if (direction.Length() >0)
             {
                 direction.Normalize();
-                Position += direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                _currentAnimation.SetDirection(direction);
-                _currentAnimation = _animations["walk"];
             }
-            else
+            if (direction.X < 0)
             {
-                _currentAnimation = _animations["idle"];
+                flip = SpriteEffects.FlipHorizontally; // Player is moving left
             }
+            else if (direction.X > 0)
+            {
+                flip = SpriteEffects.None; // Player is moving right
+            }
+            Position += direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _currentAnimation = _animations["walk"];
             _currentAnimation.Update(gameTime);
+        }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            _currentAnimation.Draw(spriteBatch, Position, flip);
         }
     }
 }
