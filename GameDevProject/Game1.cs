@@ -58,8 +58,10 @@ namespace GameDevProject
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             enemyFactory = new EnemyFactory(Content);
-            enemies.Add(enemyFactory.CreateEnemy(new Vector2(300, 400)));
-
+            for (int i = 0; i < 1000; i+=100)
+            {
+                enemies.Add(enemyFactory.CreateEnemy(new Vector2(300+i, 400+i)));
+            }
             TiledMap _tiledMap = Content.Load<TiledMap>("map");
 
             _collisionManager.AddCollidableObjects(CollisionLoader.LoadCollidableObjectsFromTiledMap(_tiledMap, GraphicsDevice));

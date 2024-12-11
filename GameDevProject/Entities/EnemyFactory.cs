@@ -17,17 +17,17 @@ namespace GameDevProject.Entities
 
         public EnemyFactory(ContentManager content)
         {
-            enemyMeleeSpriteSheetIdle = new SpriteSheet(content.Load<Texture2D>("Skeleton enemy"),50,50);
+            enemyMeleeSpriteSheetIdle = new SpriteSheet(content.Load<Texture2D>("Skeleton enemy"),64,64,192);
             enemyMeleeSpriteSheetWalk = new SpriteSheet(content.Load<Texture2D>("Skeleton enemy"), 64, 64,128);
         }
         public Enemy CreateEnemy(Vector2 Position)
         {
             Dictionary<string, Animation> enemyMeleeAnimations = new Dictionary<string, Animation>()
             {
-                {"idle", new Animation(enemyMeleeSpriteSheetIdle, new int[] {0,1,2,3,4 },0.2f) },
+                {"idle", new Animation(enemyMeleeSpriteSheetIdle, new int[] {0,1,2,3 },0.2f) },
                 { "walk", new Animation(enemyMeleeSpriteSheetWalk, new int[] {0,1,2,3,4,5,6,7,8,9,10,11 },0.2f)}
             };
-            return new EnemyMelee(enemyMeleeAnimations, Position, 50f);
+            return new EnemyMelee(enemyMeleeAnimations, Position, 25f);
         }
     }
 }
