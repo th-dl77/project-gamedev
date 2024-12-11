@@ -19,7 +19,7 @@ namespace GameDevProject.Entities
 
             Animation runningAnimation = new Animation(runningAnimationSheet, new int[] { 0, 1, 2, 3, 4, 5 }, 0.2f);
             Animation idleAnimation = new Animation(idleAnimationSheet, new int[] { 0, 1, 2, 3, 4, 5 }, 0.2f);
-            Animation fightingAnimation = new Animation(fightingAnimationSheet, new int[] { 0, 1, 2, 3, 4, 5, 6, 7 }, 0.2f);
+            Animation fightingAnimation = new Animation(fightingAnimationSheet, new int[] { 0, 1, 2, 3, 4, 5, 6, 7 }, 0.08f);
 
             Dictionary<string, Animation> animations = new Dictionary<string, Animation>
             {
