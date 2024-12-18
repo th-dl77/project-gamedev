@@ -114,6 +114,7 @@ namespace GameDevProject.Entities
         {
             //Give gameover screen + death animation;
             Debug.Write("Player has died");
+            currentAnimation = animations["death"];
         }
 
         public void Draw(SpriteBatch spriteBatch)
