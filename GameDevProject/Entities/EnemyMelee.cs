@@ -59,7 +59,7 @@ namespace GameDevProject.Entities
                     swingTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                     if (swingTimer >= swingDuration)
                     {
-                        Debug.Write("player took damage"); //let the player take damage
+                        player.TakeHit(30); //let the player take damage
                         swingTimer = 0f;
                     }
                 }

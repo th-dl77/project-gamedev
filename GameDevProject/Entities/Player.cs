@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Content;
 using System.Reflection.Metadata;
 using GameDevProject.Collisions;
 using GameDevProject.Input;
+using System.Diagnostics;
 
 namespace GameDevProject.Entities
 {
@@ -28,6 +29,7 @@ namespace GameDevProject.Entities
 
         private IInputStrategy _inputStrategy;
 
+        public int Health { get; private set; } = 100;
         public int SpriteHeight { get; private set; } = 56;
         public int SpriteWidth { get; private set; } = 56;
 
@@ -99,9 +101,19 @@ namespace GameDevProject.Entities
 
             Velocity = inputVelocity;
         }
-        public void TakeHit(Enemy enemy)
+        public void TakeHit(int dmgAmount)
         {
+            Health -= dmgAmount;
+            if (Health < 0)
+            {
+                Die();
+            }
+        }
 
+        public void Die()
+        {
+            //Give gameover screen + death animation;
+            Debug.Write("Player has died");
         }
 
         public void Draw(SpriteBatch spriteBatch)
