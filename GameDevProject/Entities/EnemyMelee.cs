@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Diagnostics;
+using System.Transactions;
 
 namespace GameDevProject.Entities
 {
     public class EnemyMelee : Enemy
     {
         private SpriteEffects flip = SpriteEffects.None;
+        protected float swingTimer = 0f;
+        protected const float swingDuration = 1f;
         public EnemyMelee(Dictionary<string, Animation> animations, Vector2 startPosition, float speed) : base(animations, startPosition, speed)
         {
         }
@@ -37,20 +40,34 @@ namespace GameDevProject.Entities
                 Position += direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 _currentAnimation = _animations["walk"];
             }
-            this.CheckRange(collisionManager.Player);
+            this.CheckRange(collisionManager.Player,gameTime);
             _currentAnimation.Update(gameTime);
         }
-        public override void CheckRange(Player player)
+        public override void CheckRange(Player player, GameTime gameTime)
         {
             float distanceToPlayer = Vector2.Distance(player.Position,this.Position);
             if (distanceToPlayer <50)
             {
-                _currentAnimation = _animations["fight"];
-                isHitting = true;
+                if (!isHitting)
+                {
+                    isHitting = true;
+                    swingTimer = 0f;
+                    _currentAnimation = _animations["fight"];
+                }
+                else
+                {
+                    swingTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if (swingTimer >= swingDuration)
+                    {
+                        Debug.Write("player took damage"); //let the player take damage
+                        swingTimer = 0f;
+                    }
+                }
             }
             else
             {
                 isHitting = false;
+                swingTimer = 0f;
             }
         }
         public override void Draw(SpriteBatch spriteBatch)

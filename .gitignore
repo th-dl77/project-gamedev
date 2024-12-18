@@ -18,6 +18,7 @@ GameDevProject/[Dd]istx64/
 GameDevProject/[Dd]istAnyCPU/
 GameDevProject/bin/
 GameDevProject/*.obj/
+GameDevProject/obj/
 
 # Package files
 GameDevProject/*.nupkg

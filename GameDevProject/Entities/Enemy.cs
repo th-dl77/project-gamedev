@@ -36,6 +36,6 @@ namespace GameDevProject.Entities
 
         public abstract void Draw(SpriteBatch spriteBatch);
 
-        public abstract void CheckRange(Player player);
+        public abstract void CheckRange(Player player, GameTime gameTime);
     }
 }
