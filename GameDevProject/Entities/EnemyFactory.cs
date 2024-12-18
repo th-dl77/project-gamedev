@@ -28,7 +28,7 @@ namespace GameDevProject.Entities
             {
                 {"idle", new Animation(enemyMeleeSpriteSheetIdle, new int[] {0,1,2,3 },0.2f) },
                 { "walk", new Animation(enemyMeleeSpriteSheetWalk, new int[] {0,1,2,3,4,5,6,7,8,9,10,11 },0.2f)},
-                { "fight", new Animation(enemyMeleeSpriteSheetFight, new int[] { 0,1,2,3,4,5,6,7,8,9,10,11,12},0.1f)}
+                { "fight", new Animation(enemyMeleeSpriteSheetFight, new int[] { 0,1,2,3,4,5,6,7,8,9,10,11,12},0.2f)}
             };
             return new EnemyMelee(enemyMeleeAnimations, Position, 25f);
         }

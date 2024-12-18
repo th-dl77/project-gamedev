@@ -99,6 +99,10 @@ namespace GameDevProject.Entities
 
             Velocity = inputVelocity;
         }
+        public void TakeHit(Enemy enemy)
+        {
+
+        }
 
         public void Draw(SpriteBatch spriteBatch)
         {
