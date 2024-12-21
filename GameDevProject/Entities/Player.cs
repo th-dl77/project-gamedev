@@ -33,6 +33,10 @@ namespace GameDevProject.Entities
         public int SpriteHeight { get; private set; } = 56;
         public int SpriteWidth { get; private set; } = 56;
 
+        private float deathTimer;
+
+        public bool isDead { get; private set; } = false;
+        
         public Vector2 Velocity;
         public Vector2 Position { get; private set; }
 
@@ -65,7 +69,10 @@ namespace GameDevProject.Entities
 
         public void Update(GameTime gameTime, CollisionManager collisionManager)
         {
-            HandleInput(gameTime);
+            if (!isDead)
+            {
+                HandleInput(gameTime);
+            }
             collisionManager.Player = this;
             Vector2 proposedPosition = Position + Velocity * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Vector2 resolvedPosition = collisionManager.ResolveCollisions(proposedPosition);
@@ -101,20 +108,25 @@ namespace GameDevProject.Entities
 
             Velocity = inputVelocity;
         }
-        public void TakeHit(int dmgAmount)
+        public void TakeHit(int dmgAmount, GameTime gameTime)
         {
             Health -= dmgAmount;
             if (Health < 0)
             {
-                Die();
+                Die(gameTime);
             }
         }
 
-        public void Die()
+        public void Die(GameTime gameTime)
         {
-            //Give gameover screen + death animation;
-            Debug.Write("Player has died");
-            currentAnimation = animations["death"];
+            //TODO: give gameover screen
+            isDead = true;
+            currentAnimation = animations["deathAnimation"];
+            deathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (deathTimer > 0.0016f)
+            {
+                currentAnimation = animations["dead"];
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)

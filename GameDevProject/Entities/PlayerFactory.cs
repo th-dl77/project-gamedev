@@ -22,13 +22,15 @@ namespace GameDevProject.Entities
             Animation idleAnimation = new Animation(idleAnimationSheet, new int[] { 0, 1, 2, 3, 4, 5 }, 0.2f);
             Animation fightingAnimation = new Animation(fightingAnimationSheet, new int[] { 0, 1, 2, 3, 4, 5, 6, 7 }, 0.08f);
             Animation deathAnimation = new Animation(deathAnimationSheet, new int[] { 0, 1, 2, 3, 4, 5, 6, 7 }, 0.2f, false);
+            Animation dead = new Animation(deathAnimationSheet, new int[] { 0, 1, 2, 3 }, 0.2f, false);
 
             Dictionary<string, Animation> animations = new Dictionary<string, Animation>
             {
                 {"idle", idleAnimation },
                 {"running",runningAnimation },
                 {"fighting",fightingAnimation },
-                { "death", deathAnimation}
+                { "deathAnimation", deathAnimation},
+                {"dead", dead }
             };
 
 

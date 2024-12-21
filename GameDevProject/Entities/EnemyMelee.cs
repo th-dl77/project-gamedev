@@ -46,7 +46,7 @@ namespace GameDevProject.Entities
         public override void CheckRange(Player player, GameTime gameTime)
         {
             float distanceToPlayer = Vector2.Distance(player.Position,this.Position);
-            if (distanceToPlayer <50)
+            if (distanceToPlayer <50 && !player.isDead)
             {
                 if (!isHitting)
                 {
@@ -59,7 +59,7 @@ namespace GameDevProject.Entities
                     swingTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                     if (swingTimer >= swingDuration)
                     {
-                        player.TakeHit(30); //let the player take damage
+                        player.TakeHit(30, gameTime); //let the player take damage
                         swingTimer = 0f;
                     }
                 }
