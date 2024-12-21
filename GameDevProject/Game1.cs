@@ -1,12 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGame.Extended.Tiled;
-using MonoGame.Extended.Tiled.Renderers;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using GameDevProject.Collisions;
-using MonoGame.Extended;
 using GameDevProject.Entities;
 using GameDevProject.Input;
 
@@ -20,8 +17,6 @@ namespace GameDevProject
         private Camera _camera;
 
         private CollisionManager _collisionManager;
-        private RenderingManager _renderingManager;
-        private TiledMapRenderer _tiledMapRenderer;
 
         private List<IEntity> entities;
         private EnemyFactory enemyFactory;
@@ -62,11 +57,6 @@ namespace GameDevProject
             {
                 entities.Add(enemyFactory.CreateEnemy(new Vector2(300+i, 400+i)));
             }
-            TiledMap _tiledMap = Content.Load<TiledMap>("map");
-
-            _collisionManager.AddCollidableObjects(CollisionLoader.LoadCollidableObjectsFromTiledMap(_tiledMap, GraphicsDevice));
-
-            _renderingManager = new RenderingManager(GraphicsDevice, _tiledMap, _camera);
 
             Texture2D spriteSheetTexture = Content.Load<Texture2D>("char_red_1");
 
@@ -100,7 +90,6 @@ namespace GameDevProject
 
             //draw the map
             _spriteBatch.Begin(transformMatrix: _camera.Transform);
-            _renderingManager.DrawMap(_spriteBatch);
             /* Debug draw for collidables
             _collisionManager.DrawCollidables(_spriteBatch);*/
             _spriteBatch.End();
