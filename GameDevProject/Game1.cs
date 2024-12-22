@@ -89,8 +89,7 @@ namespace GameDevProject
 
             player = PlayerFactory.CreatePlayer(inputStrategy, spriteSheetTexture, new Vector2(200, 200));
 
-            buttonTexture = new Texture2D(GraphicsDevice, 1,1);
-            buttonTexture.SetData(new[] { Color.Black });
+            buttonTexture = Content.Load<Texture2D>("buttonTemplate");
 
             mainMenuBackground = Content.Load<Texture2D>("backgroundMenu");
 
@@ -108,9 +107,13 @@ namespace GameDevProject
             switch (currentGameState)
             {
                 case GameStates.MainMenu:
-                    if (IsButtonClicked(new Vector2(300,300),mouseState))
+                    if (IsButtonClicked(new Vector2(215,285),mouseState))
                     {
                         currentGameState = GameStates.Playing;
+                    }
+                    if (IsButtonClicked(new Vector2(215, 485), mouseState))
+                    {
+                        Exit();
                     }
                     break;
                 case GameStates.Playing:
@@ -151,9 +154,11 @@ namespace GameDevProject
                 case GameStates.MainMenu:
                     _spriteBatch.Begin();
                     _spriteBatch.Draw(mainMenuBackground, new Rectangle(0, 0, 800, 800), Color.White);
-                    _spriteBatch.DrawString(font, "Main menu", new Vector2(75, 50), Color.Red, 0f,new Vector2(0,0),2f,SpriteEffects.None,0f);
-                    _spriteBatch.Draw(buttonTexture, new Vector2(300, 300), new Rectangle(40,40,40,20),Color.Black,0f,new Vector2(0,0),2f,SpriteEffects.None,0f);
-                    _spriteBatch.DrawString(font, "Play", new Vector2(310, 310), Color.White);
+                    _spriteBatch.DrawString(font, "Main menu", new Vector2(100, 50), Color.Gold, 0f,new Vector2(0,0),1.5f,SpriteEffects.None,0f);
+                    _spriteBatch.Draw(buttonTexture, new Vector2(215, 285), new Rectangle(0,0,200,200),Color.White,0f,new Vector2(0,0),2f,SpriteEffects.None,0f);
+                    _spriteBatch.DrawString(font, "Play", new Vector2(310, 310), Color.Black);
+                    _spriteBatch.Draw(buttonTexture, new Vector2(215, 485), new Rectangle(0, 0, 200, 200), Color.White, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
+                    _spriteBatch.DrawString(font, "Exit", new Vector2(300, 510), Color.Black);
                     _spriteBatch.End();
                     break;
                 case GameStates.Playing:
