@@ -25,12 +25,13 @@ namespace GameDevProject
 
 
         private CollisionManager _collisionManager;
+        private CollisionLoader collisionLoader;
         private IMapLoader mapLoader;
 
         private List<IEntity> entities;
         private EnemyFactory enemyFactory;
 
-        private IEntity player;
+        private Player player;
 
         #region debug
         //private Texture2D _debugTexture;
@@ -49,16 +50,16 @@ namespace GameDevProject
             _graphics.ApplyChanges();
 
             _camera = new Camera(GraphicsDevice.Viewport);
-
+            _collisionManager = new CollisionManager();
             //mapLoader = new TextFileMapLoader();
 
             IMapReader tilemapReader = new FileTilemapReader();
             TextFileMapLoader loader = new TextFileMapLoader(tilemapReader);
             tileMap = loader.Load("Content/Tilemap.txt");
+            collisionLoader = new CollisionLoader(_collisionManager, 32);
+            collisionLoader.LoadCollidables(tileMap);
 
             entities = new List<IEntity>();
-
-            _collisionManager = new CollisionManager();
 
             base.Initialize();
         }
@@ -98,7 +99,7 @@ namespace GameDevProject
             player.Update(gameTime, _collisionManager);
             foreach (var entity in entities)
             {
-                entity.Update(gameTime, _collisionManager);
+                entity.Update(gameTime, player);
             }
             _camera.Update(player.Position, 1600, 1600);
             base.Update(gameTime);

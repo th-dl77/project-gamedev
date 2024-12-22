@@ -16,7 +16,7 @@ using System.Diagnostics;
 
 namespace GameDevProject.Entities
 {
-    public class Player : IEntity
+    public class Player
     {
 
         private readonly Dictionary<string, Animation> animations;
@@ -73,9 +73,8 @@ namespace GameDevProject.Entities
             {
                 HandleInput(gameTime);
             }
-            collisionManager.Player = this;
             Vector2 proposedPosition = Position + Velocity * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Vector2 resolvedPosition = collisionManager.ResolveCollisions(proposedPosition);
+            Vector2 resolvedPosition = collisionManager.CheckCollision(Position,proposedPosition,Bounds.Height, Bounds.Width);
             Position = resolvedPosition;
             currentAnimation.Update(gameTime);
         }

@@ -19,11 +19,11 @@ namespace GameDevProject.Entities
         public EnemyMelee(Dictionary<string, Animation> animations, Vector2 startPosition, float speed) : base(animations, startPosition, speed)
         {
         }
-        public override void Update(GameTime gameTime, CollisionManager collisionManager)
+        public override void Update(GameTime gameTime, Player player)
         {
             if (!isHitting)
             {
-                Vector2 playerPosition = collisionManager.Player.Position;
+                Vector2 playerPosition = player.Position;
                 Vector2 direction = playerPosition - Position;
                 if (direction.Length() > 0)
                 {
@@ -40,7 +40,7 @@ namespace GameDevProject.Entities
                 Position += direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 _currentAnimation = _animations["walk"];
             }
-            this.CheckRange(collisionManager.Player,gameTime);
+            this.CheckRange(player,gameTime);
             _currentAnimation.Update(gameTime);
         }
         public override void CheckRange(Player player, GameTime gameTime)

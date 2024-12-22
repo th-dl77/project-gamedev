@@ -12,7 +12,7 @@ namespace GameDevProject.Entities
     public interface IEntity
     {
         Vector2 Position { get; }
-        void Update(GameTime gameTime, CollisionManager collisionManager);
+        void Update(GameTime gameTime, Player player);
         void Draw(SpriteBatch spriteBatch);
     }
 }

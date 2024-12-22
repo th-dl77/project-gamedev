@@ -8,23 +8,22 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevProject.Collisions
 {
-    public class CollidableObject
+    public class CollidableObject : ICollidableHandler
     {
-        public Rectangle Bounds { get; set; }
-        public bool IsCollidable { get; set; }
-
-        private Texture2D _texture;
-
-        public CollidableObject(Rectangle bounds, GraphicsDevice graphicsDevice, bool isCollidable = true)
+        private readonly Rectangle _boundingBox;
+        private readonly bool _isSolid;
+        public CollidableObject(Rectangle boundingBox, bool isSolid)
         {
-            Bounds = bounds;
-            IsCollidable = isCollidable;
-            _texture = new Texture2D(graphicsDevice, 1, 1);
-            _texture.SetData(new[] { Color.Green });
+            _boundingBox = boundingBox;
+            _isSolid = isSolid;
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public Rectangle GetBoundingBox()
         {
-            spriteBatch.Draw(_texture, Bounds, Color.White);
+            return _boundingBox;
+        }
+        public bool IsSolid()
+        {
+            return _isSolid;
         }
     }
 

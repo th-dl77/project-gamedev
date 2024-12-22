@@ -13,16 +13,18 @@ namespace GameDevProject.Collisions
             collidables.Add(collidable);
         }
 
-        public bool CheckCollision(Rectangle boundingBox)
+        public Vector2 CheckCollision(Vector2 position, Vector2 proposedPosition, int boundsHeight, int boundsWidth)
         {
+            Rectangle newPlayerbounds = new Rectangle((int)proposedPosition.X, (int)proposedPosition.Y, boundsWidth, boundsHeight);
+
             foreach (var collidable in collidables)
             {
-                if (collidable.IsSolid() && collidable.GetBoundingBox().Intersects(boundingBox))
+                if (newPlayerbounds.Intersects(collidable.GetBoundingBox()))
                 {
-                    return true;
+                    return position;
                 }
             }
-            return false;
+            return proposedPosition;
         }
     }
 }
