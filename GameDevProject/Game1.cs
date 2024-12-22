@@ -88,7 +88,7 @@ namespace GameDevProject
 
             player = PlayerFactory.CreatePlayer(inputStrategy, spriteSheetTexture, new Vector2(200, 200));
 
-            buttonTexture = new Texture2D(GraphicsDevice, 1, 1);
+            buttonTexture = new Texture2D(GraphicsDevice, 1,1);
             buttonTexture.SetData(new[] { Color.Black });
 
             #region debug 
@@ -99,11 +99,16 @@ namespace GameDevProject
 
         protected override void Update(GameTime gameTime)
         {
+            MouseState mouseState = Mouse.GetState();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             switch (currentGameState)
             {
                 case GameStates.MainMenu:
+                    if (IsButtonClicked(new Vector2(300,300),mouseState))
+                    {
+                        currentGameState = GameStates.Playing;
+                    }
                     break;
                 case GameStates.Playing:
                     player.Update(gameTime, _collisionManager);
@@ -142,9 +147,9 @@ namespace GameDevProject
             {
                 case GameStates.MainMenu:
                     _spriteBatch.Begin();
-                    _spriteBatch.DrawString(font, "Main menu", new Vector2(100, 50), Color.White, 0f,new Vector2(0,0),2f,SpriteEffects.None,0f);
-                    _spriteBatch.Draw(buttonTexture, new Vector2(100, 100), Color.Black);
-                    _spriteBatch.DrawString(font, "Play", new Vector2(10, 10), Color.White);
+                    _spriteBatch.DrawString(font, "Main menu", new Vector2(75, 50), Color.Red, 0f,new Vector2(0,0),2f,SpriteEffects.None,0f);
+                    _spriteBatch.Draw(buttonTexture, new Vector2(300, 300), new Rectangle(40,40,40,20),Color.Black,0f,new Vector2(0,0),2f,SpriteEffects.None,0f);
+                    _spriteBatch.DrawString(font, "Play", new Vector2(310, 310), Color.White);
                     _spriteBatch.End();
                     break;
                 case GameStates.Playing:
@@ -176,6 +181,11 @@ namespace GameDevProject
                     break;
             }
             base.Draw(gameTime);
+        }
+        private bool IsButtonClicked(Vector2 position, MouseState mouseState)
+        {
+            Rectangle buttonRect = new Rectangle((int)position.X, (int)position.Y, 100, 100);
+            return buttonRect.Contains(mouseState.Position) && mouseState.LeftButton == ButtonState.Pressed;
         }
     }
 }
