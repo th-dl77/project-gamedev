@@ -20,6 +20,8 @@ namespace GameDevProject
         private Texture2D buttonTexture;
         private Texture2D mainMenuBackground;
 
+        private Texture2D _debugTexture;
+
         private Camera _camera;
         private string[,] tileMap;
         private const int TILE_SIZE = 32;
@@ -94,8 +96,8 @@ namespace GameDevProject
             mainMenuBackground = Content.Load<Texture2D>("backgroundMenu");
 
             #region debug 
-            //_debugTexture = new Texture2D(GraphicsDevice, 1, 1);
-            //_debugTexture.SetData(new[] { Color.White });
+            _debugTexture = new Texture2D(GraphicsDevice, 1, 1);
+            _debugTexture.SetData(new[] { Color.White });
             #endregion
         }
 
@@ -155,10 +157,17 @@ namespace GameDevProject
                     _spriteBatch.Begin();
                     _spriteBatch.Draw(mainMenuBackground, new Rectangle(0, 0, 800, 800), Color.White);
                     _spriteBatch.DrawString(font, "Main menu", new Vector2(100, 50), Color.Gold, 0f,new Vector2(0,0),1.5f,SpriteEffects.None,0f);
-                    _spriteBatch.Draw(buttonTexture, new Vector2(215, 285), new Rectangle(0,0,200,200),Color.White,0f,new Vector2(0,0),2f,SpriteEffects.None,0f);
+                    Vector2 buttonPosition1 = new Vector2(215, 285);
+                    _spriteBatch.Draw(buttonTexture, buttonPosition1, new Rectangle(0,0,200,200),Color.White,0f,new Vector2(0,0),2f,SpriteEffects.None,0f);
                     _spriteBatch.DrawString(font, "Play", new Vector2(310, 310), Color.Black);
-                    _spriteBatch.Draw(buttonTexture, new Vector2(215, 485), new Rectangle(0, 0, 200, 200), Color.White, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
+                    Vector2 buttonPosition2 = new Vector2(215, 485);
+                    _spriteBatch.Draw(buttonTexture, buttonPosition2, new Rectangle(0, 0, 200, 200), Color.White, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
                     _spriteBatch.DrawString(font, "Exit", new Vector2(300, 510), Color.Black);
+                    //debug hitboxes
+                    Rectangle button1Hitbox = new Rectangle((int)buttonPosition1.X, (int)buttonPosition1.Y, 300, 140);
+                    Rectangle button2Hitbox = new Rectangle((int)buttonPosition2.X, (int)buttonPosition2.Y, 300, 140);
+                    _spriteBatch.Draw(_debugTexture, button1Hitbox, Color.Green);
+                    _spriteBatch.Draw(_debugTexture, button2Hitbox, Color.Red);
                     _spriteBatch.End();
                     break;
                 case GameStates.Playing:
@@ -191,9 +200,9 @@ namespace GameDevProject
             }
             base.Draw(gameTime);
         }
-        private bool IsButtonClicked(Vector2 position, MouseState mouseState)
+        private bool IsButtonClicked(Vector2 position, MouseState mouseState )
         {
-            Rectangle buttonRect = new Rectangle((int)position.X, (int)position.Y, 100, 100);
+            Rectangle buttonRect = new Rectangle((int)position.X, (int)position.Y, 200, 150);
             return buttonRect.Contains(mouseState.Position) && mouseState.LeftButton == ButtonState.Pressed;
         }
     }

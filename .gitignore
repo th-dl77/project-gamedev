@@ -19,7 +19,7 @@ GameDevProject/[Dd]istAnyCPU/
 GameDevProject/bin/
 GameDevProject/*.obj/
 GameDevProject/obj/
-GameDevProject/Content/obj
+GameDevProject/Content/obj/DesktopGL/
 GameDevProject/Content/bin
 
 # Package files
