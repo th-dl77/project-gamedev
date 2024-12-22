@@ -18,6 +18,8 @@ namespace GameDevProject
 
         private CollisionManager _collisionManager;
 
+        private Texture2D tileMap;
+
         private List<IEntity> entities;
         private EnemyFactory enemyFactory;
 
@@ -52,6 +54,8 @@ namespace GameDevProject
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            tileMap = Content.Load<Texture2D>("tileMapTextures");
+            
             enemyFactory = new EnemyFactory(Content);
             for (int i = 0; i < 1000; i+=100)
             {
@@ -96,6 +100,7 @@ namespace GameDevProject
 
             //draw the player
             _spriteBatch.Begin();
+            _spriteBatch.Draw(tileMap, new Rectangle(0, 0, 800, 800), Color.White);
             /* used to draw textures around the bounds of the playerchar
             player.DrawBounds(_spriteBatch, _debugTexture);*/
             player.Draw(_spriteBatch);

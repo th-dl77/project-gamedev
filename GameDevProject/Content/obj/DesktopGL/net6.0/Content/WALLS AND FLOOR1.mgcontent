@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/delae/OneDrive/Documenten/AP/J2_S1/Game_Development/GameDevProject/GameDevProject/Content/Skeleton enemy.png</SourceFile>
-  <SourceTime>2024-12-11T14:26:36.1686551+01:00</SourceTime>
-  <DestFile>C:/Users/delae/OneDrive/Documenten/AP/J2_S1/Game_Development/GameDevProject/GameDevProject/Content/bin/DesktopGL/Skeleton enemy.xnb</DestFile>
-  <DestTime>2024-12-22T14:42:48.3078741+01:00</DestTime>
+  <SourceFile>C:/Users/delae/OneDrive/Documenten/AP/J2_S1/Game_Development/GameDevProject/GameDevProject/Content/WALLS AND FLOOR1.png</SourceFile>
+  <SourceTime>2023-08-30T22:47:53+02:00</SourceTime>
+  <DestFile>C:/Users/delae/OneDrive/Documenten/AP/J2_S1/Game_Development/GameDevProject/GameDevProject/Content/bin/DesktopGL/Content/WALLS AND FLOOR1.xnb</DestFile>
+  <DestTime>2024-12-22T00:02:57.7260606+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T13:44:56+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

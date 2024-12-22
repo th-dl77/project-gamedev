@@ -30,3 +30,5 @@ GameDevProject/*.nupkg
 .vs/
 .vscode/
 .idea/
+/GameDevProject/Map/Tile.cs
+/GameDevProject/Map/TileMap.cs

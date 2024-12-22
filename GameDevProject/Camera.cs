@@ -7,9 +7,9 @@ namespace GameDevProject
     public class Camera
     {
         public Matrix Transform { get; private set; }
-        private Viewport viewport;
-        private Vector2 position;
-        private float zoom;
+        public Viewport viewport;
+        public Vector2 position;
+        public float zoom;
 
         public Camera(Viewport viewport)
         {
