@@ -111,6 +111,7 @@ namespace GameDevProject.Entities
             {
                 currentAnimation = animations["dead"];
             }
+            
         }
 
         public void Draw(SpriteBatch spriteBatch)
