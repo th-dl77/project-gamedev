@@ -27,6 +27,7 @@ namespace GameDevProject
 
 
         private CollisionManager _collisionManager;
+        private IMapLoader mapLoader;
 
         private List<IEntity> entities;
         private EnemyFactory enemyFactory;
@@ -51,6 +52,8 @@ namespace GameDevProject
 
             _camera = new Camera(GraphicsDevice.Viewport);
 
+            mapLoader = new TextFileMapLoader();
+
             entities = new List<IEntity>();
 
             _collisionManager = new CollisionManager();
@@ -61,16 +64,13 @@ namespace GameDevProject
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            mapLoader.Load("Content/Tilemap.txt", out int mapWidth, out int mapHeight);
 
-            // Load tile textures
-            tiles = new Texture2D[5]; // Assuming 16 different tile types
+            tiles = new Texture2D[5];
             for (int i = 0; i < tiles.Length; i++)
             {
                 tiles[i] = Content.Load<Texture2D>("tileMapTextures" + (i));
             }
-
-            // Load tilemap from CSV file
-            LoadTilemap("Content/Tilemap.txt");
 
             enemyFactory = new EnemyFactory(Content);
             for (int i = 0; i < 1000; i += 100)
@@ -107,17 +107,13 @@ namespace GameDevProject
         {
             //clear screen
             GraphicsDevice.Clear(Color.Gray);
-
-
-            //draw the player
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, _camera.Transform);
 
-            // Draw tiles
             for (int y = 0; y < MAP_HEIGHT; y++)
             {
                 for (int x = 0; x < MAP_WIDTH; x++)
                 {
-                    int tileIndex = int.Parse(tileMap[x, y]); // Get tile index from tilemap
+                    int tileIndex = int.Parse(tileMap[x, y]);
                     _spriteBatch.Draw(tiles[tileIndex], new Rectangle(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE), Color.White);
                 }
             }
@@ -128,37 +124,6 @@ namespace GameDevProject
             }
             _spriteBatch.End();
             base.Draw(gameTime);
-        }
-        private void LoadTilemap(string filename)
-        {
-            tileMap = new string[MAP_WIDTH, MAP_HEIGHT];
-
-            using (var stream = TitleContainer.OpenStream("Content/Tilemap.txt"))
-            using (var reader = new StreamReader(stream))
-            {
-                string line;
-                int y = 0;
-
-                while ((line = reader.ReadLine()) != null)
-                {
-                    string[] tiles = line.Split(',');
-
-                    for (int x = 0; x < MAP_WIDTH; x++)
-                    {
-                        if (x < tiles.Length) // Check if index is within bounds
-                        {
-                            tileMap[x, y] = tiles[x];
-                        }
-                        else
-                        {
-                            // Handle missing tile data (e.g., fill with default tile)
-                            tileMap[x, y] = "0";
-                        }
-                    }
-
-                    y++;
-                }
-            }
         }
     }
 }

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace GameDevProject.Map
 {
-    internal interface IMapLoader
+    public interface IMapLoader
     {
+        string[,] Load(string filename);
     }
 }
