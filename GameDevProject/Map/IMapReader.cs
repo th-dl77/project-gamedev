@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace GameDevProject.Map
 {
-    internal interface IMapReader
+    public interface IMapReader
     {
+        IEnumerable<string> ReadLines(string filename);
     }
 }

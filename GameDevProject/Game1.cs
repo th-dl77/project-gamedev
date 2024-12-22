@@ -19,9 +19,7 @@ namespace GameDevProject
 
         private Camera _camera;
         private string[,] tileMap;
-        private const int MAP_WIDTH = 50;
         private const int TILE_SIZE = 32;
-        private const int MAP_HEIGHT = 50;
         private Texture2D[] tiles;
 
 
@@ -52,7 +50,11 @@ namespace GameDevProject
 
             _camera = new Camera(GraphicsDevice.Viewport);
 
-            mapLoader = new TextFileMapLoader();
+            //mapLoader = new TextFileMapLoader();
+
+            IMapReader tilemapReader = new FileTilemapReader();
+            TextFileMapLoader loader = new TextFileMapLoader(tilemapReader);
+            tileMap = loader.Load("Content/Tilemap.txt");
 
             entities = new List<IEntity>();
 
@@ -64,7 +66,6 @@ namespace GameDevProject
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            mapLoader.Load("Content/Tilemap.txt", out int mapWidth, out int mapHeight);
 
             tiles = new Texture2D[5];
             for (int i = 0; i < tiles.Length; i++)
@@ -109,12 +110,17 @@ namespace GameDevProject
             GraphicsDevice.Clear(Color.Gray);
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, _camera.Transform);
 
-            for (int y = 0; y < MAP_HEIGHT; y++)
+            for (int y = 0; y < tileMap.GetLength(1); y++)
             {
-                for (int x = 0; x < MAP_WIDTH; x++)
+                for (int x = 0; x < tileMap.GetLength(0); x++)
                 {
-                    int tileIndex = int.Parse(tileMap[x, y]);
-                    _spriteBatch.Draw(tiles[tileIndex], new Rectangle(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE), Color.White);
+                    string tileValue = tileMap[x, y];
+                    int tileIndex = int.Parse(tileValue);
+
+                    if (tileIndex >= 0 && tileIndex < tiles.Length)
+                    {
+                        _spriteBatch.Draw(tiles[tileIndex], new Rectangle(x*TILE_SIZE,y*TILE_SIZE,TILE_SIZE,TILE_SIZE), Color.White);
+                    }
                 }
             }
             player.Draw(_spriteBatch);

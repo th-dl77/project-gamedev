@@ -13,12 +13,18 @@ namespace GameDevProject.Map
         private string[,] tileMap;
         private const int MAP_HEIGHT = 50;
         private const int MAP_WIDTH = 50;
+        private readonly IMapReader mapReader;
+
+        public TextFileMapLoader(IMapReader mapReader)
+        {
+            this.mapReader = mapReader;
+        }
         public string[,] Load(string filename)
         {
             string[,] tileMap = new string[MAP_WIDTH, MAP_HEIGHT];
 
             //read lines
-            var lines;
+            var lines = mapReader.ReadLines(filename);
             int y = 0;
             foreach (var line in lines)
             {
