@@ -16,9 +16,9 @@ namespace GameDevProject
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private SpriteFont font;
-        private Texture2D buttonTexture;
-        private Texture2D mainMenuBackground;
+        public SpriteFont font;
+        public Texture2D buttonTexture;
+        public Texture2D mainMenuBackground;
 
         private Texture2D _debugTexture;
 

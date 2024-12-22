@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameDevProject
+namespace GameDevProject.GameStates
 {
     public interface IGameState
     {
