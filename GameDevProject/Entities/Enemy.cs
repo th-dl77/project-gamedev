@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GameDevProject.Collisions;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -11,8 +6,6 @@ namespace GameDevProject.Entities
 {
     public abstract class Enemy : IEntity
     {
-        private SpriteEffects flip = SpriteEffects.None;
-
         public bool IsAlive { get; set; } = true;
 
         protected bool isHitting;

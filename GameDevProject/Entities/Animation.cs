@@ -1,10 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameDevProject.Entities
 {
@@ -13,7 +8,6 @@ namespace GameDevProject.Entities
         public SpriteSheet _spriteSheet;
         private int[] frames;
         private float frameTime;
-        private SpriteEffects flip = SpriteEffects.None;
         private float timer;
         private int currentFrame;
         public bool IsLooping { get; set; }

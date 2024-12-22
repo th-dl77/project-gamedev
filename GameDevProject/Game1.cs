@@ -2,13 +2,10 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using GameDevProject.Collisions;
 using GameDevProject.Entities;
 using GameDevProject.Input;
 using GameDevProject.Map;
-using System.Runtime.ExceptionServices;
-using System.IO;
 
 namespace GameDevProject
 {
@@ -22,11 +19,8 @@ namespace GameDevProject
         private const int TILE_SIZE = 32;
         private Texture2D[] tiles;
 
-
-
         private CollisionManager _collisionManager;
         private CollisionLoader collisionLoader;
-        private IMapLoader mapLoader;
 
         private List<IEntity> entities;
         private EnemyFactory enemyFactory;
@@ -84,7 +78,7 @@ namespace GameDevProject
 
             IInputStrategy inputStrategy = new KeyboardInputStrategy();
 
-            player = PlayerFactory.CreatePlayer(inputStrategy, spriteSheetTexture, _camera, new Vector2(200, 200));
+            player = PlayerFactory.CreatePlayer(inputStrategy, spriteSheetTexture, new Vector2(200, 200));
 
             #region debug 
             //_debugTexture = new Texture2D(GraphicsDevice, 1, 1);

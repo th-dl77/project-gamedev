@@ -1,6 +1,4 @@
-﻿using GameDevProject.Entities;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
 namespace GameDevProject.Collisions

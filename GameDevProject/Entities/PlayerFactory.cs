@@ -1,9 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using GameDevProject.Input;
 
@@ -11,7 +7,7 @@ namespace GameDevProject.Entities
 {
     public static class PlayerFactory
     {
-        public static Player CreatePlayer(IInputStrategy inputStrategy, Texture2D spriteSheetTexture, Camera camera, Vector2 initPos)
+        public static Player CreatePlayer(IInputStrategy inputStrategy, Texture2D spriteSheetTexture, Vector2 initPos)
         {
             SpriteSheet runningAnimationSheet = new SpriteSheet(spriteSheetTexture, 56, 56, 112);
             SpriteSheet idleAnimationSheet = new SpriteSheet(spriteSheetTexture, 56, 56);
@@ -34,7 +30,7 @@ namespace GameDevProject.Entities
             };
 
 
-            return new Player(inputStrategy, animations, initPos, camera);
+            return new Player(inputStrategy, animations, initPos);
         }
     }
 }

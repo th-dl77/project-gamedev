@@ -1,18 +1,8 @@
-﻿using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.Xna.Framework.Content;
-using System.Reflection.Metadata;
 using GameDevProject.Collisions;
 using GameDevProject.Input;
-using System.Diagnostics;
 
 namespace GameDevProject.Entities
 {
@@ -20,9 +10,6 @@ namespace GameDevProject.Entities
     {
 
         private readonly Dictionary<string, Animation> animations;
-        //private Animation runningAnimation;
-        //private Animation idleAnimation;
-        //private Animation fightingAnimation;
         private Animation currentAnimation;
 
         private SpriteEffects _currentFlipEffect = SpriteEffects.None;
@@ -34,19 +21,14 @@ namespace GameDevProject.Entities
         public bool IsHitting { get; private set; } = false;
         public int SpriteHeight { get; private set; } = 56;
         public int SpriteWidth { get; private set; } = 56;
-
-        private float deathTimer;
-
         public bool isDead { get; private set; } = false;
+
+        private float deathTimer { get; set; }
         
         public Vector2 Velocity;
         public Vector2 Position { get; private set; }
-
         private float Speed { get; } = 100f;
-
-        private Camera _camera;
         public float Scale { get; private set; } = 2f;
-        private bool isFacingLeft = false;
         public Rectangle Bounds
         {
             get
@@ -60,13 +42,12 @@ namespace GameDevProject.Entities
             }
         }
 
-        public Player(IInputStrategy inputStrategy, Dictionary<string, Animation> animations, Vector2 startPosition, Camera _camera)
+        public Player(IInputStrategy inputStrategy, Dictionary<string, Animation> animations, Vector2 startPosition)
         {
             this._inputStrategy = inputStrategy;
             this.animations = animations;
             currentAnimation = animations["idle"];
             Position = startPosition;
-            this._camera = _camera;
         }
 
         public void Update(GameTime gameTime, CollisionManager collisionManager)
@@ -107,8 +88,8 @@ namespace GameDevProject.Entities
             else
             {
                 currentAnimation = animations["idle"];
+                IsHitting = false;
             }
-
             Velocity = inputVelocity;
         }
         public void TakeHit(int dmgAmount, GameTime gameTime)

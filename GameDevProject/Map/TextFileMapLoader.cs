@@ -1,16 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameDevProject.Map
+﻿namespace GameDevProject.Map
 {
     public class TextFileMapLoader : IMapLoader
     {
-        private string[,] tileMap;
         private const int MAP_HEIGHT = 50;
         private const int MAP_WIDTH = 50;
         private readonly IMapReader mapReader;
