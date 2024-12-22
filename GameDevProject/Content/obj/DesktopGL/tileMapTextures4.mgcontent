@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/delae/OneDrive/Documenten/AP/J2_S1/Game_Development/GameDevProject/GameDevProject/Content/tileMapTextures2.png</SourceFile>
-  <SourceTime>2024-12-22T15:03:02.6031358+01:00</SourceTime>
-  <DestFile>C:/Users/delae/OneDrive/Documenten/AP/J2_S1/Game_Development/GameDevProject/GameDevProject/Content/bin/DesktopGL/tileMapTextures2.xnb</DestFile>
-  <DestTime>2024-12-22T15:46:51.3822223+01:00</DestTime>
+  <SourceFile>C:/Users/delae/OneDrive/Documenten/AP/J2_S1/Game_Development/GameDevProject/GameDevProject/Content/tileMapTextures4.png</SourceFile>
+  <SourceTime>2024-12-22T15:46:11.8854267+01:00</SourceTime>
+  <DestFile>C:/Users/delae/OneDrive/Documenten/AP/J2_S1/Game_Development/GameDevProject/GameDevProject/Content/bin/DesktopGL/tileMapTextures4.xnb</DestFile>
+  <DestTime>2024-12-22T15:46:51.3910799+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T13:44:56+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

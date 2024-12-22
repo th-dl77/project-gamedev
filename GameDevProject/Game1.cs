@@ -63,10 +63,10 @@ namespace GameDevProject
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Load tile textures
-            tiles = new Texture2D[3]; // Assuming 16 different tile types
+            tiles = new Texture2D[5]; // Assuming 16 different tile types
             for (int i = 0; i < tiles.Length; i++)
             {
-                tiles[i] = Content.Load<Texture2D>("tileMapTextures" + (i+1));
+                tiles[i] = Content.Load<Texture2D>("tileMapTextures" + (i));
             }
 
             // Load tilemap from CSV file
@@ -99,7 +99,7 @@ namespace GameDevProject
             {
                 entity.Update(gameTime, _collisionManager);
             }
-            _camera.Update(player.Position, 800, 800);
+            _camera.Update(player.Position, 1600, 1600);
             base.Update(gameTime);
         }
 

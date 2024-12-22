@@ -14,7 +14,7 @@ namespace GameDevProject
         public Camera(Viewport viewport)
         {
             this.viewport = viewport;
-            zoom = 2f;
+            zoom = 1.25f;
             position = Vector2.Zero;
         }
 
