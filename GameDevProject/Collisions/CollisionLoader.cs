@@ -1,0 +1,37 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+
+namespace GameDevProject.Collisions
+{
+    internal class CollisionLoader
+    {
+        private readonly CollisionManager _collisionManager;
+        private readonly int _tileSize;
+
+        public CollisionLoader(CollisionManager collisionManager, int tileSize)
+        {
+            _collisionManager = collisionManager;
+            _tileSize = tileSize;
+        }
+
+        public void LoadCollidables(string[,] tileMap)
+        {
+            for (int y = 0; y < tileMap.GetLength(1); y++)
+            {
+                for (int x = 0; x < tileMap.GetLength(0); x++)
+                {
+                    string tile = tileMap[x, y];
+                    if (tile == "1") // Assuming "1" represents a solid tile
+                    {
+                        Rectangle tileBoundingBox = new Rectangle(x * _tileSize, y * _tileSize, _tileSize, _tileSize);
+                        _collisionManager.AddCollidable(new CollidableObject(tileBoundingBox, true));
+                    }
+                }
+            }
+        }
+    }
+}
