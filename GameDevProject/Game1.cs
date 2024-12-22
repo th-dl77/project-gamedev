@@ -102,6 +102,18 @@ namespace GameDevProject
                 entity.Update(gameTime, player);
             }
             _camera.Update(player.Position, 1600, 1600);
+            if (player.IsHitting)
+            {
+                Rectangle swordHitbox = player.GetSwordHitbox();
+
+                foreach (var entity in entities)
+                {
+                    if (swordHitbox.Intersects(entity.Bounds))
+                    {
+                        entity.Die(gameTime); // Apply damage or trigger other effects
+                    }
+                }
+            }
             base.Update(gameTime);
         }
 

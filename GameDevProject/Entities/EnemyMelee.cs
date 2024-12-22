@@ -21,27 +21,29 @@ namespace GameDevProject.Entities
         }
         public override void Update(GameTime gameTime, Player player)
         {
-            this.Die(gameTime);
-            if (!isHitting)
+            if (IsAlive)
             {
-                Vector2 playerPosition = player.Position;
-                Vector2 direction = playerPosition - Position;
-                if (direction.Length() > 0)
+                if (!isHitting)
                 {
-                    direction.Normalize();
+                    Vector2 playerPosition = player.Position;
+                    Vector2 direction = playerPosition - Position;
+                    if (direction.Length() > 0)
+                    {
+                        direction.Normalize();
+                    }
+                    if (direction.X < 0)
+                    {
+                        flip = SpriteEffects.FlipHorizontally; // Player is moving left
+                    }
+                    else if (direction.X > 0)
+                    {
+                        flip = SpriteEffects.None; // Player is moving right
+                    }
+                    Position += direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    _currentAnimation = _animations["walk"];
                 }
-                if (direction.X < 0)
-                {
-                    flip = SpriteEffects.FlipHorizontally; // Player is moving left
-                }
-                else if (direction.X > 0)
-                {
-                    flip = SpriteEffects.None; // Player is moving right
-                }
-                Position += direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                _currentAnimation = _animations["walk"];
+                this.CheckRange(player, gameTime);
             }
-            this.CheckRange(player,gameTime);
             _currentAnimation.Update(gameTime);
         }
         public override void CheckRange(Player player, GameTime gameTime)
@@ -73,8 +75,8 @@ namespace GameDevProject.Entities
         }
         public override void Die(GameTime gameTime)
         {
-            float timer = (float)gameTime.ElapsedGameTime.TotalSeconds;
             _currentAnimation = _animations["death"];
+            IsAlive = false;
         }
         public override void Draw(SpriteBatch spriteBatch)
         {

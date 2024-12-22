@@ -30,6 +30,8 @@ namespace GameDevProject.Entities
         private IInputStrategy _inputStrategy;
 
         public int Health { get; private set; } = 100;
+
+        public bool IsHitting { get; private set; } = false;
         public int SpriteHeight { get; private set; } = 56;
         public int SpriteWidth { get; private set; } = 56;
 
@@ -86,9 +88,11 @@ namespace GameDevProject.Entities
             if (_inputStrategy.IsActionPressed("fight"))
             {
                 currentAnimation = animations["fighting"];
+                IsHitting = true;
             }
             else if (inputVelocity != Vector2.Zero)
             {
+                IsHitting = false;
                 inputVelocity.Normalize(); //used to fix diagonal movement, otherwise way too fast
                 currentAnimation = animations["running"];
                 if (inputVelocity.X < 0)

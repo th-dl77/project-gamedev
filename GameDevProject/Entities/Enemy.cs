@@ -13,6 +13,8 @@ namespace GameDevProject.Entities
     {
         private SpriteEffects flip = SpriteEffects.None;
 
+        public bool IsAlive { get; set; } = true;
+
         protected bool isHitting;
         protected Animation _currentAnimation;
         protected Dictionary<string, Animation> _animations;
