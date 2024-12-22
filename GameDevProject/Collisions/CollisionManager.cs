@@ -15,7 +15,7 @@ namespace GameDevProject.Collisions
             set { player = value; }
         }
 
-        private List<CollidableObject> collidableObjects; // List of all objects that the player can collide with (e.g., walls, barriers)
+        private List<CollidableObject> collidableObjects;
 
         public CollisionManager()
         {

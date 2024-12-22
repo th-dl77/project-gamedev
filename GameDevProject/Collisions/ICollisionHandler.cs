@@ -7,9 +7,11 @@ using Microsoft.Xna.Framework;
 
 namespace GameDevProject.Collisions
 {
-    public interface ICollisionHandler
+    public interface ICollidableHandler
     {
-        bool CheckCollision(Rectangle playerBounds, Rectangle objectBounds);
+        Rectangle GetBoundingBox();
+        bool IsSolid();
     }
+
 
 }
