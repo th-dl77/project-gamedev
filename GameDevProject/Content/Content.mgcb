@@ -25,6 +25,13 @@
 /processorParam:TextureFormat=Color
 /build:char_red_1.png
 
+#begin Font1.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Font1.spritefont
+
 #begin Skeleton enemy.png
 /importer:TextureImporter
 /processor:TextureProcessor

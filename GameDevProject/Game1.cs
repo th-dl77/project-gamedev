@@ -6,13 +6,18 @@ using GameDevProject.Collisions;
 using GameDevProject.Entities;
 using GameDevProject.Input;
 using GameDevProject.Map;
+using System.Collections;
 
+public enum GameStates { MainMenu, Playing, Gameover}
 namespace GameDevProject
 {
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        private SpriteFont font;
+        private Texture2D buttonTexture;
 
         private Camera _camera;
         private string[,] tileMap;
@@ -25,6 +30,8 @@ namespace GameDevProject
         private List<IEntity> entities;
         private EnemyFactory enemyFactory;
 
+        public GameStates currentGameState;
+
         private Player player;
 
         #region debug
@@ -34,7 +41,7 @@ namespace GameDevProject
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = false;
+            IsMouseVisible = true;
         }
 
         protected override void Initialize()
@@ -62,6 +69,7 @@ namespace GameDevProject
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            font = Content.Load<SpriteFont>("Font1");
             tiles = new Texture2D[5];
             for (int i = 0; i < tiles.Length; i++)
             {
@@ -80,6 +88,9 @@ namespace GameDevProject
 
             player = PlayerFactory.CreatePlayer(inputStrategy, spriteSheetTexture, new Vector2(200, 200));
 
+            buttonTexture = new Texture2D(GraphicsDevice, 1, 1);
+            buttonTexture.SetData(new[] { Color.Black });
+
             #region debug 
             //_debugTexture = new Texture2D(GraphicsDevice, 1, 1);
             //_debugTexture.SetData(new[] { Color.White });
@@ -90,23 +101,34 @@ namespace GameDevProject
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            player.Update(gameTime, _collisionManager);
-            foreach (var entity in entities)
+            switch (currentGameState)
             {
-                entity.Update(gameTime, player);
-            }
-            _camera.Update(player.Position, 1600, 1600);
-            if (player.IsHitting)
-            {
-                Rectangle swordHitbox = player.GetSwordHitbox();
-
-                foreach (var entity in entities)
-                {
-                    if (swordHitbox.Intersects(entity.Bounds))
+                case GameStates.MainMenu:
+                    break;
+                case GameStates.Playing:
+                    player.Update(gameTime, _collisionManager);
+                    foreach (var entity in entities)
                     {
-                        entity.Die(gameTime); // Apply damage or trigger other effects
+                        entity.Update(gameTime, player);
                     }
-                }
+                    _camera.Update(player.Position, 1600, 1600);
+                    if (player.IsHitting)
+                    {
+                        Rectangle swordHitbox = player.GetSwordHitbox();
+
+                        foreach (var entity in entities)
+                        {
+                            if (swordHitbox.Intersects(entity.Bounds))
+                            {
+                                entity.Die(gameTime); // Apply damage or trigger other effects
+                            }
+                        }
+                    }
+                    break;
+                case GameStates.Gameover:
+                    break;
+                default:
+                    break;
             }
             base.Update(gameTime);
         }
@@ -115,27 +137,44 @@ namespace GameDevProject
         {
             //clear screen
             GraphicsDevice.Clear(Color.Gray);
-            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, _camera.Transform);
 
-            for (int y = 0; y < tileMap.GetLength(1); y++)
+            switch (currentGameState)
             {
-                for (int x = 0; x < tileMap.GetLength(0); x++)
-                {
-                    string tileValue = tileMap[x, y];
-                    int tileIndex = int.Parse(tileValue);
+                case GameStates.MainMenu:
+                    _spriteBatch.Begin();
+                    _spriteBatch.DrawString(font, "Main menu", new Vector2(100, 50), Color.White, 0f,new Vector2(0,0),2f,SpriteEffects.None,0f);
+                    _spriteBatch.Draw(buttonTexture, new Vector2(100, 100), Color.Black);
+                    _spriteBatch.DrawString(font, "Play", new Vector2(10, 10), Color.White);
+                    _spriteBatch.End();
+                    break;
+                case GameStates.Playing:
+                    _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, _camera.Transform);
 
-                    if (tileIndex >= 0 && tileIndex < tiles.Length)
+                    for (int y = 0; y < tileMap.GetLength(1); y++)
                     {
-                        _spriteBatch.Draw(tiles[tileIndex], new Rectangle(x*TILE_SIZE,y*TILE_SIZE,TILE_SIZE,TILE_SIZE), Color.White);
+                        for (int x = 0; x < tileMap.GetLength(0); x++)
+                        {
+                            string tileValue = tileMap[x, y];
+                            int tileIndex = int.Parse(tileValue);
+
+                            if (tileIndex >= 0 && tileIndex < tiles.Length)
+                            {
+                                _spriteBatch.Draw(tiles[tileIndex], new Rectangle(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE), Color.White);
+                            }
+                        }
                     }
-                }
+                    player.Draw(_spriteBatch);
+                    foreach (var entity in entities)
+                    {
+                        entity.Draw(_spriteBatch);
+                    }
+                    _spriteBatch.End();
+                    break;
+                case GameStates.Gameover:
+                    break;
+                default:
+                    break;
             }
-            player.Draw(_spriteBatch);
-            foreach (var entity in entities)
-            {
-                entity.Draw(_spriteBatch);
-            }
-            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }
