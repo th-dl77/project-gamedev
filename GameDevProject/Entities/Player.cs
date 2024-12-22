@@ -137,5 +137,24 @@ namespace GameDevProject.Entities
         {
             spriteBatch.Draw(debugTexture, Bounds, Color.Blue * 0.5f);
         }
+
+        public Rectangle GetSwordHitbox()
+        {
+            int swordHeight = 50;
+            int swordWidth = 20;
+
+            Rectangle swordHitbox = new Rectangle();
+
+            if (_currentFlipEffect == SpriteEffects.FlipHorizontally)
+            {
+                swordHitbox = new Rectangle((int)Position.X - swordWidth, (int)Position.Y, swordWidth, swordHeight);
+            }
+            else
+            {
+                swordHitbox = new Rectangle((int)Position.X + Bounds.Width, (int)Position.Y, swordWidth, swordHeight);
+            }
+
+            return swordHitbox;
+        }
     }
 }

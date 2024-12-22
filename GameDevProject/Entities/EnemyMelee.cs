@@ -21,6 +21,7 @@ namespace GameDevProject.Entities
         }
         public override void Update(GameTime gameTime, Player player)
         {
+            this.Die(gameTime);
             if (!isHitting)
             {
                 Vector2 playerPosition = player.Position;
@@ -69,6 +70,11 @@ namespace GameDevProject.Entities
                 isHitting = false;
                 swingTimer = 0f;
             }
+        }
+        public override void Die(GameTime gameTime)
+        {
+            float timer = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _currentAnimation = _animations["death"];
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
