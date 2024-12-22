@@ -18,6 +18,7 @@ namespace GameDevProject
 
         private SpriteFont font;
         private Texture2D buttonTexture;
+        private Texture2D mainMenuBackground;
 
         private Camera _camera;
         private string[,] tileMap;
@@ -91,6 +92,8 @@ namespace GameDevProject
             buttonTexture = new Texture2D(GraphicsDevice, 1,1);
             buttonTexture.SetData(new[] { Color.Black });
 
+            mainMenuBackground = Content.Load<Texture2D>("backgroundMenu");
+
             #region debug 
             //_debugTexture = new Texture2D(GraphicsDevice, 1, 1);
             //_debugTexture.SetData(new[] { Color.White });
@@ -147,6 +150,7 @@ namespace GameDevProject
             {
                 case GameStates.MainMenu:
                     _spriteBatch.Begin();
+                    _spriteBatch.Draw(mainMenuBackground, new Rectangle(0, 0, 800, 800), Color.White);
                     _spriteBatch.DrawString(font, "Main menu", new Vector2(75, 50), Color.Red, 0f,new Vector2(0,0),2f,SpriteEffects.None,0f);
                     _spriteBatch.Draw(buttonTexture, new Vector2(300, 300), new Rectangle(40,40,40,20),Color.Black,0f,new Vector2(0,0),2f,SpriteEffects.None,0f);
                     _spriteBatch.DrawString(font, "Play", new Vector2(310, 310), Color.White);
