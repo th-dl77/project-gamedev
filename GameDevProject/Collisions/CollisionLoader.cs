@@ -25,7 +25,7 @@ namespace GameDevProject.Collisions
                 for (int x = 0; x < tileMap.GetLength(0); x++)
                 {
                     string tile = tileMap[x, y];
-                    if (tile == "1") // Assuming "1" represents a solid tile
+                    if (tile == "1" || tile == "4" || tile == "2")
                     {
                         Rectangle tileBoundingBox = new Rectangle(x * _tileSize, y * _tileSize, _tileSize, _tileSize);
                         _collisionManager.AddCollidable(new CollidableObject(tileBoundingBox, true));
