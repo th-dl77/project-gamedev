@@ -32,6 +32,8 @@ namespace GameDevProject.Entities
         private float Speed { get; } = 100f;
         public float Scale { get; private set; } = 2f;
 
+        private float delayTimer = 3f;
+
         public event Action OnDeath;
         public Rectangle Bounds
         {
@@ -59,6 +61,14 @@ namespace GameDevProject.Entities
             if (!isDead)
             {
                 HandleInput(gameTime);
+            }
+            else
+            {
+               delayTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+               if (delayTimer<=0)
+                {
+                    OnDeath?.Invoke();
+                }
             }
             Vector2 proposedPosition = Position + Velocity * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Vector2 resolvedPosition = collisionManager.CheckCollision(Position,proposedPosition,Bounds.Height, Bounds.Width);
@@ -114,9 +124,7 @@ namespace GameDevProject.Entities
             if (deathTimer > 0.0016f)
             {
                 currentAnimation = animations["dead"];
-            }
-            OnDeath?.Invoke();
-            
+            }            
         }
 
         public void Draw(SpriteBatch spriteBatch)

@@ -19,6 +19,7 @@ namespace GameDevProject
         public SpriteFont font;
         public Texture2D buttonTexture;
         public Texture2D mainMenuBackground;
+        public Texture2D deathScreenBackground;
 
         private Texture2D _debugTexture;
 
@@ -93,8 +94,9 @@ namespace GameDevProject
             buttonTexture = Content.Load<Texture2D>("buttonTemplate");
 
             mainMenuBackground = Content.Load<Texture2D>("backgroundMenu");
+            deathScreenBackground = Content.Load<Texture2D>("deathScreen");
             gameStateManager = new GameStateManager(this);
-            player.OnDeath += () => gameStateManager.ChangeGameState(new GameOverState(buttonTexture, font));
+            player.OnDeath += () => gameStateManager.ChangeGameState(new GameOverState(buttonTexture,font,deathScreenBackground));
 
             #region debug 
             _debugTexture = new Texture2D(GraphicsDevice, 1, 1);
