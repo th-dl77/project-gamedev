@@ -15,6 +15,7 @@ namespace GameDevProject.Entities
         protected const float swingDuration = 1f;
         private List<Vector2> patrolPoints;
         private int currentPatrolIndex;
+        private bool detected;
         private float patrolThreshold = 10f;
         public GolemEnemy(Dictionary<string, Animation> animations, Vector2 startPosition, float speed, List<Vector2> patrolPoints) : base(animations, startPosition, speed)
         {
@@ -31,8 +32,9 @@ namespace GameDevProject.Entities
                     Vector2 playerPosition = player.Position;
                     Vector2 direction = Vector2.Zero;
                     float distanceToPlayer = Vector2.Distance(player.Position, this.Position);
-                    if (distanceToPlayer < 100)
+                    if (distanceToPlayer < 100 || detected)
                     {
+                        detected = true;
                         direction = playerPosition - Position;
                     }
                     else
@@ -62,6 +64,10 @@ namespace GameDevProject.Entities
                 this.CheckRange(player, gameTime);
             }
             _currentAnimation.Update(gameTime);
+        }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            _currentAnimation.Draw(spriteBatch, Position, flip);
         }
     }
 }

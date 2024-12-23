@@ -49,10 +49,10 @@ namespace GameDevProject.Entities
             };
             List<Vector2> patrolPoints = new List<Vector2>();
             patrolPoints.Add(new Vector2(100, 100));
-            patrolPoints.Add(new Vector2(150, 100));
-            patrolPoints.Add(new Vector2(175, 125));
-            patrolPoints.Add(new Vector2(200, 100));
-            return new GolemEnemy(golemMeleeAnimations, position, 15f, patrolPoints);
+            patrolPoints.Add(new Vector2(250, 100));
+            patrolPoints.Add(new Vector2(450, 125));
+            patrolPoints.Add(new Vector2(700, 100));
+            return new GolemEnemy(golemMeleeAnimations, position, 40f, patrolPoints);
         }
     }
 }
