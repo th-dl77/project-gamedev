@@ -62,7 +62,6 @@ namespace GameDevProject
             tileMap = loader.Load("Content/Tilemap.txt");
             collisionLoader = new CollisionLoader(_collisionManager, 32);
             collisionLoader.LoadCollidables(tileMap);
-
             entities = new List<IEntity>();
 
             base.Initialize();
@@ -95,6 +94,7 @@ namespace GameDevProject
 
             mainMenuBackground = Content.Load<Texture2D>("backgroundMenu");
             gameStateManager = new GameStateManager(this);
+            player.OnDeath += () => gameStateManager.ChangeGameState(new GameOverState(buttonTexture, font));
 
             #region debug 
             _debugTexture = new Texture2D(GraphicsDevice, 1, 1);

@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using GameDevProject.Collisions;
 using GameDevProject.Input;
+using GameDevProject.GameStates;
+using System;
 
 namespace GameDevProject.Entities
 {
@@ -29,6 +31,8 @@ namespace GameDevProject.Entities
         public Vector2 Position { get; private set; }
         private float Speed { get; } = 100f;
         public float Scale { get; private set; } = 2f;
+
+        public event Action OnDeath;
         public Rectangle Bounds
         {
             get
@@ -111,6 +115,7 @@ namespace GameDevProject.Entities
             {
                 currentAnimation = animations["dead"];
             }
+            OnDeath?.Invoke();
             
         }
 
