@@ -68,6 +68,18 @@
 /processorParam:TextureFormat=Compressed
 /build:Font1.spritefont
 
+#begin Golem_AttackA.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Golem_AttackA.png
+
 #begin Golem_Run.png
 /importer:TextureImporter
 /processor:TextureProcessor
