@@ -1,7 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameDevProject.Collisions;
+using GameDevProject.Entities;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,16 +16,56 @@ namespace GameDevProject.GameStates
     {
         public PlayingState(Game1 game)
         {
-
+            camera = game._camera;
         }
 
+        private Camera camera;
         public void Update(Game1 game, GameTime gameTime)
         {
 
+            game.player.Update(gameTime, game._collisionManager);
+            foreach (var entity in game.entities)
+            {
+                entity.Update(gameTime, game.player);
+            }
+            game._camera.Update(game.player.Position, 1600, 1600);
+            if (game.player.IsHitting)
+            {
+                Rectangle swordHitbox = game.player.GetSwordHitbox();
+
+                foreach (var entity in game.entities)
+                {
+                    if (swordHitbox.Intersects(entity.Bounds))
+                    {
+                        entity.Die(gameTime);
+                    }
+                }
+            }
         }
         public void Draw(Game1 game, GameTime gameTime)
         {
+            SpriteBatch _spriteBatch = game._spriteBatch;
+            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, camera.Transform);
 
+            for (int y = 0; y < game.tileMap.GetLength(1); y++)
+            {
+                for (int x = 0; x < game.tileMap.GetLength(0); x++)
+                {
+                    string tileValue = game.tileMap[x, y];
+                    int tileIndex = int.Parse(tileValue);
+
+                    if (tileIndex >= 0 && tileIndex < game.tiles.Length)
+                    {
+                        _spriteBatch.Draw(game.tiles[tileIndex], new Rectangle(x * Game1.TILE_SIZE, y * Game1.TILE_SIZE, Game1.TILE_SIZE, Game1.TILE_SIZE), Color.White);
+                    }
+                }
+            }
+            game.player.Draw(_spriteBatch);
+            foreach (var entity in game.entities)
+            {
+                entity.Draw(_spriteBatch);
+            }
+            _spriteBatch.End();
         }
     }
 }

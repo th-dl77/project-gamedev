@@ -5,7 +5,7 @@ namespace GameDevProject.GameStates
     public class GameStateManager
     {
         private Game1 game;
-        private IGameState currentGameState;
+        public IGameState currentGameState;
 
         public GameStateManager(Game1 game)
         {

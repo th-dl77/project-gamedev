@@ -7,14 +7,14 @@ using GameDevProject.Entities;
 using GameDevProject.Input;
 using GameDevProject.Map;
 using System.Collections;
+using GameDevProject.GameStates;
 
-public enum GameStates { MainMenu, Playing, Gameover}
 namespace GameDevProject
 {
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
+        public SpriteBatch _spriteBatch;
 
         public SpriteFont font;
         public Texture2D buttonTexture;
@@ -22,20 +22,20 @@ namespace GameDevProject
 
         private Texture2D _debugTexture;
 
-        private Camera _camera;
-        private string[,] tileMap;
-        private const int TILE_SIZE = 32;
-        private Texture2D[] tiles;
+        public Camera _camera;
+        public string[,] tileMap;
+        public const int TILE_SIZE = 32;
+        public Texture2D[] tiles;
 
-        private CollisionManager _collisionManager;
+        public CollisionManager _collisionManager;
         private CollisionLoader collisionLoader;
 
-        private List<IEntity> entities;
+        public List<IEntity> entities;
         private EnemyFactory enemyFactory;
 
-        public GameStates currentGameState;
+        private GameStateManager gameStateManager;
 
-        private Player player;
+        public Player player;
 
         #region debug
         //private Texture2D _debugTexture;
@@ -94,6 +94,7 @@ namespace GameDevProject
             buttonTexture = Content.Load<Texture2D>("buttonTemplate");
 
             mainMenuBackground = Content.Load<Texture2D>("backgroundMenu");
+            gameStateManager = new GameStateManager(this);
 
             #region debug 
             _debugTexture = new Texture2D(GraphicsDevice, 1, 1);
@@ -103,46 +104,9 @@ namespace GameDevProject
 
         protected override void Update(GameTime gameTime)
         {
-            MouseState mouseState = Mouse.GetState();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            switch (currentGameState)
-            {
-                case GameStates.MainMenu:
-                    if (IsButtonClicked(new Vector2(215,285),mouseState))
-                    {
-                        currentGameState = GameStates.Playing;
-                    }
-                    if (IsButtonClicked(new Vector2(215, 485), mouseState))
-                    {
-                        Exit();
-                    }
-                    break;
-                case GameStates.Playing:
-                    player.Update(gameTime, _collisionManager);
-                    foreach (var entity in entities)
-                    {
-                        entity.Update(gameTime, player);
-                    }
-                    _camera.Update(player.Position, 1600, 1600);
-                    if (player.IsHitting)
-                    {
-                        Rectangle swordHitbox = player.GetSwordHitbox();
-
-                        foreach (var entity in entities)
-                        {
-                            if (swordHitbox.Intersects(entity.Bounds))
-                            {
-                                entity.Die(gameTime); // Apply damage or trigger other effects
-                            }
-                        }
-                    }
-                    break;
-                case GameStates.Gameover:
-                    break;
-                default:
-                    break;
-            }
+            gameStateManager.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -150,61 +114,18 @@ namespace GameDevProject
         {
             //clear screen
             GraphicsDevice.Clear(Color.Gray);
-
-            switch (currentGameState)
-            {
-                case GameStates.MainMenu:
-                    _spriteBatch.Begin();
-                    _spriteBatch.Draw(mainMenuBackground, new Rectangle(0, 0, 800, 800), Color.White);
-                    _spriteBatch.DrawString(font, "Main menu", new Vector2(100, 50), Color.Gold, 0f,new Vector2(0,0),1.5f,SpriteEffects.None,0f);
-                    Vector2 buttonPosition1 = new Vector2(215, 285);
-                    _spriteBatch.Draw(buttonTexture, buttonPosition1, new Rectangle(0,0,200,200),Color.White,0f,new Vector2(0,0),2f,SpriteEffects.None,0f);
-                    _spriteBatch.DrawString(font, "Play", new Vector2(310, 310), Color.Black);
-                    Vector2 buttonPosition2 = new Vector2(215, 485);
-                    _spriteBatch.Draw(buttonTexture, buttonPosition2, new Rectangle(0, 0, 200, 200), Color.White, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
-                    _spriteBatch.DrawString(font, "Exit", new Vector2(300, 510), Color.Black);
-                        /*debug hitboxes
-                        Rectangle button1Hitbox = new Rectangle((int)buttonPosition1.X, (int)buttonPosition1.Y, 300, 140);
-                        Rectangle button2Hitbox = new Rectangle((int)buttonPosition2.X, (int)buttonPosition2.Y, 300, 140);
-                        _spriteBatch.Draw(_debugTexture, button1Hitbox, Color.Green);
-                        _spriteBatch.Draw(_debugTexture, button2Hitbox, Color.Red);
-                        */
-                    _spriteBatch.End();
-                    break;
-                case GameStates.Playing:
-                    _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, _camera.Transform);
-
-                    for (int y = 0; y < tileMap.GetLength(1); y++)
-                    {
-                        for (int x = 0; x < tileMap.GetLength(0); x++)
-                        {
-                            string tileValue = tileMap[x, y];
-                            int tileIndex = int.Parse(tileValue);
-
-                            if (tileIndex >= 0 && tileIndex < tiles.Length)
-                            {
-                                _spriteBatch.Draw(tiles[tileIndex], new Rectangle(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE), Color.White);
-                            }
-                        }
-                    }
-                    player.Draw(_spriteBatch);
-                    foreach (var entity in entities)
-                    {
-                        entity.Draw(_spriteBatch);
-                    }
-                    _spriteBatch.End();
-                    break;
-                case GameStates.Gameover:
-                    break;
-                default:
-                    break;
-            }
+            gameStateManager.Draw(gameTime);
             base.Draw(gameTime);
         }
-        private bool IsButtonClicked(Vector2 position, MouseState mouseState )
+        public bool IsButtonClicked(Rectangle position, MouseState mouseState )
         {
             Rectangle buttonRect = new Rectangle((int)position.X, (int)position.Y, 300, 140);
             return buttonRect.Contains(mouseState.Position) && mouseState.LeftButton == ButtonState.Pressed;
+        }
+
+        public void ChangeGameState(IGameState newGameState)
+        {
+            gameStateManager.currentGameState = newGameState;
         }
     }
 }
