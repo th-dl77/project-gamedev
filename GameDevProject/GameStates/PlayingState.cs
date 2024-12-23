@@ -60,11 +60,11 @@ namespace GameDevProject.GameStates
                     }
                 }
             }
-            game.player.Draw(_spriteBatch);
             foreach (var entity in game.entities)
             {
                 entity.Draw(_spriteBatch);
             }
+            game.player.Draw(_spriteBatch);
             _spriteBatch.End();
         }
     }
