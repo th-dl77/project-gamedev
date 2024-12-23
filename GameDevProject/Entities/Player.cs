@@ -61,6 +61,7 @@ namespace GameDevProject.Entities
             if (!isDead)
             {
                 HandleInput(gameTime);
+                delayTimer = 3f;
             }
             else
             {
@@ -117,7 +118,6 @@ namespace GameDevProject.Entities
 
         public void Die(GameTime gameTime)
         {
-            //TODO: give gameover screen
             isDead = true;
             currentAnimation = animations["deathAnimation"];
             deathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;

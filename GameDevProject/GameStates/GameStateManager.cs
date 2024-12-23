@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System.Diagnostics;
 
 namespace GameDevProject.GameStates
 {
@@ -23,6 +24,7 @@ namespace GameDevProject.GameStates
         }
         public void ChangeGameState(IGameState newGameState)
         {
+            Debug.Write($"Changing state to {newGameState}");
             currentGameState = newGameState;
         }
     }
