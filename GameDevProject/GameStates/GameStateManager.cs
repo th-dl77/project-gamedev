@@ -21,5 +21,9 @@ namespace GameDevProject.GameStates
         {
             currentGameState.Draw(game, gameTime);
         }
+        public void ChangeGameState(IGameState newGameState)
+        {
+            currentGameState = newGameState;
+        }
     }
 }

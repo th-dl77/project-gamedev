@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameDevProject.UI;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -11,12 +12,14 @@ namespace GameDevProject.GameStates
         private Texture2D backgroundTexture;
         private Rectangle playButtonHitBox;
         private Rectangle exitButtonHitBox;
+        private UIManager uiManager;
 
         public StartMenuState(Texture2D buttonTexture, SpriteFont font, Texture2D backgroundTexture)
         {
             this.buttonTexture = buttonTexture;
             this.font = font;
             this.backgroundTexture = backgroundTexture;
+            uiManager = new UIManager(buttonTexture, font);
 
             playButtonHitBox = new Rectangle(215, 285, 300, 140);
             exitButtonHitBox = new Rectangle(215, 485, 300, 140);
@@ -24,11 +27,11 @@ namespace GameDevProject.GameStates
         public void Update(Game1 game, GameTime gameTime)
         {
             MouseState mouseState = Mouse.GetState();
-            if (game.IsButtonClicked(playButtonHitBox, mouseState))
+            if (uiManager.IsButtonClicked(playButtonHitBox, mouseState))
             {
-                game.ChangeGameState(new PlayingState(game));
+                game.gameStateManager.ChangeGameState(new PlayingState(game));
             }
-            if (game.IsButtonClicked(exitButtonHitBox, mouseState))
+            if (uiManager.IsButtonClicked(exitButtonHitBox, mouseState))
             {
                 game.Exit();
             }

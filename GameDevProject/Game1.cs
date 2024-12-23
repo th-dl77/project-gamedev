@@ -33,7 +33,7 @@ namespace GameDevProject
         public List<IEntity> entities;
         private EnemyFactory enemyFactory;
 
-        private GameStateManager gameStateManager;
+        public GameStateManager gameStateManager;
 
         public Player player;
 
@@ -116,16 +116,6 @@ namespace GameDevProject
             GraphicsDevice.Clear(Color.Gray);
             gameStateManager.Draw(gameTime);
             base.Draw(gameTime);
-        }
-        public bool IsButtonClicked(Rectangle position, MouseState mouseState )
-        {
-            Rectangle buttonRect = new Rectangle((int)position.X, (int)position.Y, 300, 140);
-            return buttonRect.Contains(mouseState.Position) && mouseState.LeftButton == ButtonState.Pressed;
-        }
-
-        public void ChangeGameState(IGameState newGameState)
-        {
-            gameStateManager.currentGameState = newGameState;
         }
     }
 }
