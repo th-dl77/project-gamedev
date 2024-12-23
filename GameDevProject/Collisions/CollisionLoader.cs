@@ -2,7 +2,7 @@
 
 namespace GameDevProject.Collisions
 {
-    internal class CollisionLoader
+    public class CollisionLoader
     {
         private readonly CollisionManager _collisionManager;
         private readonly int _tileSize;

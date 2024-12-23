@@ -5,7 +5,7 @@ namespace GameDevProject.Collisions
 {
     public class CollisionManager
     {
-        private readonly List<ICollidableHandler> collidables = new List<ICollidableHandler>();
+        public List<ICollidableHandler> collidables = new List<ICollidableHandler>();
         public void AddCollidable(ICollidableHandler collidable)
         {
             collidables.Add(collidable);

@@ -1,4 +1,5 @@
-﻿using GameDevProject.UI;
+﻿using GameDevProject.Entities;
+using GameDevProject.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -9,19 +10,22 @@ namespace GameDevProject.GameStates
     {
         private Texture2D buttonTexture;
         private SpriteFont font;
+        private Player newPlayer;
         private Rectangle resetButtonHitBox;
         private Texture2D deathScreenBackground;
         private UIManager uiManager;
         private GameStateManager gameStateManager;
+        private GameResetHandler gameResetHandler;
 
         private Texture2D _debugTexture;
 
-        public GameOverState(Texture2D buttonTexture, SpriteFont font,Texture2D deathScreenBackground, GameStateManager gameStateManager)
+        public GameOverState(Texture2D buttonTexture, SpriteFont font,Texture2D deathScreenBackground, GameStateManager gameStateManager, GameResetHandler gameResetHandler)
         {
             this.buttonTexture = buttonTexture;
             this.font = font;
             this.deathScreenBackground = deathScreenBackground;
             this.gameStateManager = gameStateManager;
+            this.gameResetHandler = gameResetHandler;
             uiManager = new UIManager(buttonTexture, font);
 
             resetButtonHitBox = new Rectangle(250, 310, 300, 140);
@@ -32,6 +36,8 @@ namespace GameDevProject.GameStates
             MouseState mouseState = Mouse.GetState();
             if (uiManager.IsButtonClicked(resetButtonHitBox,mouseState))
             {
+                newPlayer = gameResetHandler.ResetGame();
+                game.player = newPlayer;
                 gameStateManager.ChangeGameState(new PlayingState(game));
             }
         }

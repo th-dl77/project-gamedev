@@ -21,12 +21,15 @@ namespace GameDevProject
         public Texture2D mainMenuBackground;
         public Texture2D deathScreenBackground;
 
+        private IMapLoader mapLoader;
+
         private Texture2D _debugTexture;
 
         public Camera _camera;
         public string[,] tileMap;
         public const int TILE_SIZE = 32;
         public Texture2D[] tiles;
+        private GameResetHandler gameResetHandler;
 
         public CollisionManager _collisionManager;
         private CollisionLoader collisionLoader;
@@ -58,10 +61,9 @@ namespace GameDevProject
             _camera = new Camera(GraphicsDevice.Viewport);
             _collisionManager = new CollisionManager();
             //mapLoader = new TextFileMapLoader();
-
             IMapReader tilemapReader = new FileTilemapReader();
-            TextFileMapLoader loader = new TextFileMapLoader(tilemapReader);
-            tileMap = loader.Load("Content/Tilemap.txt");
+            mapLoader = new TextFileMapLoader(tilemapReader);
+            tileMap = mapLoader.Load("Content/Tilemap.txt");
             collisionLoader = new CollisionLoader(_collisionManager, 32);
             collisionLoader.LoadCollidables(tileMap);
             entities = new List<IEntity>();
@@ -87,17 +89,16 @@ namespace GameDevProject
             }
 
             Texture2D spriteSheetTexture = Content.Load<Texture2D>("char_red_1");
-
-            IInputStrategy inputStrategy = new KeyboardInputStrategy();
-
-            player = playerFactory.CreatePlayer(inputStrategy, spriteSheetTexture, new Vector2(200, 200));
+            playerFactory = new PlayerFactory();
+            player = playerFactory.CreatePlayer(spriteSheetTexture, new Vector2(200, 200));
 
             buttonTexture = Content.Load<Texture2D>("buttonTemplate");
 
             mainMenuBackground = Content.Load<Texture2D>("backgroundMenu");
             deathScreenBackground = Content.Load<Texture2D>("deathScreen");
             gameStateManager = new GameStateManager(this);
-            player.OnDeath += () => gameStateManager.ChangeGameState(new GameOverState(buttonTexture,font,deathScreenBackground,gameStateManager));
+            gameResetHandler = new GameResetHandler(spriteSheetTexture, mapLoader, _collisionManager, entities, collisionLoader, playerFactory,enemyFactory);
+            player.OnDeath += () => gameStateManager.ChangeGameState(new GameOverState(buttonTexture,font,deathScreenBackground,gameStateManager,gameResetHandler));
 
             #region debug 
             _debugTexture = new Texture2D(GraphicsDevice, 1, 1);

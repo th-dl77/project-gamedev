@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using GameDevProject.Input;
+using System.Net.Mime;
 
 namespace GameDevProject.Entities
 {
     public class PlayerFactory
     {
-        public Player CreatePlayer(IInputStrategy inputStrategy, Texture2D spriteSheetTexture, Vector2 initPos)
+        public Player CreatePlayer(Texture2D spriteSheetTexture, Vector2 initPos)
         {
+            IInputStrategy inputStrategy = new KeyboardInputStrategy();
             SpriteSheet runningAnimationSheet = new SpriteSheet(spriteSheetTexture, 56, 56, 112);
             SpriteSheet idleAnimationSheet = new SpriteSheet(spriteSheetTexture, 56, 56);
             SpriteSheet fightingAnimationSheet = new SpriteSheet(spriteSheetTexture, 56, 56, 56);
