@@ -10,12 +10,14 @@ namespace GameDevProject.Entities
         private Texture2D skeletonTexture;
         private Texture2D golemRun;
         private Texture2D golemAttack;
+        private Texture2D golemDeath;
 
         public EnemyFactory(ContentManager content)
         {
             skeletonTexture = content.Load<Texture2D>("Skeleton enemy");
             golemRun = content.Load<Texture2D>("Golem_Run");
             golemAttack = content.Load<Texture2D>("Golem_AttackA");
+            golemDeath = content.Load<Texture2D>("Golem_DeathB");
         }
         public Enemy CreateEnemy(string enemyType, Vector2 Position)
         {
@@ -45,7 +47,8 @@ namespace GameDevProject.Entities
             Dictionary<string, Animation> golemMeleeAnimations = new Dictionary<string, Animation>()
             {
                 { "walk", new Animation(new SpriteSheet(golemRun,64,64), new int[] { 0,1,2,3},0.3f) },
-                { "fight", new Animation(new SpriteSheet(golemAttack,64,64),new int[] { 0,1,2,3,4,5,6,7,8,9,10,11},0.2f)}
+                { "fight", new Animation(new SpriteSheet(golemAttack,64,64),new int[] { 0,1,2,3,4,5,6,7,8,9,10,11},0.2f)},
+                { "death", new Animation(new SpriteSheet(golemDeath,64,64), new int[] { 0,1,2,3,4,5,6,7,8},0.2f,false)}
             };
             List<Vector2> patrolPoints = new List<Vector2>();
             patrolPoints.Add(new Vector2(100, 100));
