@@ -85,7 +85,9 @@ namespace GameDevProject
             enemyFactory = new EnemyFactory(Content);
             for (int i = 0; i < 1000; i += 100)
             {
-                entities.Add(enemyFactory.CreateEnemy(new Vector2(300 + i, 400 + i)));
+                entities.Add(enemyFactory.CreateEnemy("skeleton", new Vector2(300 + i, 400 + i)));
+                entities.Add(enemyFactory.CreateEnemy("golem", new Vector2(150 + i, 100 + i)));
+
             }
 
             Texture2D spriteSheetTexture = Content.Load<Texture2D>("char_red_1");

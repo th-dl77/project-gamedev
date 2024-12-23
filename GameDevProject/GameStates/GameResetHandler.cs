@@ -44,7 +44,7 @@ namespace GameDevProject.GameStates
             collisionManager.collidables.Clear();
             for (int i = 0; i < 1000; i += 100)
             {
-                enemies.Add(enemyFactory.CreateEnemy(new Vector2(300 + i, 400 + i)));
+                enemies.Add(enemyFactory.CreateEnemy("skeleton",new Vector2(300 + i, 400 + i)));
             }
 
             string[,] tileMap = mapLoader.Load("Content/Tilemap.txt");

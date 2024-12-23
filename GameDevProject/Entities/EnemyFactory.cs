@@ -7,28 +7,32 @@ namespace GameDevProject.Entities
 {
     public class EnemyFactory
     {
-        private SpriteSheet enemyMeleeSpriteSheetIdle;
-        private SpriteSheet enemyMeleeSpriteSheetWalk;
-        private SpriteSheet enemyMeleeSpriteSheetFight;
-        private SpriteSheet enemyMeleeSpriteDead;
+        private Texture2D enemyTexture;
 
         public EnemyFactory(ContentManager content)
         {
-            enemyMeleeSpriteSheetIdle = new SpriteSheet(content.Load<Texture2D>("Skeleton enemy"),64,64,192);
-            enemyMeleeSpriteSheetWalk = new SpriteSheet(content.Load<Texture2D>("Skeleton enemy"), 64, 64,128);
-            enemyMeleeSpriteSheetFight = new SpriteSheet(content.Load<Texture2D>("Skeleton enemy"), 64, 64);
-            enemyMeleeSpriteDead = new SpriteSheet(content.Load<Texture2D>("Skeleton enemy"), 64, 64, 64);
+            enemyTexture = content.Load<Texture2D>("Skeleton enemy");
         }
-        public Enemy CreateEnemy(Vector2 Position)
+        public Enemy CreateEnemy(string enemyType, Vector2 Position)
+        {
+            switch (enemyType)
+            {
+                case "skeleton":
+                    return createSkeletonEnemy(Position);
+                default:
+                    throw new System.ArgumentException($"Unknown enemy type: {enemyType}");
+            }
+        }
+        public Enemy createSkeletonEnemy(Vector2 position)
         {
             Dictionary<string, Animation> enemyMeleeAnimations = new Dictionary<string, Animation>()
-            {
-                {"idle", new Animation(enemyMeleeSpriteSheetIdle, new int[] {0,1,2,3 },0.2f) },
-                { "walk", new Animation(enemyMeleeSpriteSheetWalk, new int[] {0,1,2,3,4,5,6,7,8,9,10,11 },0.2f)},
-                { "fight", new Animation(enemyMeleeSpriteSheetFight, new int[] { 0,1,2,3,4,5,6,7,8,9,10,11,12},0.2f)},
-                { "death", new Animation(enemyMeleeSpriteDead, new int[] { 0,1,2,3,4,5,6,7,8,9,10,11},0.2f,false)}
-            };
-            return new EnemyMelee(enemyMeleeAnimations, Position, 25f);
+                    {
+                        {"idle", new Animation(new SpriteSheet(enemyTexture,64,64,192), new int[] {0,1,2,3 },0.2f) },
+                        { "walk", new Animation(new SpriteSheet(enemyTexture,64,64,128), new int[] {0,1,2,3,4,5,6,7,8,9,10,11 },0.2f)},
+                        { "fight", new Animation(new SpriteSheet(enemyTexture,64,64), new int[] { 0,1,2,3,4,5,6,7,8,9,10,11,12},0.2f)},
+                        { "death", new Animation(new SpriteSheet(enemyTexture,64,64,64), new int[] { 0,1,2,3,4,5,6,7,8,9,10,11},0.2f,false)}
+                    };
+            return new EnemyMelee(enemyMeleeAnimations, position, 25f);
         }
     }
 }
