@@ -13,8 +13,13 @@ namespace GameDevProject.Entities
         private SpriteEffects flip = SpriteEffects.None;
         protected float swingTimer = 0f;
         protected const float swingDuration = 1f;
-        public GolemEnemy(Dictionary<string, Animation> animations, Vector2 startPosition, float speed) : base(animations, startPosition, speed)
+        private List<Vector2> patrolPoints;
+        private int currentPatrolIndex;
+        private float patrolThreshold = 10f;
+        public GolemEnemy(Dictionary<string, Animation> animations, Vector2 startPosition, float speed, List<Vector2> patrolPoints) : base(animations, startPosition, speed)
         {
+            this.currentPatrolIndex = 0;
+            this.patrolPoints = patrolPoints;
         }
         public override void Update(GameTime gameTime, Player player)
         {
@@ -22,8 +27,18 @@ namespace GameDevProject.Entities
             {
                 if (!isHitting)
                 {
+                    Vector2 targetPoint = patrolPoints[currentPatrolIndex];
                     Vector2 playerPosition = player.Position;
-                    Vector2 direction = playerPosition - Position;
+                    Vector2 direction = Vector2.Zero;
+                    float distanceToPlayer = Vector2.Distance(player.Position, this.Position);
+                    if (distanceToPlayer < 100)
+                    {
+                        direction = playerPosition - Position;
+                    }
+                    else
+                    {
+                        direction = targetPoint - Position;
+                    }
                     if (direction.Length() > 0)
                     {
                         direction.Normalize();
@@ -37,6 +52,11 @@ namespace GameDevProject.Entities
                         flip = SpriteEffects.None; // Player is moving right
                     }
                     Position += direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    if (Vector2.Distance(Position, targetPoint) < patrolThreshold)
+                    {
+                        currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Count; 
+                    }
                     _currentAnimation = _animations["walk"];
                 }
                 this.CheckRange(player, gameTime);

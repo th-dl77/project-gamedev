@@ -47,7 +47,12 @@ namespace GameDevProject.Entities
                 { "walk", new Animation(new SpriteSheet(golemRun,64,64), new int[] { 0,1,2,3},0.3f) },
                 { "fight", new Animation(new SpriteSheet(golemAttack,64,64),new int[] { 0,1,2,3,4,5,6,7,8,9,10,11},0.2f)}
             };
-            return new EnemyMelee(golemMeleeAnimations, position, 15f);
+            List<Vector2> patrolPoints = new List<Vector2>();
+            patrolPoints.Add(new Vector2(100, 100));
+            patrolPoints.Add(new Vector2(150, 100));
+            patrolPoints.Add(new Vector2(175, 125));
+            patrolPoints.Add(new Vector2(200, 100));
+            return new GolemEnemy(golemMeleeAnimations, position, 15f, patrolPoints);
         }
     }
 }
