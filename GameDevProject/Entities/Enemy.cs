@@ -24,7 +24,7 @@ namespace GameDevProject.Entities
         public Enemy(Dictionary<string, Animation> animations, Vector2 startPosition, float speed)
         {
             _animations = animations;
-            _currentAnimation = _animations["idle"];
+            _currentAnimation = _animations["walk"];
             Position = startPosition;
             Speed = speed;
         }

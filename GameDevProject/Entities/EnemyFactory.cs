@@ -7,32 +7,44 @@ namespace GameDevProject.Entities
 {
     public class EnemyFactory
     {
-        private Texture2D enemyTexture;
+        private Texture2D skeletonTexture;
+        private Texture2D golemRun;
 
         public EnemyFactory(ContentManager content)
         {
-            enemyTexture = content.Load<Texture2D>("Skeleton enemy");
+            skeletonTexture = content.Load<Texture2D>("Skeleton enemy");
+            golemRun = content.Load<Texture2D>("Golem_Run");
         }
         public Enemy CreateEnemy(string enemyType, Vector2 Position)
         {
             switch (enemyType)
             {
                 case "skeleton":
-                    return createSkeletonEnemy(Position);
+                    return CreateSkeletonEnemy(Position);
+                case "golem":
+                    return CreateGolemEnemy(Position);
                 default:
                     throw new System.ArgumentException($"Unknown enemy type: {enemyType}");
             }
         }
-        public Enemy createSkeletonEnemy(Vector2 position)
+        public Enemy CreateSkeletonEnemy(Vector2 position)
         {
-            Dictionary<string, Animation> enemyMeleeAnimations = new Dictionary<string, Animation>()
+            Dictionary<string, Animation> skeletonMeleeAnimations = new Dictionary<string, Animation>()
                     {
-                        {"idle", new Animation(new SpriteSheet(enemyTexture,64,64,192), new int[] {0,1,2,3 },0.2f) },
-                        { "walk", new Animation(new SpriteSheet(enemyTexture,64,64,128), new int[] {0,1,2,3,4,5,6,7,8,9,10,11 },0.2f)},
-                        { "fight", new Animation(new SpriteSheet(enemyTexture,64,64), new int[] { 0,1,2,3,4,5,6,7,8,9,10,11,12},0.2f)},
-                        { "death", new Animation(new SpriteSheet(enemyTexture,64,64,64), new int[] { 0,1,2,3,4,5,6,7,8,9,10,11},0.2f,false)}
+                        {"idle", new Animation(new SpriteSheet(skeletonTexture,64,64,192), new int[] {0,1,2,3 },0.2f) },
+                        { "walk", new Animation(new SpriteSheet(skeletonTexture,64,64,128), new int[] {0,1,2,3,4,5,6,7,8,9,10,11 },0.2f)},
+                        { "fight", new Animation(new SpriteSheet(skeletonTexture,64,64), new int[] { 0,1,2,3,4,5,6,7,8,9,10,11,12},0.2f)},
+                        { "death", new Animation(new SpriteSheet(skeletonTexture,64,64,64), new int[] { 0,1,2,3,4,5,6,7,8,9,10,11},0.2f,false)}
                     };
-            return new EnemyMelee(enemyMeleeAnimations, position, 25f);
+            return new EnemyMelee(skeletonMeleeAnimations, position, 25f);
+        }
+        public Enemy CreateGolemEnemy(Vector2 position)
+        {
+            Dictionary<string, Animation> golemMeleeAnimations = new Dictionary<string, Animation>()
+            {
+                { "walk", new Animation(new SpriteSheet(golemRun,64,64), new int[] { 0,1,2,3},0.3f) }
+            };
+            return new EnemyMelee(golemMeleeAnimations, position, 15f);
         }
     }
 }
