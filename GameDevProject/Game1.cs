@@ -35,6 +35,7 @@ namespace GameDevProject
         private EnemyFactory enemyFactory;
 
         public GameStateManager gameStateManager;
+        private PlayerFactory playerFactory;
 
         public Player player;
 
@@ -89,7 +90,7 @@ namespace GameDevProject
 
             IInputStrategy inputStrategy = new KeyboardInputStrategy();
 
-            player = PlayerFactory.CreatePlayer(inputStrategy, spriteSheetTexture, new Vector2(200, 200));
+            player = playerFactory.CreatePlayer(inputStrategy, spriteSheetTexture, new Vector2(200, 200));
 
             buttonTexture = Content.Load<Texture2D>("buttonTemplate");
 

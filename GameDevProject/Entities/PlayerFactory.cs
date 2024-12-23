@@ -5,9 +5,9 @@ using GameDevProject.Input;
 
 namespace GameDevProject.Entities
 {
-    public static class PlayerFactory
+    public class PlayerFactory
     {
-        public static Player CreatePlayer(IInputStrategy inputStrategy, Texture2D spriteSheetTexture, Vector2 initPos)
+        public Player CreatePlayer(IInputStrategy inputStrategy, Texture2D spriteSheetTexture, Vector2 initPos)
         {
             SpriteSheet runningAnimationSheet = new SpriteSheet(spriteSheetTexture, 56, 56, 112);
             SpriteSheet idleAnimationSheet = new SpriteSheet(spriteSheetTexture, 56, 56);
