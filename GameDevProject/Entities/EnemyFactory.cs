@@ -11,6 +11,9 @@ namespace GameDevProject.Entities
         private Texture2D golemRun;
         private Texture2D golemAttack;
         private Texture2D golemDeath;
+        private Texture2D slimeDeath;
+        private Texture2D slimeRun;
+        private Texture2D slimeFight;
 
         public EnemyFactory(ContentManager content)
         {
@@ -18,6 +21,9 @@ namespace GameDevProject.Entities
             golemRun = content.Load<Texture2D>("Golem_Run");
             golemAttack = content.Load<Texture2D>("Golem_AttackA");
             golemDeath = content.Load<Texture2D>("Golem_DeathB");
+            slimeDeath = content.Load<Texture2D>("Slime_Spiked_Death");
+            slimeRun = content.Load<Texture2D>("Slime_Spiked_Run");
+            slimeFight = content.Load<Texture2D>("Slime_Spiked_Ability");
         }
         public Enemy CreateEnemy(string enemyType, Vector2 Position)
         {
@@ -27,6 +33,8 @@ namespace GameDevProject.Entities
                     return CreateSkeletonEnemy(Position);
                 case "golem":
                     return CreateGolemEnemy(Position);
+                case "slime":
+                    return CreateSlimeEnemy(Position);
                 default:
                     throw new System.ArgumentException($"Unknown enemy type: {enemyType}");
             }
@@ -56,6 +64,21 @@ namespace GameDevProject.Entities
             patrolPoints.Add(new Vector2(450, 125));
             patrolPoints.Add(new Vector2(700, 100));
             return new GolemEnemy(golemMeleeAnimations, position, 40f, patrolPoints);
+        }
+        public Enemy CreateSlimeEnemy(Vector2 position)
+        {
+            Dictionary<string, Animation> slimeEnemyAnimations = new Dictionary<string, Animation>()
+            {
+                { "walk", new Animation(new SpriteSheet(slimeRun,64,64), new int[] { 0,1,2,3},0.2f) },
+                { "death", new Animation(new SpriteSheet(slimeDeath,64,64), new int[] { 0,1,2,3,4},0.2f,false)},
+                { "fight", new Animation(new SpriteSheet(slimeFight,64,64), new int[] { 0,1,2,3,4},0.2f, false)}
+            };
+            List<Vector2> patrolPoints = new List<Vector2>();
+            patrolPoints.Add(new Vector2(100, 200));
+            patrolPoints.Add(new Vector2(250, 300));
+            patrolPoints.Add(new Vector2(450, 425));
+            patrolPoints.Add(new Vector2(700, 500));
+            return new SlimeEnemy(slimeEnemyAnimations, position, 40f, patrolPoints);
         }
     }
 }
