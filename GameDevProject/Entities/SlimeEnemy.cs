@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameDevProject.Entities
 {
@@ -15,7 +11,6 @@ namespace GameDevProject.Entities
         protected const float swingDuration = 1f;
         private List<Vector2> patrolPoints;
         private int currentPatrolIndex;
-        private bool detected;
         private float patrolThreshold = 10f;
         public SlimeEnemy(Dictionary<string, Animation> animations, Vector2 startPosition, float speed, List<Vector2> patrolPoints) : base(animations, startPosition, speed, patrolPoints)
         {

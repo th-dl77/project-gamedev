@@ -4,9 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using GameDevProject.Collisions;
 using GameDevProject.Entities;
-using GameDevProject.Input;
 using GameDevProject.Map;
-using System.Collections;
 using GameDevProject.GameStates;
 
 namespace GameDevProject
