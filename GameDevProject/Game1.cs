@@ -87,6 +87,7 @@ namespace GameDevProject
             }
             entities.Add(enemyFactory.CreateEnemy("golem", new Vector2(100,100)));
             entities.Add(enemyFactory.CreateEnemy("slime", new Vector2(100, 200)));
+            entities.Add(enemyFactory.CreateEnemy("bat", new Vector2(80, 200)));
 
             Texture2D spriteSheetTexture = Content.Load<Texture2D>("char_red_1");
             playerFactory = new PlayerFactory();
