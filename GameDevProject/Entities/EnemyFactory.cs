@@ -71,7 +71,7 @@ namespace GameDevProject.Entities
             {
                 { "walk", new Animation(new SpriteSheet(slimeRun,64,64), new int[] { 0,1,2,3},0.2f) },
                 { "death", new Animation(new SpriteSheet(slimeDeath,64,64), new int[] { 0,1,2,3,4},0.2f,false)},
-                { "fight", new Animation(new SpriteSheet(slimeFight,64,64), new int[] { 0,1,2,3,4},0.2f, false)}
+                { "fight", new Animation(new SpriteSheet(slimeFight,64,64), new int[] { 0,1,2,3},0.2f, false)}
             };
             List<Vector2> patrolPoints = new List<Vector2>();
             patrolPoints.Add(new Vector2(100, 200));

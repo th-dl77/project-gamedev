@@ -29,7 +29,7 @@ namespace GameDevProject.Entities
         
         public Vector2 Velocity;
         public Vector2 Position { get; private set; }
-        private float Speed { get; } = 100f;
+        private float Speed { get; set; } = 100f;
         public float Scale { get; private set; } = 2f;
 
         private float delayTimer = 3f;
@@ -80,10 +80,11 @@ namespace GameDevProject.Entities
         private void HandleInput(GameTime gameTime)
         {
             Vector2 inputVelocity = _inputStrategy.GetMovementInput();
-
+            Speed = 100f;
             if (_inputStrategy.IsActionPressed("fight"))
             {
                 currentAnimation = animations["fighting"];
+                Speed = 0f;
                 IsHitting = true;
             }
             else if (inputVelocity != Vector2.Zero)
