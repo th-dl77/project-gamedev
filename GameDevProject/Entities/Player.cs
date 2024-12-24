@@ -121,11 +121,11 @@ namespace GameDevProject.Entities
         {
             isDead = true;
             currentAnimation = animations["deathAnimation"];
-            deathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (deathTimer > 0.0016f)
-            {
-                currentAnimation = animations["dead"];
-            }            
+            //deathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //if (deathTimer > 0.0016f)
+            //{
+            //    currentAnimation = animations["dead"];
+            //}            
         }
 
         public void Draw(SpriteBatch spriteBatch)
