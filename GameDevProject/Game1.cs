@@ -94,7 +94,7 @@ namespace GameDevProject
             mainMenuBackground = Content.Load<Texture2D>("backgroundMenu");
             deathScreenBackground = Content.Load<Texture2D>("deathScreen");
             gameStateManager = new GameStateManager(this);
-            gameResetHandler = new GameResetHandler(this, spriteSheetTexture, mapLoader, _collisionManager, collisionLoader, playerFactory,enemyFactory,buttonTexture,font,deathScreenBackground,gameStateManager);
+            gameResetHandler = new GameResetHandler(this, spriteSheetTexture, mapLoader, _collisionManager, collisionLoader, playerFactory,enemyFactory,buttonTexture,font,deathScreenBackground,gameStateManager, enemySpawner, entities);
             player.OnDeath += () => gameStateManager.ChangeGameState(new GameOverState(buttonTexture,font,deathScreenBackground,gameStateManager,gameResetHandler));
 
             #region debug 
