@@ -24,7 +24,6 @@ namespace GameDevProject.GameStates
         private Texture2D playerTexture;
         private List<IEntity> enemies;
         private Game1 game;
-        private EnemyFactory enemyFactory;
         public GameResetHandler(Game1 game, Texture2D playerTexture, IMapLoader mapLoader, CollisionManager collisionManager, CollisionLoader collisionLoader, PlayerFactory playerFactory, EnemyFactory enemyFactory, Texture2D buttonTexture, SpriteFont font, Texture2D deathScreenBackground, GameStateManager gameStateManager)
         {
             this.playerFactory = playerFactory;
@@ -36,7 +35,6 @@ namespace GameDevProject.GameStates
             this.gameStateManager = gameStateManager;
             this.collisionManager = collisionManager;
             this.collisionLoader = collisionLoader;
-            this.enemyFactory = enemyFactory;
             this.game = game;
         }
         public Player ResetGame()
