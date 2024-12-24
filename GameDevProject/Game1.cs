@@ -19,6 +19,8 @@ namespace GameDevProject
         public Texture2D mainMenuBackground;
         public Texture2D deathScreenBackground;
 
+        public EnemySpawner enemySpawner;
+
         private IMapLoader mapLoader;
 
         private Texture2D _debugTexture;
@@ -56,6 +58,7 @@ namespace GameDevProject
             _graphics.PreferredBackBufferHeight = 800;
             _graphics.ApplyChanges();
 
+            enemySpawner = new EnemySpawner(Content);
             _camera = new Camera(GraphicsDevice.Viewport);
             _collisionManager = new CollisionManager();
             //mapLoader = new TextFileMapLoader();
@@ -80,14 +83,7 @@ namespace GameDevProject
                 tiles[i] = Content.Load<Texture2D>("tileMapTextures" + (i));
             }
 
-            enemyFactory = new EnemyFactory(Content);
-            for (int i = 0; i < 1000; i += 100)
-            {
-                entities.Add(enemyFactory.CreateEnemy("skeleton", new Vector2(100 + i, 200 + i)));
-            }
-            entities.Add(enemyFactory.CreateEnemy("golem", new Vector2(100,100)));
-            entities.Add(enemyFactory.CreateEnemy("slime", new Vector2(100, 200)));
-            entities.Add(enemyFactory.CreateEnemy("bat", new Vector2(80, 200)));
+            entities = enemySpawner.Spawn(1);
 
             Texture2D spriteSheetTexture = Content.Load<Texture2D>("char_red_1");
             playerFactory = new PlayerFactory();
@@ -98,7 +94,7 @@ namespace GameDevProject
             mainMenuBackground = Content.Load<Texture2D>("backgroundMenu");
             deathScreenBackground = Content.Load<Texture2D>("deathScreen");
             gameStateManager = new GameStateManager(this);
-            gameResetHandler = new GameResetHandler(spriteSheetTexture, mapLoader, _collisionManager, entities, collisionLoader, playerFactory,enemyFactory,buttonTexture,font,deathScreenBackground,gameStateManager);
+            gameResetHandler = new GameResetHandler(this, spriteSheetTexture, mapLoader, _collisionManager, collisionLoader, playerFactory,enemyFactory,buttonTexture,font,deathScreenBackground,gameStateManager);
             player.OnDeath += () => gameStateManager.ChangeGameState(new GameOverState(buttonTexture,font,deathScreenBackground,gameStateManager,gameResetHandler));
 
             #region debug 

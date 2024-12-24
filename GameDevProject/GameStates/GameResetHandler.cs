@@ -23,8 +23,9 @@ namespace GameDevProject.GameStates
         private CollisionLoader collisionLoader;
         private Texture2D playerTexture;
         private List<IEntity> enemies;
+        private Game1 game;
         private EnemyFactory enemyFactory;
-        public GameResetHandler(Texture2D playerTexture, IMapLoader mapLoader, CollisionManager collisionManager, List<IEntity> enemies, CollisionLoader collisionLoader, PlayerFactory playerFactory, EnemyFactory enemyFactory, Texture2D buttonTexture, SpriteFont font, Texture2D deathScreenBackground, GameStateManager gameStateManager)
+        public GameResetHandler(Game1 game, Texture2D playerTexture, IMapLoader mapLoader, CollisionManager collisionManager, CollisionLoader collisionLoader, PlayerFactory playerFactory, EnemyFactory enemyFactory, Texture2D buttonTexture, SpriteFont font, Texture2D deathScreenBackground, GameStateManager gameStateManager)
         {
             this.playerFactory = playerFactory;
             this.playerTexture = playerTexture;
@@ -36,16 +37,13 @@ namespace GameDevProject.GameStates
             this.collisionManager = collisionManager;
             this.collisionLoader = collisionLoader;
             this.enemyFactory = enemyFactory;
-            this.enemies = enemies;
+            this.game = game;
         }
         public Player ResetGame()
         {
-            enemies.Clear();
+            game.entities.Clear();
             collisionManager.collidables.Clear();
-            for (int i = 0; i < 1000; i += 100)
-            {
-                enemies.Add(enemyFactory.CreateEnemy("skeleton",new Vector2(300 + i, 400 + i)));
-            }
+            game.entities = game.enemySpawner.Spawn(1);
 
             string[,] tileMap = mapLoader.Load("Content/Tilemap.txt");
             collisionLoader.LoadCollidables(tileMap);
