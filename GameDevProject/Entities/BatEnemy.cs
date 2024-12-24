@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace GameDevProject.Entities
 {
-    public class BatEnemy : GolemEnemy
+    public class BatEnemy : PatrollingEnemy
     {
         private SpriteEffects flip = SpriteEffects.None;
         protected float swingTimer = 0f;
@@ -14,8 +14,6 @@ namespace GameDevProject.Entities
         private float patrolThreshold = 10f;
         public BatEnemy(Dictionary<string, Animation> animations, Vector2 startPosition, float speed, List<Vector2> patrolPoints) : base(animations, startPosition, speed, patrolPoints)
         {
-            this.currentPatrolIndex = 0;
-            this.patrolPoints = patrolPoints;
         }
         public override void Update(GameTime gameTime, Player player)
         {
