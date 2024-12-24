@@ -110,6 +110,7 @@ namespace GameDevProject.Entities
         }
         public void TakeHit(int dmgAmount, GameTime gameTime)
         {
+            currentAnimation = animations["damageAnimation"];
             Health -= dmgAmount;
             if (Health < 0)
             {
@@ -120,12 +121,7 @@ namespace GameDevProject.Entities
         public void Die(GameTime gameTime)
         {
             isDead = true;
-            currentAnimation = animations["deathAnimation"];
-            //deathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            //if (deathTimer > 0.0016f)
-            //{
-            //    currentAnimation = animations["dead"];
-            //}            
+            currentAnimation = animations["deathAnimation"];         
         }
 
         public void Draw(SpriteBatch spriteBatch)
