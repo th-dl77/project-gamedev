@@ -137,7 +137,7 @@ namespace GameDevProject.Entities
 
         public Rectangle GetSwordHitbox()
         {
-            int swordHeight = 50;
+            int swordHeight = 30;
             int swordWidth = 20;
 
             Rectangle swordHitbox = new Rectangle();

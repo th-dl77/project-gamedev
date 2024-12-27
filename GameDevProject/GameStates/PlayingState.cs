@@ -57,6 +57,8 @@ namespace GameDevProject.GameStates
                 entity.Draw(_spriteBatch);
             }
             game.player.Draw(_spriteBatch);
+            _spriteBatch.End();
+            _spriteBatch.Begin();
             game.healthRenderer.Draw(_spriteBatch, game.player.Health, game.player.MaxHealth);
             _spriteBatch.End();
         }
