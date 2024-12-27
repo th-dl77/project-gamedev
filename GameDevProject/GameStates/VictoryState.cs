@@ -48,9 +48,9 @@ namespace GameDevProject.GameStates
             SpriteBatch spriteBatch = game._spriteBatch;
             spriteBatch.Begin();
             spriteBatch.Draw(backGround, new Rectangle(0, 0, 800, 800), Color.White);
-            spriteBatch.DrawString(font, "You Won!", new Vector2(285, 200), Color.DarkRed);
+            spriteBatch.DrawString(font, "Victory!", new Vector2(285, 200), Color.DarkRed);
             spriteBatch.Draw(buttonTexture, new Vector2(250, 310), new Rectangle(0, 0, 200, 200), Color.White, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
-            spriteBatch.DrawString(font, "Play Again", new Vector2(310, 340), Color.Black);
+            spriteBatch.DrawString(font, "Reset", new Vector2(310, 340), Color.Black);
             spriteBatch.End();
 
         }

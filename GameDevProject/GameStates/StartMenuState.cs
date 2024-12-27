@@ -41,7 +41,7 @@ namespace GameDevProject.GameStates
             SpriteBatch _spriteBatch = game._spriteBatch;
             _spriteBatch.Begin();
             _spriteBatch.Draw(backgroundTexture, new Rectangle(0, 0, 800, 800), Color.White);
-            _spriteBatch.DrawString(font, "Monster Slayer", new Vector2(50, 50), Color.Gold, 0f, new Vector2(0, 0), 1.25f, SpriteEffects.None, 0f);
+            _spriteBatch.DrawString(font, "Monster Slayer", new Vector2(50, 50), Color.DarkRed, 0f, new Vector2(0, 0), 1.25f, SpriteEffects.None, 0f);
             Vector2 buttonPosition1 = new Vector2(215, 200);
             _spriteBatch.Draw(buttonTexture, buttonPosition1, new Rectangle(0, 0, 200, 200), Color.White, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
             _spriteBatch.DrawString(font, "Play", new Vector2(310, 225), Color.Black);
