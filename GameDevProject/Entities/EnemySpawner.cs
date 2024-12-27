@@ -29,13 +29,14 @@ namespace GameDevProject.Entities
         {
             List<IEntity> entities = new List<IEntity>();
 
-            for (int i = 0; i < 1000; i += 100)
+            for (int i = 0; i < 1400; i += 100)
             {
-                entities.Add(enemyFactory.CreateEnemy("skeleton", new Vector2(100 + i, 200 + i)));
+                entities.Add(enemyFactory.CreateSkeletonEnemy(new Vector2(100 + i, 200 + i)));
             }
-            entities.Add(enemyFactory.CreateEnemy("golem", new Vector2(100, 100)));
-            entities.Add(enemyFactory.CreateEnemy("slime", new Vector2(100, 200)));
-            entities.Add(enemyFactory.CreateEnemy("bat", new Vector2(80, 200)));
+            //entities.Add(enemyFactory.CreateEnemy("golem", new Vector2(100, 100)));
+            entities.Add(enemyFactory.CreateSlimeEnemy(new Vector2(100, 200)));
+            entities.Add(enemyFactory.CreateBatEnemy(new Vector2(80, 200)));
+            entities.Add(enemyFactory.CreateGolemEnemy(new Vector2(80,200),new List<Vector2>() { new Vector2(100,200), new Vector2(200,100), new Vector2(240,300)}));
             return entities;
         }
     }

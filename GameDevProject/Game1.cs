@@ -92,7 +92,7 @@ namespace GameDevProject
 
             Texture2D spriteSheetTexture = Content.Load<Texture2D>("char_red_1");
             playerFactory = new PlayerFactory();
-            player = playerFactory.CreatePlayer(spriteSheetTexture, new Vector2(200, 200));
+            player = playerFactory.CreatePlayer(spriteSheetTexture, new Vector2(800, 800));
 
             buttonTexture = Content.Load<Texture2D>("buttonTemplate");
 

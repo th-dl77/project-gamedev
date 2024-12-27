@@ -32,22 +32,6 @@ namespace GameDevProject.Entities
             batDeath = content.Load<Texture2D>("Bat_Death");
 
         }
-        public Enemy CreateEnemy(string enemyType, Vector2 Position)
-        {
-            switch (enemyType)
-            {
-                case "skeleton":
-                    return CreateSkeletonEnemy(Position);
-                case "golem":
-                    return CreateGolemEnemy(Position);
-                case "slime":
-                    return CreateSlimeEnemy(Position);
-                case "bat":
-                    return CreateBatEnemy(Position);
-                default:
-                    throw new System.ArgumentException($"Unknown enemy type: {enemyType}");
-            }
-        }
         public Enemy CreateSkeletonEnemy(Vector2 position)
         {
             Dictionary<string, Animation> skeletonMeleeAnimations = new Dictionary<string, Animation>()
@@ -59,7 +43,7 @@ namespace GameDevProject.Entities
                     };
             return new EnemyMelee(skeletonMeleeAnimations, position, 25f);
         }
-        public Enemy CreateGolemEnemy(Vector2 position)
+        public Enemy CreateGolemEnemy(Vector2 position, List<Vector2> patrolPoints)
         {
             Dictionary<string, Animation> golemMeleeAnimations = new Dictionary<string, Animation>()
             {
@@ -67,11 +51,6 @@ namespace GameDevProject.Entities
                 { "fight", new Animation(new SpriteSheet(golemAttack,64,64),new int[] { 0,1,2,3,4,5,6,7,8,9,10,11},0.2f)},
                 { "death", new Animation(new SpriteSheet(golemDeath,64,64), new int[] { 0,1,2,3,4,5,6,7,8},0.2f,false)}
             };
-            List<Vector2> patrolPoints = new List<Vector2>();
-            patrolPoints.Add(new Vector2(100, 100));
-            patrolPoints.Add(new Vector2(250, 100));
-            patrolPoints.Add(new Vector2(450, 125));
-            patrolPoints.Add(new Vector2(700, 100));
             return new GolemEnemy(golemMeleeAnimations, position, 40f, patrolPoints);
         }
         public Enemy CreateSlimeEnemy(Vector2 position)
