@@ -10,7 +10,7 @@ namespace GameDevProject.Entities
         private Vector2 startPos;
         private int spacing;
 
-        public HealthRenderer(Texture2D heartTextureFull, Texture2D heartTextureEmpty, Vector2 startPos, int spacing = 30)
+        public HealthRenderer(Texture2D heartTextureFull, Texture2D heartTextureEmpty, Vector2 startPos, int spacing = 40)
         {
             this.heartTextureFull = heartTextureFull;
             this.heartTextureEmpty = heartTextureEmpty;
