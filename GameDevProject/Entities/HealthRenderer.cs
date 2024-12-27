@@ -27,7 +27,7 @@ namespace GameDevProject.Entities
                 }
                 else
                 {
-                    spriteBatch.Draw(heartTextureFull, startPos + new Vector2(i * spacing, 0), Color.White);
+                    spriteBatch.Draw(heartTextureEmpty, startPos + new Vector2(i * spacing, 0), Color.White);
                 }
             }
         }

@@ -18,7 +18,8 @@ namespace GameDevProject.Entities
 
         private IInputStrategy _inputStrategy;
 
-        public int Health { get; private set; } = 100;
+        public int Health { get; private set; } = 5;
+        public int MaxHealth { get; private set; } = 5;
 
         public bool IsHitting { get; private set; } = false;
         public int SpriteHeight { get; private set; } = 56;

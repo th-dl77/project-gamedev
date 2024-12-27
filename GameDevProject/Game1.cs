@@ -34,6 +34,8 @@ namespace GameDevProject
         public CollisionManager _collisionManager;
         private CollisionLoader collisionLoader;
 
+        public HealthRenderer healthRenderer;
+
         public List<IEntity> entities;
         private EnemyFactory enemyFactory;
 
@@ -76,6 +78,9 @@ namespace GameDevProject
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            Texture2D heartTextureFull = Content.Load<Texture2D>("heartFull");
+            Texture2D heartTextureEmpty = Content.Load<Texture2D>("heartEmpty");
+
             font = Content.Load<SpriteFont>("Font1");
             tiles = new Texture2D[5];
             for (int i = 0; i < tiles.Length; i++)
@@ -93,6 +98,7 @@ namespace GameDevProject
 
             mainMenuBackground = Content.Load<Texture2D>("backgroundMenu");
             deathScreenBackground = Content.Load<Texture2D>("deathScreen");
+            healthRenderer = new HealthRenderer(heartTextureFull, heartTextureEmpty, new Vector2(10,10));
             gameStateManager = new GameStateManager(this);
             gameResetHandler = new GameResetHandler(this, spriteSheetTexture, mapLoader, _collisionManager, collisionLoader, playerFactory,enemyFactory,buttonTexture,font,deathScreenBackground,gameStateManager, enemySpawner, entities);
             player.OnDeath += () => gameStateManager.ChangeGameState(new GameOverState(buttonTexture,font,deathScreenBackground,gameStateManager,gameResetHandler));

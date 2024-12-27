@@ -55,7 +55,7 @@ namespace GameDevProject.Entities
                     swingTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                     if (swingTimer >= swingDuration)
                     {
-                        player.TakeHit(30, gameTime); //let the player take damage
+                        player.TakeHit(1, gameTime); //let the player take damage
                         swingTimer = 0f;
                     }
                 }
