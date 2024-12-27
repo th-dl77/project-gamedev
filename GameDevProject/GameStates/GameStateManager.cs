@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameDevProject.Entities;
+using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace GameDevProject.GameStates
@@ -26,6 +28,17 @@ namespace GameDevProject.GameStates
         {
             Debug.Write($"Changing state to {newGameState}");
             currentGameState = newGameState;
+        }
+        public bool AllEnemiesDead(List<IEntity> enemies)
+        {
+            foreach (var enemy in enemies)
+            {
+                if (enemy.IsAlive)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

@@ -41,13 +41,14 @@ namespace GameDevProject.GameStates
             SpriteBatch _spriteBatch = game._spriteBatch;
             _spriteBatch.Begin();
             _spriteBatch.Draw(backgroundTexture, new Rectangle(0, 0, 800, 800), Color.White);
-            _spriteBatch.DrawString(font, "Main menu", new Vector2(100, 50), Color.Gold, 0f, new Vector2(0, 0), 1.5f, SpriteEffects.None, 0f);
-            Vector2 buttonPosition1 = new Vector2(215, 285);
+            _spriteBatch.DrawString(font, "Monster Slayer", new Vector2(50, 50), Color.Gold, 0f, new Vector2(0, 0), 1.25f, SpriteEffects.None, 0f);
+            Vector2 buttonPosition1 = new Vector2(215, 200);
             _spriteBatch.Draw(buttonTexture, buttonPosition1, new Rectangle(0, 0, 200, 200), Color.White, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
-            _spriteBatch.DrawString(font, "Play", new Vector2(310, 310), Color.Black);
-            Vector2 buttonPosition2 = new Vector2(215, 485);
+            _spriteBatch.DrawString(font, "Play", new Vector2(310, 225), Color.Black);
+            Vector2 buttonPosition2 = new Vector2(215, 400);
             _spriteBatch.Draw(buttonTexture, buttonPosition2, new Rectangle(0, 0, 200, 200), Color.White, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
-            _spriteBatch.DrawString(font, "Exit", new Vector2(300, 510), Color.Black);
+            _spriteBatch.DrawString(font, "Exit", new Vector2(300, 425), Color.Black);
+
             /*debug hitboxes
             Rectangle button1Hitbox = new Rectangle((int)buttonPosition1.X, (int)buttonPosition1.Y, 300, 140);
             Rectangle button2Hitbox = new Rectangle((int)buttonPosition2.X, (int)buttonPosition2.Y, 300, 140);

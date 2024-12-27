@@ -29,7 +29,7 @@ namespace GameDevProject
         public string[,] tileMap;
         public const int TILE_SIZE = 32;
         public Texture2D[] tiles;
-        private GameResetHandler gameResetHandler;
+        public GameResetHandler gameResetHandler;
 
         public CollisionManager _collisionManager;
         private CollisionLoader collisionLoader;

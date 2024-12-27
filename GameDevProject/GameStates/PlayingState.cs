@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameDevProject.Entities;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 
@@ -32,6 +33,10 @@ namespace GameDevProject.GameStates
                         entity.Die(gameTime);
                     }
                 }
+            }
+            if (game.gameStateManager.AllEnemiesDead(game.entities))
+            {
+                game.gameStateManager.ChangeGameState(new VictoryState(game.buttonTexture, game.font, game.mainMenuBackground, game.gameStateManager, game.gameResetHandler));
             }
         }
         public void Draw(Game1 game, GameTime gameTime)
