@@ -13,5 +13,33 @@ namespace GameDevProject.Entities
             this.currentPatrolIndex = 0;
             this.patrolPoints = patrolPoints;
         }
+
+        public override void CheckRange(Player player, GameTime gameTime)
+        {
+            float distanceToPlayer = Vector2.Distance(player.Position, this.Position);
+            if (distanceToPlayer < 40 && !player.isDead)
+            {
+                if (!isHitting)
+                {
+                    isHitting = true;
+                    swingTimer = 0f;
+                    _currentAnimation = _animations["fight"];
+                }
+                else
+                {
+                    swingTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if (swingTimer >= swingDuration)
+                    {
+                        player.TakeHit(2, gameTime); //let the player take damage
+                        swingTimer = 0f;
+                    }
+                }
+            }
+            else
+            {
+                isHitting = false;
+                swingTimer = 0f;
+            }
+        }
     }
 }

@@ -3,9 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using GameDevProject.Collisions;
 using GameDevProject.Input;
-using GameDevProject.GameStates;
 using System;
-using System.Security.AccessControl;
 
 namespace GameDevProject.Entities
 {
