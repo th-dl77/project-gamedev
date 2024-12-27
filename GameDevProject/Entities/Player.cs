@@ -21,7 +21,6 @@ namespace GameDevProject.Entities
 
         public int Health { get; private set; } = 5;
         public int MaxHealth { get; private set; } = 5;
-
         public bool IsHitting { get; private set; } = false;
         public int SpriteHeight { get; private set; } = 56;
         public int SpriteWidth { get; private set; } = 56;
@@ -39,6 +38,10 @@ namespace GameDevProject.Entities
         private float maxSpeed = 15f;
         private float accelerationRate = 30f;
         private float decelerationRate = 20f;
+
+        private float hitCooldownTimer = 0f;
+        private float hitCooldownDuration = 1f;
+
         public Vector2 Acceleration { get; set; } = Vector2.Zero;
 
         public event Action OnDeath;
@@ -72,11 +75,20 @@ namespace GameDevProject.Entities
             }
             else
             {
-               delayTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+               delayTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds; // delay to let the death animation play
                if (delayTimer<=0)
                 {
                     OnDeath?.Invoke();
                 }
+            }
+
+            if (hitCooldownTimer > 0f)
+            {
+                if (!isDead)
+                {
+                    currentAnimation = animations["damageAnimation"];
+                }
+                hitCooldownTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             Vector2 proposedPosition = Position + Velocity * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Vector2 resolvedPosition = collisionManager.CheckCollision(Position,proposedPosition,Bounds.Height, Bounds.Width);
@@ -133,8 +145,16 @@ namespace GameDevProject.Entities
 
         public void TakeHit(int dmgAmount, GameTime gameTime)
         {
+
+            if (hitCooldownTimer > 0f)
+            {
+                return;
+            }
             currentAnimation = animations["damageAnimation"];
             Health -= dmgAmount;
+
+            hitCooldownTimer = hitCooldownDuration;
+
             if (Health < 0)
             {
                 Die(gameTime);

@@ -15,7 +15,7 @@ namespace GameDevProject.Entities
             Animation runningAnimation = new Animation(new SpriteSheet(spriteSheetTexture, 56, 56, 112), new int[] { 0, 1, 2, 3, 4, 5 }, 0.2f);
             Animation idleAnimation = new Animation(new SpriteSheet(spriteSheetTexture, 56, 56), new int[] { 0, 1, 2, 3, 4, 5 }, 0.2f);
             Animation fightingAnimation = new Animation(new SpriteSheet(spriteSheetTexture, 56, 56, 56), new int[] { 0, 1, 2, 3, 4, 5, 6, 7 }, 0.08f);
-            Animation damageAnimation = new Animation(new SpriteSheet(spriteSheetTexture, 56, 56, 280), new int[] { 0, 1, 2, 3 }, 0.2f);
+            Animation damageAnimation = new Animation(new SpriteSheet(spriteSheetTexture, 56, 56, 280), new int[] { 0, 1, 2, 3 }, 0.2f, true);
             Animation deathAnimation = new Animation(new SpriteSheet(spriteSheetTexture, 56, 56, 336), new int[] { 0, 1, 2, 3, 4, 5, 6, 7,8,9,10,11 }, 0.2f, false);
 
             Dictionary<string, Animation> animations = new Dictionary<string, Animation>
