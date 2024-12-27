@@ -5,6 +5,7 @@ using GameDevProject.Collisions;
 using GameDevProject.Input;
 using GameDevProject.GameStates;
 using System;
+using System.Security.AccessControl;
 
 namespace GameDevProject.Entities
 {
@@ -30,10 +31,15 @@ namespace GameDevProject.Entities
         
         public Vector2 Velocity;
         public Vector2 Position { get; private set; }
-        private float Speed { get; set; } = 100f;
+        private float Speed { get; set; } = 20f;
         public float Scale { get; private set; } = 2f;
 
         private float delayTimer = 3f;
+
+        private float maxSpeed = 15f;
+        private float accelerationRate = 30f;
+        private float decelerationRate = 20f;
+        public Vector2 Acceleration { get; set; } = Vector2.Zero;
 
         public event Action OnDeath;
         public Rectangle Bounds
@@ -77,38 +83,54 @@ namespace GameDevProject.Entities
             Position = resolvedPosition;
             currentAnimation.Update(gameTime);
         }
-
         private void HandleInput(GameTime gameTime)
         {
-            Vector2 inputVelocity = _inputStrategy.GetMovementInput();
-            Speed = 100f;
+            Vector2 inputDirection = _inputStrategy.GetMovementInput();
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             if (_inputStrategy.IsActionPressed("fight"))
             {
+                // stop movement while swinging
                 currentAnimation = animations["fighting"];
-                Speed = 0f;
+                Velocity = Vector2.Zero; 
+                Acceleration = Vector2.Zero;
                 IsHitting = true;
             }
-            else if (inputVelocity != Vector2.Zero)
+            else if (inputDirection != Vector2.Zero)
             {
                 IsHitting = false;
-                inputVelocity.Normalize(); //used to fix diagonal movement, otherwise way too fast
+                inputDirection.Normalize();
+                Acceleration = inputDirection * accelerationRate;
+
+                // update velocity with acceleration
+                Velocity += Acceleration * deltaTime;
+
+                //ensure velocity is not faster than maxspeed
+                if (Velocity.Length() > maxSpeed)
+                {
+                    Velocity.Normalize();
+                    Velocity *= maxSpeed;
+                }
                 currentAnimation = animations["running"];
-                if (inputVelocity.X < 0)
-                {
-                    _currentFlipEffect = SpriteEffects.FlipHorizontally; // Player is moving left
-                }
-                else if (inputVelocity.X > 0)
-                {
-                    _currentFlipEffect = SpriteEffects.None; // Player is moving right
-                }
+                _currentFlipEffect = inputDirection.X < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             }
             else
             {
-                currentAnimation = animations["idle"];
-                IsHitting = false;
+                if (Velocity.Length() > 0.1f)
+                {
+                    // deceleration
+                    Velocity -= Velocity * decelerationRate * deltaTime;
+                }
+                else
+                {
+                    Velocity = Vector2.Zero;
+                    currentAnimation = animations["idle"];
+                }
             }
-            Velocity = inputVelocity;
+
+            Position += Velocity * deltaTime;
         }
+
         public void TakeHit(int dmgAmount, GameTime gameTime)
         {
             currentAnimation = animations["damageAnimation"];
@@ -137,7 +159,7 @@ namespace GameDevProject.Entities
 
         public Rectangle GetSwordHitbox()
         {
-            int swordHeight = 30;
+            int swordHeight = 40;
             int swordWidth = 20;
 
             Rectangle swordHitbox = new Rectangle();
