@@ -9,17 +9,20 @@ namespace GameDevProject.Assets
 {
     public class GameAssets
     {
-        public Texture2D ButtonTexture { get; }
-        public SpriteFont Font { get; }
-        public Texture2D DeathScreenBackground { get; }
-        public Texture2D PlayerTexture { get; }
+        private Dictionary<string, IAsset> assets;
 
-        public GameAssets(Texture2D buttonTexture, SpriteFont font, Texture2D deathScreenBackground, Texture2D playerTexture)
+        public GameAssets()
         {
-            ButtonTexture = buttonTexture;
-            Font = font;
-            DeathScreenBackground = deathScreenBackground;
-            PlayerTexture = playerTexture;
+            assets = new Dictionary<string, IAsset>();
+        }
+
+        public void AddAsset(string key, IAsset asset)
+        {
+            assets[key] = asset;
+        }
+        public IAsset GetAsset(string key)
+        {
+            return assets.ContainsKey(key) ? assets[key] : null;
         }
     }
 }
