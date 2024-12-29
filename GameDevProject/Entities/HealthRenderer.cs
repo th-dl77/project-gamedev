@@ -1,19 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using GameDevProject.Assets;
 
 namespace GameDevProject.Entities
 {
     public class HealthRenderer
     {
-        private Texture2D heartTextureFull;
-        private Texture2D heartTextureEmpty;
+        private GameAssets gameAssets;
         private Vector2 startPos;
         private int spacing;
 
-        public HealthRenderer(Texture2D heartTextureFull, Texture2D heartTextureEmpty, Vector2 startPos, int spacing = 40)
+        public HealthRenderer(GameAssets gameAssets, Vector2 startPos, int spacing = 40)
         {
-            this.heartTextureFull = heartTextureFull;
-            this.heartTextureEmpty = heartTextureEmpty;
+            this.gameAssets = gameAssets;
             this.startPos = startPos;
             this.spacing = spacing;
         }
@@ -23,11 +22,11 @@ namespace GameDevProject.Entities
             {
                 if (i < currentHealth)
                 {
-                    spriteBatch.Draw(heartTextureFull, startPos + new Vector2(i * spacing, 0), Color.White);
+                    spriteBatch.Draw(gameAssets.GetTexture("heartFull"), startPos + new Vector2(i * spacing, 0), Color.White);
                 }
                 else
                 {
-                    spriteBatch.Draw(heartTextureEmpty, startPos + new Vector2(i * spacing, 0), Color.White);
+                    spriteBatch.Draw(gameAssets.GetTexture("heartEmpty"), startPos + new Vector2(i * spacing, 0), Color.White);
                 }
             }
         }

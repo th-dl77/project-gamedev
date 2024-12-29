@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameDevProject.Assets
+﻿namespace GameDevProject.Assets
 {
-    public class IAsset
+    public interface IAsset
     {
     }
 }

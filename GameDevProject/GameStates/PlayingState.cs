@@ -39,7 +39,7 @@ namespace GameDevProject.GameStates
             }
             if (game.gameStateManager.AllEnemiesDead(game.entities))
             {
-                game.gameStateManager.ChangeGameState(new VictoryState(gameAssets, game.mainMenuBackground, game.gameStateManager, game.gameResetHandler));
+                game.gameStateManager.ChangeGameState(new VictoryState(gameAssets, gameAssets.GetTexture("mainMenuBackground"), game.gameStateManager, game.gameResetHandler));
             }
         }
         public void Draw(Game1 game, GameTime gameTime)

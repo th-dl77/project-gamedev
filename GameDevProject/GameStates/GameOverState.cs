@@ -9,11 +9,11 @@ namespace GameDevProject.GameStates
 {
     public class GameOverState : IGameState
     {
-        private Texture2D buttonTexture;
+        private TextureAsset buttonTexture;
         private SpriteFont font;
         private Player newPlayer;
         private Rectangle resetButtonHitBox;
-        private Texture2D deathScreenBackground;
+        private TextureAsset deathScreenBackground;
         private UIManager uiManager;
         private GameStateManager gameStateManager;
         private GameResetHandler gameResetHandler;
@@ -27,8 +27,8 @@ namespace GameDevProject.GameStates
             this.gameAssets = gameAssets;
             this.gameStateManager = gameStateManager;
             this.gameResetHandler = gameResetHandler;
-            uiManager = new UIManager(buttonTexture, font);
 
+            uiManager = new UIManager(gameAssets.GetTexture("buttonTexture"), gameAssets.GetFont("font"));
             resetButtonHitBox = new Rectangle(250, 310, 300, 140);
 
         }
@@ -46,10 +46,10 @@ namespace GameDevProject.GameStates
         {
             SpriteBatch spriteBatch = game._spriteBatch;
             spriteBatch.Begin();
-            spriteBatch.Draw(gameAssets.DeathScreenBackground, new Rectangle(0,0,800,800), Color.White);
-            spriteBatch.DrawString(gameAssets.Font, "You Died!", new Vector2(285,200), Color.DarkRed);
-            spriteBatch.Draw(gameAssets.ButtonTexture, new Vector2(250,310), new Rectangle(0, 0, 200, 200), Color.White, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
-            spriteBatch.DrawString(font, "Reset", new Vector2(310, 340), Color.Black);
+            spriteBatch.Draw(gameAssets.GetTexture("deathScreen"), new Rectangle(0,0,800,800), Color.White);
+            spriteBatch.DrawString(gameAssets.GetFont("font"), "You Died!", new Vector2(285,200), Color.DarkRed);
+            spriteBatch.Draw(gameAssets.GetTexture("buttonTexture"), new Vector2(250,310), new Rectangle(0, 0, 200, 200), Color.White, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
+            spriteBatch.DrawString(gameAssets.GetFont("font"), "Reset", new Vector2(310, 340), Color.Black);
             spriteBatch.End();
                 
         }

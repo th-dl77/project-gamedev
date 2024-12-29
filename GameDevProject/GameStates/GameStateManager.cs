@@ -16,7 +16,7 @@ namespace GameDevProject.GameStates
         {
             this.game = game;
             this.gameAssets = gameAssets;
-            currentGameState = new StartMenuState(gameAssets, game.mainMenuBackground);
+            currentGameState = new StartMenuState(gameAssets, gameAssets.GetTexture("mainMenuBackground"));
         }
         public void Update(GameTime gameTime)
         {

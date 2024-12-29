@@ -27,7 +27,7 @@ namespace GameDevProject.GameStates
             this.backGround = backGround;
             this.gameStateManager = gameStateManager;
             this.gameResetHandler = gameResetHandler;
-            uiManager = new UIManager(gameAssets.ButtonTexture, gameAssets.Font);
+            uiManager = new UIManager(gameAssets.GetTexture("buttonTexture"), gameAssets.GetFont("font"));
 
             resetButtonHitBox = new Rectangle(250, 310, 300, 140);
 
@@ -47,9 +47,9 @@ namespace GameDevProject.GameStates
             SpriteBatch spriteBatch = game._spriteBatch;
             spriteBatch.Begin();
             spriteBatch.Draw(backGround, new Rectangle(0, 0, 800, 800), Color.White);
-            spriteBatch.DrawString(gameAssets.Font, "Victory!", new Vector2(285, 200), Color.DarkRed);
-            spriteBatch.Draw(gameAssets.ButtonTexture, new Vector2(250, 310), new Rectangle(0, 0, 200, 200), Color.White, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
-            spriteBatch.DrawString(gameAssets.Font, "Reset", new Vector2(310, 340), Color.Black);
+            spriteBatch.DrawString(gameAssets.GetFont("font"), "Victory!", new Vector2(285, 200), Color.DarkRed);
+            spriteBatch.Draw(gameAssets.GetTexture("buttonTexture"), new Vector2(250, 310), new Rectangle(0, 0, 200, 200), Color.White, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
+            spriteBatch.DrawString(gameAssets.GetFont("font"), "Reset", new Vector2(310, 340), Color.Black);
             spriteBatch.End();
 
         }
