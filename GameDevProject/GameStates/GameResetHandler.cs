@@ -48,7 +48,7 @@ namespace GameDevProject.GameStates
 
             string[,] tileMap = mapLoader.Load("Content/Tilemap.txt");
             collisionLoader.LoadCollidables(tileMap);
-            Player player = playerFactory.CreatePlayer(playerTexture, new Vector2(200, 200));
+            Player player = playerFactory.CreatePlayer(playerTexture, new Vector2(800, 800));
             player.OnDeath += () => gameStateManager.ChangeGameState(new GameOverState(buttonTexture, font, deathScreenBackground, gameStateManager, this));
             return player;
         }
