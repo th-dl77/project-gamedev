@@ -70,7 +70,7 @@ namespace GameDevProject
             collisionLoader = new CollisionLoader(_collisionManager, 32);
             entities = new List<IEntity>();
 
-            healthRenderer = new HealthRenderer(gameAssets, new Vector2(10, 10));
+            healthRenderer = new HealthRenderer(gameAssets, new Vector2(600, 10));
 
             playerFactory = new PlayerFactory();
             player = playerFactory.CreatePlayer(gameAssets.GetTexture("player"), new Vector2(800, 800));

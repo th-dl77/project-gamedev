@@ -2,6 +2,7 @@
 using GameDevProject.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Linq;
 
 
 namespace GameDevProject.GameStates
@@ -78,6 +79,8 @@ namespace GameDevProject.GameStates
             _spriteBatch.End();
             _spriteBatch.Begin();
             game.healthRenderer.Draw(_spriteBatch, game.player.Health, game.player.MaxHealth);
+            _spriteBatch.DrawString(gameAssets.GetFont("font"), $"Current level : {currentLevel}", new Vector2(10, 10), Color.Red,0f,new Vector2(0,0),0.4f,SpriteEffects.None,0f);
+            _spriteBatch.DrawString(gameAssets.GetFont("font"), $"Enemies left: {game.entities.Count(e => e.IsAlive)}", new Vector2(10, 50), Color.Red, 0f, new Vector2(0, 0), 0.4f, SpriteEffects.None, 0f);
             _spriteBatch.End();
         }
     }
