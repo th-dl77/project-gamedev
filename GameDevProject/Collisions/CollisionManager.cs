@@ -5,8 +5,8 @@ namespace GameDevProject.Collisions
 {
     public class CollisionManager
     {
-        public List<ICollidableHandler> collidables = new List<ICollidableHandler>();
-        public void AddCollidable(ICollidableHandler collidable)
+        public List<ICollidable> collidables = new List<ICollidable>();
+        public void AddCollidable(ICollidable collidable)
         {
             collidables.Add(collidable);
         }
@@ -23,6 +23,11 @@ namespace GameDevProject.Collisions
                 }
             }
             return proposedPosition;
+        }
+
+        public void UpdateCollidable(ICollidable collidable, Rectangle newBounds)
+        {
+            collidable.Bounds = newBounds;
         }
     }
 }

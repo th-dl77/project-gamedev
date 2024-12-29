@@ -2,8 +2,9 @@
 
 namespace GameDevProject.Collisions
 {
-    public interface ICollidableHandler
+    public interface ICollidable
     {
+        public Rectangle Bounds { get; set; }
         Rectangle GetBoundingBox();
         bool IsSolid();
     }

@@ -2,18 +2,18 @@
 
 namespace GameDevProject.Collisions
 {
-    public class CollidableObject : ICollidableHandler
+    public class CollidableObject : ICollidable
     {
-        private readonly Rectangle _boundingBox;
+        public Rectangle Bounds { get; set; }
         private readonly bool _isSolid;
         public CollidableObject(Rectangle boundingBox, bool isSolid)
         {
-            _boundingBox = boundingBox;
+            Bounds = boundingBox;
             _isSolid = isSolid;
         }
         public Rectangle GetBoundingBox()
         {
-            return _boundingBox;
+            return Bounds;
         }
         public bool IsSolid()
         {

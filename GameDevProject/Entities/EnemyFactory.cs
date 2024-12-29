@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using GameDevProject.Assets;
 
 namespace GameDevProject.Entities
 {
@@ -16,9 +17,10 @@ namespace GameDevProject.Entities
         private Texture2D slimeFight;
         private Texture2D batFight;
         private Texture2D batFly;
+        private GameAssets gameAssets;
         private Texture2D batDeath;
 
-        public EnemyFactory(ContentManager content)
+        public EnemyFactory(ContentManager content, GameAssets gameAssets)
         {
             skeletonTexture = content.Load<Texture2D>("Skeleton enemy");
             golemRun = content.Load<Texture2D>("Golem_Run");
@@ -30,7 +32,7 @@ namespace GameDevProject.Entities
             batFight = content.Load<Texture2D>("Bat_Attack");
             batFly = content.Load<Texture2D>("Bat_Fly");
             batDeath = content.Load<Texture2D>("Bat_Death");
-
+            this.gameAssets = gameAssets;
         }
         public Enemy CreateSkeletonEnemy(Vector2 position)
         {
@@ -41,7 +43,7 @@ namespace GameDevProject.Entities
                         { "fight", new Animation(new SpriteSheet(skeletonTexture,64,64), new int[] { 0,1,2,3,4,5,6,7,8,9,10,11,12},0.2f)},
                         { "death", new Animation(new SpriteSheet(skeletonTexture,64,64,64), new int[] { 0,1,2,3,4,5,6,7,8,9,10,11,12},0.2f,false)}
                     };
-            return new EnemyMelee(skeletonMeleeAnimations, position, 25f);
+            return new EnemyMelee(skeletonMeleeAnimations, position, 25f, gameAssets);
         }
         public Enemy CreateGolemEnemy(Vector2 position, List<Vector2> patrolPoints)
         {

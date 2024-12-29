@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GameDevProject.Assets;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -7,11 +8,13 @@ namespace GameDevProject.Entities
     public class EnemyMelee : Enemy
     {
         private SpriteEffects flip = SpriteEffects.None;
+        private GameAssets gameAssets;
         public float deathTimer = 0f;
         protected float swingTimer = 0f;
         protected const float swingDuration = 1f;
-        public EnemyMelee(Dictionary<string, Animation> animations, Vector2 startPosition, float speed) : base(animations, startPosition, speed)
+        public EnemyMelee(Dictionary<string, Animation> animations, Vector2 startPosition, float speed, GameAssets gameAssets = null) : base(animations, startPosition, speed)
         {
+            this.gameAssets = gameAssets;
         }
         public override void Update(GameTime gameTime, Player player)
         {
@@ -37,6 +40,7 @@ namespace GameDevProject.Entities
                     _currentAnimation = _animations["walk"];
                 }
                 this.CheckRange(player, gameTime);
+                CollidableObject.Bounds = GetBounds();
             }
             else
             {
@@ -86,6 +90,7 @@ namespace GameDevProject.Entities
             {
                 _currentAnimation.Draw(spriteBatch, Position, flip);
             }
+            spriteBatch.Draw(gameAssets.GetTexture("debug"), Bounds, Color.Aqua);
         }
     }
 }

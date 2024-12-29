@@ -17,7 +17,7 @@ namespace GameDevProject.GameStates
             camera = game._camera;
             currentLevel = 0;
             this.gameAssets = gameAssets;
-            enemySpawner = new EnemySpawner(game.Content, 1600, 1600, game.player.Position, game.collisionLoader);
+            enemySpawner = new EnemySpawner(game.Content, 1600, 1600, game.player.Position, game.collisionLoader, gameAssets);
         }
 
         private Camera camera;
@@ -32,7 +32,10 @@ namespace GameDevProject.GameStates
                     currentLevel = 0;
                 }
                 else
+                {
                     game.entities = enemySpawner.Spawn(currentLevel);
+                    game.collisionLoader.LoadEnemyCollidables(game.entities);
+                }
             }
             game.player.Update(gameTime, game._collisionManager);
             foreach (var entity in game.entities)
@@ -46,12 +49,13 @@ namespace GameDevProject.GameStates
 
                 foreach (var entity in game.entities)
                 {
-                    if (swordHitbox.Intersects(entity.Bounds))
+                    if (swordHitbox.Intersects(entity.GetBounds()))
                     {
                         entity.Die(gameTime);
                     }
                 }
             }
+            game.collisionLoader.UpdateEnemyCollidables(game.entities);
         }
         public void Draw(Game1 game, GameTime gameTime)
         {

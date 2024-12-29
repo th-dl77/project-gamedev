@@ -1,12 +1,15 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System.Collections;
+using GameDevProject.Collisions;
 
 namespace GameDevProject.Entities
 {
     public interface IEntity
     {
         Vector2 Position { get; }
-        Rectangle Bounds { get; }
+        ICollidable CollidableObject { get; }
+        Rectangle GetBounds();
         public bool IsAlive { get; set; }
         void Update(GameTime gameTime, Player player);
         void Draw(SpriteBatch spriteBatch);

@@ -34,8 +34,18 @@ namespace GameDevProject.Collisions
         {
             foreach (var entity in entities)
             {
-                Rectangle enemyBounds = entity.Bounds;
-                _collisionManager.AddCollidable(new CollidableObject(enemyBounds, false));
+                _collisionManager.AddCollidable(entity.CollidableObject);
+            }
+        }
+
+        public void UpdateEnemyCollidables(List<IEntity> enemies)
+        {
+            foreach (var enemy in enemies)
+            {
+                if (enemy.IsAlive)
+                {
+                    _collisionManager.UpdateCollidable(enemy.CollidableObject, enemy.GetBounds());
+                }
             }
         }
     }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System;
 using GameDevProject.Collisions;
 using System.Runtime.CompilerServices;
+using GameDevProject.Assets;
 
 
 namespace GameDevProject.Entities
@@ -17,9 +18,9 @@ namespace GameDevProject.Entities
         private CollisionLoader collisionLoader;
         private Vector2 playerPos;
 
-        public EnemySpawner(ContentManager content, int spawnAreaWidth, int spawnAreaHeight, Vector2 playerPos, CollisionLoader collisionLoader)
+        public EnemySpawner(ContentManager content, int spawnAreaWidth, int spawnAreaHeight, Vector2 playerPos, CollisionLoader collisionLoader, GameAssets gameAssets)
         {
-            enemyFactory = new EnemyFactory(content);
+            enemyFactory = new EnemyFactory(content, gameAssets);
             this.spawnAreaWidth = spawnAreaWidth;
             this.spawnAreaHeight = spawnAreaHeight;
             this.collisionLoader = collisionLoader;
