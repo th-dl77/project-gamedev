@@ -7,6 +7,7 @@ namespace GameDevProject.Entities
     public abstract class Enemy : IEntity
     {
         public bool IsAlive { get; set; } = true;
+        public bool IsVisible { get; set; } = true;
 
         protected bool isHitting;
         protected Animation _currentAnimation;

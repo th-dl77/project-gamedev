@@ -7,6 +7,7 @@ namespace GameDevProject.Entities
     public class EnemyMelee : Enemy
     {
         private SpriteEffects flip = SpriteEffects.None;
+        public float deathTimer = 0f;
         protected float swingTimer = 0f;
         protected const float swingDuration = 1f;
         public EnemyMelee(Dictionary<string, Animation> animations, Vector2 startPosition, float speed) : base(animations, startPosition, speed)
@@ -36,6 +37,14 @@ namespace GameDevProject.Entities
                     _currentAnimation = _animations["walk"];
                 }
                 this.CheckRange(player, gameTime);
+            }
+            else
+            {
+                deathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (deathTimer >=5)
+                {
+                    IsVisible = false;
+                }
             }
             _currentAnimation.Update(gameTime);
         }
@@ -73,7 +82,10 @@ namespace GameDevProject.Entities
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            _currentAnimation.Draw(spriteBatch, Position, flip);
+            if (IsVisible)
+            {
+                _currentAnimation.Draw(spriteBatch, Position, flip);
+            }
         }
     }
 }

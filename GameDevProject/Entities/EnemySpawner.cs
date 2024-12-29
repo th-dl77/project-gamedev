@@ -38,7 +38,7 @@ namespace GameDevProject.Entities
         {
             List<IEntity> entities = new List<IEntity>();
 
-            for (int i = 0; i < 14; i ++)
+            for (int i = 0; i < 50; i ++)
             {
                 entities.Add(enemyFactory.CreateSkeletonEnemy(GetRandomSpawnPosition(playerPos, 200)));
             }
