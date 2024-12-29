@@ -48,8 +48,6 @@ namespace GameDevProject.GameStates
             _spriteBatch.Draw(gameAssets.GetTexture("buttonTexture"), buttonPosition2, new Rectangle(0, 0, 200, 200), Color.White, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
             _spriteBatch.DrawString(gameAssets.GetFont("font"), "Exit", new Vector2(300, 425), Color.Black);
             /*
-            Rectangle button1Hitbox = new Rectangle((int)buttonPosition1.X, (int)buttonPosition1.Y, 300, 140);
-            Rectangle button2Hitbox = new Rectangle((int)buttonPosition2.X, (int)buttonPosition2.Y, 300, 140);
             _spriteBatch.Draw(gameAssets.GetTexture("debug"), playButtonHitBox, Color.Green);
             _spriteBatch.Draw(gameAssets.GetTexture("debug"), exitButtonHitBox, Color.Red);
             */

@@ -46,6 +46,7 @@ namespace GameDevProject.GameStates
             spriteBatch.DrawString(gameAssets.GetFont("font"), "Victory!", new Vector2(285, 200), Color.DarkRed);
             spriteBatch.Draw(gameAssets.GetTexture("buttonTexture"), new Vector2(250, 310), new Rectangle(0, 0, 200, 200), Color.White, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
             spriteBatch.DrawString(gameAssets.GetFont("font"), "Reset", new Vector2(310, 340), Color.Black);
+            //spriteBatch.Draw(gameAssets.GetTexture("debug"), resetButtonHitBox, Color.Aqua);
             spriteBatch.End();
 
         }

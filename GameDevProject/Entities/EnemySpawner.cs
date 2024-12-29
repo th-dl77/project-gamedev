@@ -35,11 +35,10 @@ namespace GameDevProject.Entities
         {
             List<IEntity> entities = new List<IEntity>();
 
-            for (int i = 0; i < 50; i ++)
+            for (int i = 0; i < 50; i++)
             {
                 entities.Add(enemyFactory.CreateSkeletonEnemy(GetRandomSpawnPosition(playerPos, 200)));
             }
-            //entities.Add(enemyFactory.CreateEnemy("golem", new Vector2(100, 100)));
             entities.Add(enemyFactory.CreateSlimeEnemy(GetRandomSpawnPosition(playerPos, 300)));
             entities.Add(enemyFactory.CreateBatEnemy(GetRandomSpawnPosition(playerPos, 200)));
             entities.Add(enemyFactory.CreateGolemEnemy(GetRandomSpawnPosition(playerPos, 400), new List<Vector2>() { new Vector2(100,200), new Vector2(200,100), new Vector2(240,300)}));
