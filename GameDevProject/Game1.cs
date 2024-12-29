@@ -63,14 +63,20 @@ namespace GameDevProject
 
             _camera = new Camera(GraphicsDevice.Viewport);
             _collisionManager = new CollisionManager();
-            //mapLoader = new TextFileMapLoader();
+
             IMapReader tilemapReader = new FileTilemapReader();
             mapLoader = new TextFileMapLoader(tilemapReader);
-            tileMap = mapLoader.Load("Content/Tilemap.txt");
 
             collisionLoader = new CollisionLoader(_collisionManager, 32);
-            collisionLoader.LoadCollidables(tileMap);
             entities = new List<IEntity>();
+
+            healthRenderer = new HealthRenderer(gameAssets, new Vector2(10, 10));
+
+            gameStateManager = new GameStateManager(this, gameAssets);
+            gameResetHandler = new GameResetHandler(this, gameAssets, mapLoader, _collisionManager, collisionLoader, playerFactory, gameStateManager, enemySpawner, entities);
+
+            playerDeathHandler = new PlayerDeathHandler(gameStateManager, gameResetHandler, gameAssets);
+
 
             base.Initialize();
         }
@@ -84,23 +90,14 @@ namespace GameDevProject
             {
                 tiles[i] = Content.Load<Texture2D>("tileMapTextures" + (i));
             }
-;
+            tileMap = mapLoader.Load("Content/Tilemap.txt");
+            collisionLoader.LoadCollidables(tileMap);
+
             playerFactory = new PlayerFactory();
-            TextureAsset playerTexture = gameAssets.GetAsset("player") as TextureAsset;
-            player = playerFactory.CreatePlayer(playerTexture.Texture, new Vector2(800, 800));
+            player = playerFactory.CreatePlayer(gameAssets.GetTexture("player"), new Vector2(800, 800));
             enemySpawner = new EnemySpawner(Content, 1600, 1600, player.Position);
             entities = enemySpawner.Spawn(1);
 
-            TextureAsset mainMenuBackground = gameAssets.GetAsset("backgroundmenu") as TextureAsset;
-
-            TextureAsset heartTextureFull = gameAssets.GetAsset("heartFull") as TextureAsset;
-            TextureAsset heartTextureEmpty = gameAssets.GetAsset("heartEmpty") as TextureAsset;
-            healthRenderer = new HealthRenderer(gameAssets, new Vector2(10,10));
-
-            gameStateManager = new GameStateManager(this, gameAssets);
-            gameResetHandler = new GameResetHandler(this, gameAssets, mapLoader, _collisionManager, collisionLoader, playerFactory, gameStateManager, enemySpawner, entities);
-
-            playerDeathHandler = new PlayerDeathHandler(gameStateManager, gameResetHandler,gameAssets);
             playerDeathHandler.HandleDeath(player);
 
             #region debug 
