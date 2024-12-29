@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
 namespace GameDevProject.Collisions
@@ -28,6 +29,14 @@ namespace GameDevProject.Collisions
         public void UpdateCollidable(ICollidable collidable, Rectangle newBounds)
         {
             collidable.Bounds = newBounds;
+        }
+
+        public void DrawCollidables(SpriteBatch spriteBatch, Texture2D debugTexture)
+        {
+            foreach (var collidable in collidables)
+            {
+                spriteBatch.Draw(debugTexture, collidable.GetBoundingBox(), Color.Green);
+            }
         }
     }
 }

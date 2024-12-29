@@ -80,6 +80,7 @@ namespace GameDevProject.GameStates
                 entity.Draw(_spriteBatch);
             }
             game.player.Draw(_spriteBatch);
+            game._collisionManager.DrawCollidables(_spriteBatch, gameAssets.GetTexture("debug"));
             _spriteBatch.End();
             _spriteBatch.Begin();
             game.healthRenderer.Draw(_spriteBatch, game.player.Health, game.player.MaxHealth);
