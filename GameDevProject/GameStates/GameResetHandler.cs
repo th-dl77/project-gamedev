@@ -35,7 +35,6 @@ namespace GameDevProject.GameStates
         {
             game.entities.Clear();
             collisionManager.collidables.Clear();
-            enemies.AddRange(enemySpawner.Spawn(1));
 
             string[,] tileMap = mapLoader.Load("Content/Tilemap.txt");
             collisionLoader.LoadCollidables(tileMap);

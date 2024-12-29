@@ -2,7 +2,6 @@
 using GameDevProject.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Numerics;
 
 
 namespace GameDevProject.GameStates
@@ -10,25 +9,26 @@ namespace GameDevProject.GameStates
     public class PlayingState : IGameState
     {
         public GameAssets gameAssets;
+        public EnemySpawner enemySpawner;
         private int currentLevel;
         public PlayingState(Game1 game, GameAssets gameAssets)
         {
             camera = game._camera;
             currentLevel = 0;
             this.gameAssets = gameAssets;
+            enemySpawner = new EnemySpawner(game.Content, 1600, 1600, game.player.Position);
         }
 
         private Camera camera;
         public void Update(Game1 game, GameTime gameTime)
         {
-            EnemySpawner enemySpawner = new EnemySpawner(game.Content, 1600, 1600, game.player.Position);
             if (game.gameStateManager.AllEnemiesDead(game.entities))
             {
                 currentLevel++;
                 if (currentLevel == 4)
                 {
                     game.gameStateManager.ChangeGameState(new VictoryState(gameAssets, gameAssets.GetTexture("mainMenuBackground"), game.gameStateManager, game.gameResetHandler));
-                    currentLevel = 1;
+                    currentLevel = 0;
                 }
                 else
                     game.entities = enemySpawner.Spawn(currentLevel);

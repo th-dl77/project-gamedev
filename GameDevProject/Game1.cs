@@ -72,6 +72,9 @@ namespace GameDevProject
 
             healthRenderer = new HealthRenderer(gameAssets, new Vector2(10, 10));
 
+            playerFactory = new PlayerFactory();
+            player = playerFactory.CreatePlayer(gameAssets.GetTexture("player"), new Vector2(800, 800));
+
             gameStateManager = new GameStateManager(this, gameAssets);
             gameResetHandler = new GameResetHandler(this, gameAssets, mapLoader, _collisionManager, collisionLoader, playerFactory, gameStateManager, enemySpawner, entities);
 
@@ -93,8 +96,6 @@ namespace GameDevProject
             tileMap = mapLoader.Load("Content/Tilemap.txt");
             collisionLoader.LoadCollidables(tileMap);
 
-            playerFactory = new PlayerFactory();
-            player = playerFactory.CreatePlayer(gameAssets.GetTexture("player"), new Vector2(800, 800));
 
             playerDeathHandler.HandleDeath(player);
 

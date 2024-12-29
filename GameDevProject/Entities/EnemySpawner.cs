@@ -26,11 +26,11 @@ namespace GameDevProject.Entities
             switch (level)
             {
                 case 1:
-                    return SpawnLevel(1);
+                    return SpawnLevel(10);
                 case 2:
-                    return SpawnLevel(1);
+                    return SpawnLevel(20);
                 case 3:
-                    return SpawnLevel(3);
+                    return SpawnLevel(30);
                 default:
                     throw new System.Exception();
             }
@@ -62,13 +62,13 @@ namespace GameDevProject.Entities
                 float y = random.Next(0, spawnAreaHeight);
 
                 spawnPosition = new Vector2(x, y);
-                if (Vector2.Distance(spawnPosition,playerPosition)>= minDistance)
+                if (Vector2.Distance(spawnPosition, playerPosition) >= minDistance)
                 {
                     return spawnPosition;
                 }
             }
             // if no valid spawn is found; return middle of the map
-            return new Vector2(800, 800);
+            return new Vector2(1000, 1000);
         }
     }
 }
