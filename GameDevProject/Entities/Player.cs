@@ -27,7 +27,7 @@ namespace GameDevProject.Entities
         private float deathTimer { get; set; }
         
         public Vector2 Velocity;
-        public Vector2 Position { get; private set; }
+        public Vector2 Position { get; set; }
         private float Speed { get; set; } = 10f;
         public float Scale { get; private set; } = 2f;
 
@@ -70,7 +70,7 @@ namespace GameDevProject.Entities
             Position = startPosition;
         }
 
-        public void Update(GameTime gameTime, CollisionManager collisionManager)
+        public void Update(GameTime gameTime, CollisionManager collisionManager, List<IEntity> entities)
         {
             if (!isDead)
             {
@@ -110,8 +110,9 @@ namespace GameDevProject.Entities
                 }
             }
             Vector2 proposedPosition = Position + Velocity * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Vector2 resolvedPosition = collisionManager.CheckCollision(Position,proposedPosition,Bounds.Height, Bounds.Width);
+            Vector2 resolvedPosition = collisionManager.CheckCollision(Position, proposedPosition, Bounds.Height, Bounds.Width);
             Position = resolvedPosition;
+            collisionManager.ResolvePlayerCollisions(this, entities);
             currentAnimation.Update(gameTime);
         }
         private void HandleInput(GameTime gameTime)
@@ -198,22 +199,23 @@ namespace GameDevProject.Entities
         public void DrawBounds(SpriteBatch spriteBatch, Texture2D debugTexture)
         {
             spriteBatch.Draw(debugTexture, Bounds, Color.Blue * 0.5f);
+            spriteBatch.Draw(debugTexture, GetSwordHitbox(), Color.Red * 0.5f);
         }
 
         public Rectangle GetSwordHitbox()
         {
-            int swordHeight = 40;
-            int swordWidth = 20;
+            int swordHeight = 60;
+            int swordWidth = 30;
 
             Rectangle swordHitbox = new Rectangle();
 
             if (_currentFlipEffect == SpriteEffects.FlipHorizontally)
             {
-                swordHitbox = new Rectangle((int)Position.X - swordWidth, (int)Position.Y, swordWidth, swordHeight);
+                swordHitbox = new Rectangle((int)Position.X+25 - swordWidth, (int)Position.Y+45, swordWidth, swordHeight);
             }
             else
             {
-                swordHitbox = new Rectangle((int)Position.X + Bounds.Width, (int)Position.Y, swordWidth, swordHeight);
+                swordHitbox = new Rectangle((int)Position.X+25 + Bounds.Width, (int)Position.Y+45, swordWidth, swordHeight);
             }
 
             return swordHitbox;

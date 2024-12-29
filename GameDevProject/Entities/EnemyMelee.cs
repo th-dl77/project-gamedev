@@ -55,7 +55,7 @@ namespace GameDevProject.Entities
         public override void CheckRange(Player player, GameTime gameTime)
         {
             float distanceToPlayer = Vector2.Distance(player.Position,this.Position);
-            if (distanceToPlayer <50 && !player.isDead)
+            if (distanceToPlayer <80 && !player.isDead)
             {
                 if (!isHitting)
                 {
@@ -90,7 +90,6 @@ namespace GameDevProject.Entities
             {
                 _currentAnimation.Draw(spriteBatch, Position, flip);
             }
-            spriteBatch.Draw(gameAssets.GetTexture("debug"), Bounds, Color.Aqua);
         }
     }
 }

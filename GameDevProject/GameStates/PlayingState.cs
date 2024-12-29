@@ -34,10 +34,10 @@ namespace GameDevProject.GameStates
                 else
                 {
                     game.entities = enemySpawner.Spawn(currentLevel);
-                    game.collisionLoader.LoadEnemyCollidables(game.entities);
+                    //game.collisionLoader.LoadEnemyCollidables(game.entities);
                 }
             }
-            game.player.Update(gameTime, game._collisionManager);
+            game.player.Update(gameTime, game._collisionManager, game.entities);
             foreach (var entity in game.entities)
             {
                 entity.Update(gameTime, game.player);
@@ -80,7 +80,9 @@ namespace GameDevProject.GameStates
                 entity.Draw(_spriteBatch);
             }
             game.player.Draw(_spriteBatch);
-            game._collisionManager.DrawCollidables(_spriteBatch, gameAssets.GetTexture("debug"));
+            //debug
+            //game.player.DrawBounds(_spriteBatch, gameAssets.GetTexture("debug"));
+            //game._collisionManager.DrawCollidables(_spriteBatch, gameAssets.GetTexture("debug"));
             _spriteBatch.End();
             _spriteBatch.Begin();
             game.healthRenderer.Draw(_spriteBatch, game.player.Health, game.player.MaxHealth);

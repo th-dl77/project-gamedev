@@ -34,8 +34,8 @@ namespace GameDevProject.Entities
         public virtual Rectangle GetBounds()
         {
             return new Rectangle(
-                (int)Position.X,
-                (int)Position.Y,
+                (int)Position.X+25,
+                (int)Position.Y+45,
                 (int)_currentAnimation._spriteSheet.FrameWidth,
                 (int)_currentAnimation._spriteSheet.FrameHeight
             );

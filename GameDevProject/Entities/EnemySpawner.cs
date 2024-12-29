@@ -54,7 +54,7 @@ namespace GameDevProject.Entities
                 entities.Add(enemyFactory.CreateSlimeEnemy(GetRandomSpawnPosition(playerPos, 200)));
                 entities.Add(enemyFactory.CreateBatEnemy(GetRandomSpawnPosition(playerPos, 400)));
             }
-            collisionLoader.LoadEnemyCollidables(entities);
+            //collisionLoader.LoadEnemyCollidables(entities);
             return entities;
         }
         public Vector2 GetRandomSpawnPosition(Vector2 playerPosition, float minDistance)

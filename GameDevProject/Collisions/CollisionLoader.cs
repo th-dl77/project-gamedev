@@ -30,13 +30,6 @@ namespace GameDevProject.Collisions
                 }
             }
         }
-        public void LoadEnemyCollidables(List<IEntity> entities)
-        {
-            foreach (var entity in entities)
-            {
-                _collisionManager.AddCollidable(entity.CollidableObject);
-            }
-        }
 
         public void UpdateEnemyCollidables(List<IEntity> enemies)
         {
