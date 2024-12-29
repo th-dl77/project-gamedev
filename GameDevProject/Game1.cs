@@ -7,6 +7,7 @@ using GameDevProject.Entities;
 using GameDevProject.Map;
 using GameDevProject.GameStates;
 using System.Net.NetworkInformation;
+using GameDevProject.Assets;
 
 namespace GameDevProject
 {
@@ -37,6 +38,8 @@ namespace GameDevProject
 
         public HealthRenderer healthRenderer;
 
+        public GameAssets gameAssets;
+
         public List<IEntity> entities;
         private EnemyFactory enemyFactory;
 
@@ -62,12 +65,15 @@ namespace GameDevProject
             _graphics.PreferredBackBufferHeight = 800;
             _graphics.ApplyChanges();
 
+            gameAssets = new GameAssets(Content.Load<Texture2D>("buttonTemplate"), Content.Load<SpriteFont>("Font1"), Content.Load<Texture2D>("deathScreen"), Content.Load<Texture2D>("char_red_1"));
+
             _camera = new Camera(GraphicsDevice.Viewport);
             _collisionManager = new CollisionManager();
             //mapLoader = new TextFileMapLoader();
             IMapReader tilemapReader = new FileTilemapReader();
             mapLoader = new TextFileMapLoader(tilemapReader);
             tileMap = mapLoader.Load("Content/Tilemap.txt");
+
             collisionLoader = new CollisionLoader(_collisionManager, 32);
             collisionLoader.LoadCollidables(tileMap);
             entities = new List<IEntity>();
@@ -88,10 +94,9 @@ namespace GameDevProject
             {
                 tiles[i] = Content.Load<Texture2D>("tileMapTextures" + (i));
             }
-
-            Texture2D spriteSheetTexture = Content.Load<Texture2D>("char_red_1");
+;
             playerFactory = new PlayerFactory();
-            player = playerFactory.CreatePlayer(spriteSheetTexture, new Vector2(800, 800));
+            player = playerFactory.CreatePlayer(gameAssets.PlayerTexture, new Vector2(800, 800));
             enemySpawner = new EnemySpawner(Content, 1600, 1600, player.Position);
             entities = enemySpawner.Spawn(1);
 
@@ -102,7 +107,7 @@ namespace GameDevProject
             healthRenderer = new HealthRenderer(heartTextureFull, heartTextureEmpty, new Vector2(10,10));
 
             gameStateManager = new GameStateManager(this);
-            gameResetHandler = new GameResetHandler(this, spriteSheetTexture, mapLoader, _collisionManager, collisionLoader, playerFactory, enemyFactory, buttonTexture, font, deathScreenBackground, gameStateManager, enemySpawner, entities);
+            gameResetHandler = new GameResetHandler(this, gameAssets, mapLoader, _collisionManager, collisionLoader, playerFactory, enemyFactory, gameStateManager, enemySpawner, entities);
 
             playerDeathHandler = new PlayerDeathHandler(gameStateManager, gameResetHandler);
             playerDeathHandler.HandleDeath(player, buttonTexture, font, deathScreenBackground);
