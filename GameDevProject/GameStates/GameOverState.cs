@@ -9,18 +9,13 @@ namespace GameDevProject.GameStates
 {
     public class GameOverState : IGameState
     {
-        private TextureAsset buttonTexture;
-        private SpriteFont font;
         private Player newPlayer;
         private Rectangle resetButtonHitBox;
-        private TextureAsset deathScreenBackground;
         private UIManager uiManager;
         private GameStateManager gameStateManager;
         private GameResetHandler gameResetHandler;
 
         private GameAssets gameAssets;
-
-        private Texture2D _debugTexture;
 
         public GameOverState(GameAssets gameAssets,GameStateManager gameStateManager, GameResetHandler gameResetHandler)
         {
@@ -30,7 +25,6 @@ namespace GameDevProject.GameStates
 
             uiManager = new UIManager(gameAssets.GetTexture("buttonTexture"), gameAssets.GetFont("font"));
             resetButtonHitBox = new Rectangle(250, 310, 300, 140);
-
         }
         public void Update(Game1 game, GameTime gameTime)
         {
@@ -50,8 +44,7 @@ namespace GameDevProject.GameStates
             spriteBatch.DrawString(gameAssets.GetFont("font"), "You Died!", new Vector2(285,200), Color.DarkRed);
             spriteBatch.Draw(gameAssets.GetTexture("buttonTexture"), new Vector2(250,310), new Rectangle(0, 0, 200, 200), Color.White, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
             spriteBatch.DrawString(gameAssets.GetFont("font"), "Reset", new Vector2(310, 340), Color.Black);
-            spriteBatch.End();
-                
+            spriteBatch.End();  
         }
     }
 }

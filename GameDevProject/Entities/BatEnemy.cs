@@ -7,8 +7,6 @@ namespace GameDevProject.Entities
     public class BatEnemy : PatrollingEnemy
     {
         private SpriteEffects flip = SpriteEffects.None;
-        protected float swingTimer = 0f;
-        protected const float swingDuration = 1f;
         private List<Vector2> patrolPoints;
         private int currentPatrolIndex;
         private float patrolThreshold = 10f;

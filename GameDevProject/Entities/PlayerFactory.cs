@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using GameDevProject.Input;
-using System.Net.Mime;
 
 namespace GameDevProject.Entities
 {

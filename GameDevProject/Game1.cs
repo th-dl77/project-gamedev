@@ -6,7 +6,6 @@ using GameDevProject.Collisions;
 using GameDevProject.Entities;
 using GameDevProject.Map;
 using GameDevProject.GameStates;
-using System.Net.NetworkInformation;
 using GameDevProject.Assets;
 
 namespace GameDevProject
@@ -36,7 +35,6 @@ namespace GameDevProject
         public GameAssets gameAssets;
 
         public List<IEntity> entities;
-        private EnemyFactory enemyFactory;
 
         public GameStateManager gameStateManager;
         private PlayerFactory playerFactory;
@@ -100,7 +98,7 @@ namespace GameDevProject
             healthRenderer = new HealthRenderer(gameAssets, new Vector2(10,10));
 
             gameStateManager = new GameStateManager(this, gameAssets);
-            gameResetHandler = new GameResetHandler(this, gameAssets, mapLoader, _collisionManager, collisionLoader, playerFactory, enemyFactory, gameStateManager, enemySpawner, entities);
+            gameResetHandler = new GameResetHandler(this, gameAssets, mapLoader, _collisionManager, collisionLoader, playerFactory, gameStateManager, enemySpawner, entities);
 
             playerDeathHandler = new PlayerDeathHandler(gameStateManager, gameResetHandler,gameAssets);
             playerDeathHandler.HandleDeath(player);

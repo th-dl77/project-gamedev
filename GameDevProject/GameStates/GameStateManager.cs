@@ -10,12 +10,10 @@ namespace GameDevProject.GameStates
     {
         private Game1 game;
         public IGameState currentGameState;
-        private GameAssets gameAssets;
 
         public GameStateManager(Game1 game, GameAssets gameAssets)
         {
             this.game = game;
-            this.gameAssets = gameAssets;
             currentGameState = new StartMenuState(gameAssets, gameAssets.GetTexture("mainMenuBackground"));
         }
         public void Update(GameTime gameTime)

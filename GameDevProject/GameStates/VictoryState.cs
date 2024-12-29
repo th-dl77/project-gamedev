@@ -1,6 +1,4 @@
-﻿
-
-using GameDevProject.Entities;
+﻿using GameDevProject.Entities;
 using GameDevProject.UI;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -18,8 +16,6 @@ namespace GameDevProject.GameStates
         private UIManager uiManager;
         private GameStateManager gameStateManager;
         private GameResetHandler gameResetHandler;
-
-        private Texture2D _debugTexture;
 
         public VictoryState(GameAssets gameAssets, Texture2D backGround, GameStateManager gameStateManager, GameResetHandler gameResetHandler)
         {

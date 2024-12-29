@@ -1,13 +1,8 @@
 ﻿using GameDevProject.Collisions;
 using GameDevProject.Entities;
 using GameDevProject.Map;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GameDevProject.Assets;
 
 namespace GameDevProject.GameStates
@@ -24,7 +19,7 @@ namespace GameDevProject.GameStates
         private Game1 game;
 
         private GameAssets gameAssets;
-        public GameResetHandler(Game1 game, GameAssets gameAssets, IMapLoader mapLoader, CollisionManager collisionManager, CollisionLoader collisionLoader, PlayerFactory playerFactory, EnemyFactory enemyFactory, GameStateManager gameStateManager, EnemySpawner enemySpawner, List<IEntity> entities)
+        public GameResetHandler(Game1 game, GameAssets gameAssets, IMapLoader mapLoader, CollisionManager collisionManager, CollisionLoader collisionLoader, PlayerFactory playerFactory, GameStateManager gameStateManager, EnemySpawner enemySpawner, List<IEntity> entities)
         {
             this.playerFactory = playerFactory;
             this.mapLoader = mapLoader;
@@ -33,6 +28,7 @@ namespace GameDevProject.GameStates
             this.collisionLoader = collisionLoader;
             this.game = game;
             this.enemies = entities;
+            this.gameAssets = gameAssets;
             this.enemySpawner = enemySpawner;
         }
         public Player ResetGame()

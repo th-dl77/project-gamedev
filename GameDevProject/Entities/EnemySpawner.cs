@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System;
-using System.Runtime.Intrinsics;
 
 
 namespace GameDevProject.Entities
@@ -28,10 +27,8 @@ namespace GameDevProject.Entities
             {
                 case 1:
                     return SpawnLevelOne();
-                    break;
                 default:
                     throw new System.Exception();
-                    break;
             }
         }
         private List<IEntity> SpawnLevelOne()
