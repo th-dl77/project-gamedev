@@ -26,22 +26,30 @@ namespace GameDevProject.Entities
             switch (level)
             {
                 case 1:
-                    return SpawnLevelOne();
+                    return SpawnLevel(1);
+                case 2:
+                    return SpawnLevel(1);
+                case 3:
+                    return SpawnLevel(3);
                 default:
                     throw new System.Exception();
             }
         }
-        private List<IEntity> SpawnLevelOne()
+        private List<IEntity> SpawnLevel(int enemyCount)
         {
             List<IEntity> entities = new List<IEntity>();
 
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < enemyCount; i++)
             {
                 entities.Add(enemyFactory.CreateSkeletonEnemy(GetRandomSpawnPosition(playerPos, 200)));
+                entities.Add(enemyFactory.CreateGolemEnemy(GetRandomSpawnPosition(playerPos, 400), new List<Vector2>() { new Vector2(100, 200), new Vector2(200, 100), new Vector2(240, 300) }));
             }
-            entities.Add(enemyFactory.CreateSlimeEnemy(GetRandomSpawnPosition(playerPos, 300)));
-            entities.Add(enemyFactory.CreateBatEnemy(GetRandomSpawnPosition(playerPos, 200)));
-            entities.Add(enemyFactory.CreateGolemEnemy(GetRandomSpawnPosition(playerPos, 400), new List<Vector2>() { new Vector2(100,200), new Vector2(200,100), new Vector2(240,300)}));
+            for (int i = 0; i < enemyCount/2; i++)
+            {
+                entities.Add(enemyFactory.CreateSlimeEnemy(GetRandomSpawnPosition(playerPos, 200)));
+                entities.Add(enemyFactory.CreateBatEnemy(GetRandomSpawnPosition(playerPos, 400)));
+            }
+
             return entities;
         }
         public Vector2 GetRandomSpawnPosition(Vector2 playerPosition, float minDistance)

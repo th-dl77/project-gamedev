@@ -1,6 +1,8 @@
 ﻿using GameDevProject.Assets;
+using GameDevProject.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Numerics;
 
 
 namespace GameDevProject.GameStates
@@ -8,16 +10,29 @@ namespace GameDevProject.GameStates
     public class PlayingState : IGameState
     {
         public GameAssets gameAssets;
+        private int currentLevel;
         public PlayingState(Game1 game, GameAssets gameAssets)
         {
             camera = game._camera;
+            currentLevel = 0;
             this.gameAssets = gameAssets;
         }
 
         private Camera camera;
         public void Update(Game1 game, GameTime gameTime)
         {
-
+            EnemySpawner enemySpawner = new EnemySpawner(game.Content, 1600, 1600, game.player.Position);
+            if (game.gameStateManager.AllEnemiesDead(game.entities))
+            {
+                currentLevel++;
+                if (currentLevel == 4)
+                {
+                    game.gameStateManager.ChangeGameState(new VictoryState(gameAssets, gameAssets.GetTexture("mainMenuBackground"), game.gameStateManager, game.gameResetHandler));
+                    currentLevel = 1;
+                }
+                else
+                    game.entities = enemySpawner.Spawn(currentLevel);
+            }
             game.player.Update(gameTime, game._collisionManager);
             foreach (var entity in game.entities)
             {
@@ -35,10 +50,6 @@ namespace GameDevProject.GameStates
                         entity.Die(gameTime);
                     }
                 }
-            }
-            if (game.gameStateManager.AllEnemiesDead(game.entities))
-            {
-                game.gameStateManager.ChangeGameState(new VictoryState(gameAssets, gameAssets.GetTexture("mainMenuBackground"), game.gameStateManager, game.gameResetHandler));
             }
         }
         public void Draw(Game1 game, GameTime gameTime)

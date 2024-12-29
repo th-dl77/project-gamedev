@@ -95,8 +95,6 @@ namespace GameDevProject
 
             playerFactory = new PlayerFactory();
             player = playerFactory.CreatePlayer(gameAssets.GetTexture("player"), new Vector2(800, 800));
-            enemySpawner = new EnemySpawner(Content, 1600, 1600, player.Position);
-            entities = enemySpawner.Spawn(1);
 
             playerDeathHandler.HandleDeath(player);
 
