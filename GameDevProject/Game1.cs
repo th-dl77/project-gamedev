@@ -42,6 +42,7 @@ namespace GameDevProject
 
         public GameStateManager gameStateManager;
         private PlayerFactory playerFactory;
+        private PlayerDeathHandler playerDeathHandler;
 
         public Player player;
 
@@ -99,9 +100,12 @@ namespace GameDevProject
             mainMenuBackground = Content.Load<Texture2D>("backgroundMenu");
             deathScreenBackground = Content.Load<Texture2D>("deathScreen");
             healthRenderer = new HealthRenderer(heartTextureFull, heartTextureEmpty, new Vector2(10,10));
+
             gameStateManager = new GameStateManager(this);
-            gameResetHandler = new GameResetHandler(this, spriteSheetTexture, mapLoader, _collisionManager, collisionLoader, playerFactory,enemyFactory,buttonTexture,font,deathScreenBackground,gameStateManager, enemySpawner, entities);
-            player.OnDeath += () => gameStateManager.ChangeGameState(new GameOverState(buttonTexture,font,deathScreenBackground,gameStateManager,gameResetHandler));
+            gameResetHandler = new GameResetHandler(this, spriteSheetTexture, mapLoader, _collisionManager, collisionLoader, playerFactory, enemyFactory, buttonTexture, font, deathScreenBackground, gameStateManager, enemySpawner, entities);
+
+            playerDeathHandler = new PlayerDeathHandler(gameStateManager, gameResetHandler);
+            playerDeathHandler.HandleDeath(player, buttonTexture, font, deathScreenBackground);
 
             #region debug 
             _debugTexture = new Texture2D(GraphicsDevice, 1, 1);
