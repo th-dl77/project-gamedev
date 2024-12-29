@@ -6,6 +6,7 @@ using GameDevProject.Collisions;
 using GameDevProject.Entities;
 using GameDevProject.Map;
 using GameDevProject.GameStates;
+using System.Net.NetworkInformation;
 
 namespace GameDevProject
 {
@@ -60,7 +61,6 @@ namespace GameDevProject
             _graphics.PreferredBackBufferHeight = 800;
             _graphics.ApplyChanges();
 
-            enemySpawner = new EnemySpawner(Content);
             _camera = new Camera(GraphicsDevice.Viewport);
             _collisionManager = new CollisionManager();
             //mapLoader = new TextFileMapLoader();
@@ -88,11 +88,11 @@ namespace GameDevProject
                 tiles[i] = Content.Load<Texture2D>("tileMapTextures" + (i));
             }
 
-            entities = enemySpawner.Spawn(1);
-
             Texture2D spriteSheetTexture = Content.Load<Texture2D>("char_red_1");
             playerFactory = new PlayerFactory();
             player = playerFactory.CreatePlayer(spriteSheetTexture, new Vector2(800, 800));
+            enemySpawner = new EnemySpawner(Content, 1600, 1600, player.Position);
+            entities = enemySpawner.Spawn(1);
 
             buttonTexture = Content.Load<Texture2D>("buttonTemplate");
 
