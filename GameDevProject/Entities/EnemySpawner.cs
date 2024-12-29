@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System;
+using GameDevProject.Collisions;
+using System.Runtime.CompilerServices;
 
 
 namespace GameDevProject.Entities
@@ -12,13 +14,15 @@ namespace GameDevProject.Entities
         private Random random = new Random();
         private int spawnAreaWidth;
         private int spawnAreaHeight;
+        private CollisionLoader collisionLoader;
         private Vector2 playerPos;
 
-        public EnemySpawner(ContentManager content, int spawnAreaWidth, int spawnAreaHeight, Vector2 playerPos)
+        public EnemySpawner(ContentManager content, int spawnAreaWidth, int spawnAreaHeight, Vector2 playerPos, CollisionLoader collisionLoader)
         {
             enemyFactory = new EnemyFactory(content);
             this.spawnAreaWidth = spawnAreaWidth;
             this.spawnAreaHeight = spawnAreaHeight;
+            this.collisionLoader = collisionLoader;
             this.playerPos = playerPos;
         }
         public List<IEntity> Spawn(int level)
@@ -49,7 +53,7 @@ namespace GameDevProject.Entities
                 entities.Add(enemyFactory.CreateSlimeEnemy(GetRandomSpawnPosition(playerPos, 200)));
                 entities.Add(enemyFactory.CreateBatEnemy(GetRandomSpawnPosition(playerPos, 400)));
             }
-
+            collisionLoader.LoadEnemyCollidables(entities);
             return entities;
         }
         public Vector2 GetRandomSpawnPosition(Vector2 playerPosition, float minDistance)

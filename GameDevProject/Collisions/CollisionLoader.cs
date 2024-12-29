@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameDevProject.Entities;
+using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace GameDevProject.Collisions
 {
@@ -26,6 +28,14 @@ namespace GameDevProject.Collisions
                         _collisionManager.AddCollidable(new CollidableObject(tileBoundingBox, true));
                     }
                 }
+            }
+        }
+        public void LoadEnemyCollidables(List<IEntity> entities)
+        {
+            foreach (var entity in entities)
+            {
+                Rectangle enemyBounds = entity.Bounds;
+                _collisionManager.AddCollidable(new CollidableObject(enemyBounds, false));
             }
         }
     }

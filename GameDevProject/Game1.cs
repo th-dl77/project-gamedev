@@ -28,7 +28,7 @@ namespace GameDevProject
         public GameResetHandler gameResetHandler;
 
         public CollisionManager _collisionManager;
-        private CollisionLoader collisionLoader;
+        public CollisionLoader collisionLoader;
 
         public HealthRenderer healthRenderer;
 
@@ -95,7 +95,6 @@ namespace GameDevProject
             }
             tileMap = mapLoader.Load("Content/Tilemap.txt");
             collisionLoader.LoadCollidables(tileMap);
-
 
             playerDeathHandler.HandleDeath(player);
 
