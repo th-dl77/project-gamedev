@@ -20,8 +20,8 @@ namespace GameDevProject.GameStates
             this.backgroundTexture = backgroundTexture;
             uiManager = new UIManager(gameAssets.GetTexture("buttonTexture"), gameAssets.GetFont("font"));
 
-            playButtonHitBox = new Rectangle(215, 285, 300, 140);
-            exitButtonHitBox = new Rectangle(215, 485, 300, 140);
+            playButtonHitBox = new Rectangle(235, 220, 280, 140);
+            exitButtonHitBox = new Rectangle(235, 420, 280, 140);
         }
         public void Update(Game1 game, GameTime gameTime)
         {
@@ -47,12 +47,11 @@ namespace GameDevProject.GameStates
             Vector2 buttonPosition2 = new Vector2(215, 400);
             _spriteBatch.Draw(gameAssets.GetTexture("buttonTexture"), buttonPosition2, new Rectangle(0, 0, 200, 200), Color.White, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
             _spriteBatch.DrawString(gameAssets.GetFont("font"), "Exit", new Vector2(300, 425), Color.Black);
-
-            /*debug hitboxes
+            /*
             Rectangle button1Hitbox = new Rectangle((int)buttonPosition1.X, (int)buttonPosition1.Y, 300, 140);
             Rectangle button2Hitbox = new Rectangle((int)buttonPosition2.X, (int)buttonPosition2.Y, 300, 140);
-            _spriteBatch.Draw(_debugTexture, button1Hitbox, Color.Green);
-            _spriteBatch.Draw(_debugTexture, button2Hitbox, Color.Red);
+            _spriteBatch.Draw(gameAssets.GetTexture("debug"), playButtonHitBox, Color.Green);
+            _spriteBatch.Draw(gameAssets.GetTexture("debug"), exitButtonHitBox, Color.Red);
             */
             _spriteBatch.End();
         }

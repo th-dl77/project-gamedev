@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
@@ -8,9 +9,15 @@ namespace GameDevProject.Assets
     {
         private Dictionary<string, IAsset> assets;
 
-        public GameAssets()
+        public GameAssets(GraphicsDevice graphicsDevice)
         {
             assets = new Dictionary<string, IAsset>();
+
+            Texture2D debugTexture = new Texture2D(graphicsDevice, 1, 1);
+            TextureAsset debugTextureAsset = new TextureAsset(debugTexture);
+            debugTexture.SetData(new[] { Color.Green });
+
+            AddAsset("debug", debugTextureAsset);
         }
 
         public void LoadContent(ContentManager content)

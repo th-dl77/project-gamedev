@@ -58,7 +58,7 @@ namespace GameDevProject
             _graphics.PreferredBackBufferHeight = 800;
             _graphics.ApplyChanges();
 
-            gameAssets = new GameAssets();
+            gameAssets = new GameAssets(GraphicsDevice);
             gameAssets.LoadContent(Content);
 
             _camera = new Camera(GraphicsDevice.Viewport);
