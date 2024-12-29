@@ -16,10 +16,7 @@ namespace GameDevProject
         private GraphicsDeviceManager _graphics;
         public SpriteBatch _spriteBatch;
 
-        public SpriteFont font;
-        public Texture2D buttonTexture;
         public Texture2D mainMenuBackground;
-        public Texture2D deathScreenBackground;
 
         public EnemySpawner enemySpawner;
 
@@ -88,7 +85,6 @@ namespace GameDevProject
             Texture2D heartTextureFull = Content.Load<Texture2D>("heartFull");
             Texture2D heartTextureEmpty = Content.Load<Texture2D>("heartEmpty");
 
-            font = Content.Load<SpriteFont>("Font1");
             tiles = new Texture2D[5];
             for (int i = 0; i < tiles.Length; i++)
             {
@@ -100,17 +96,14 @@ namespace GameDevProject
             enemySpawner = new EnemySpawner(Content, 1600, 1600, player.Position);
             entities = enemySpawner.Spawn(1);
 
-            buttonTexture = Content.Load<Texture2D>("buttonTemplate");
-
             mainMenuBackground = Content.Load<Texture2D>("backgroundMenu");
-            deathScreenBackground = Content.Load<Texture2D>("deathScreen");
             healthRenderer = new HealthRenderer(heartTextureFull, heartTextureEmpty, new Vector2(10,10));
 
-            gameStateManager = new GameStateManager(this);
+            gameStateManager = new GameStateManager(this, gameAssets);
             gameResetHandler = new GameResetHandler(this, gameAssets, mapLoader, _collisionManager, collisionLoader, playerFactory, enemyFactory, gameStateManager, enemySpawner, entities);
 
-            playerDeathHandler = new PlayerDeathHandler(gameStateManager, gameResetHandler);
-            playerDeathHandler.HandleDeath(player, buttonTexture, font, deathScreenBackground);
+            playerDeathHandler = new PlayerDeathHandler(gameStateManager, gameResetHandler,gameAssets);
+            playerDeathHandler.HandleDeath(player);
 
             #region debug 
             _debugTexture = new Texture2D(GraphicsDevice, 1, 1);

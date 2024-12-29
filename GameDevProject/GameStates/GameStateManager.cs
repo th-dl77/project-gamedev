@@ -1,4 +1,5 @@
-﻿using GameDevProject.Entities;
+﻿using GameDevProject.Assets;
+using GameDevProject.Entities;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,11 +10,13 @@ namespace GameDevProject.GameStates
     {
         private Game1 game;
         public IGameState currentGameState;
+        private GameAssets gameAssets;
 
-        public GameStateManager(Game1 game)
+        public GameStateManager(Game1 game, GameAssets gameAssets)
         {
             this.game = game;
-            currentGameState = new StartMenuState(game.buttonTexture, game.font, game.mainMenuBackground);
+            this.gameAssets = gameAssets;
+            currentGameState = new StartMenuState(gameAssets, game.mainMenuBackground);
         }
         public void Update(GameTime gameTime)
         {

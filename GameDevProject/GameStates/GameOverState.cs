@@ -1,4 +1,5 @@
-﻿using GameDevProject.Entities;
+﻿using GameDevProject.Assets;
+using GameDevProject.Entities;
 using GameDevProject.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,13 +18,13 @@ namespace GameDevProject.GameStates
         private GameStateManager gameStateManager;
         private GameResetHandler gameResetHandler;
 
+        private GameAssets gameAssets;
+
         private Texture2D _debugTexture;
 
-        public GameOverState(Texture2D buttonTexture, SpriteFont font,Texture2D deathScreenBackground, GameStateManager gameStateManager, GameResetHandler gameResetHandler)
+        public GameOverState(GameAssets gameAssets,GameStateManager gameStateManager, GameResetHandler gameResetHandler)
         {
-            this.buttonTexture = buttonTexture;
-            this.font = font;
-            this.deathScreenBackground = deathScreenBackground;
+            this.gameAssets = gameAssets;
             this.gameStateManager = gameStateManager;
             this.gameResetHandler = gameResetHandler;
             uiManager = new UIManager(buttonTexture, font);
@@ -38,16 +39,16 @@ namespace GameDevProject.GameStates
             {
                 newPlayer = gameResetHandler.ResetGame();
                 game.player = newPlayer;
-                gameStateManager.ChangeGameState(new PlayingState(game));
+                gameStateManager.ChangeGameState(new PlayingState(game, gameAssets));
             }
         }
         public void Draw(Game1 game, GameTime gameTime)
         {
             SpriteBatch spriteBatch = game._spriteBatch;
             spriteBatch.Begin();
-            spriteBatch.Draw(deathScreenBackground, new Rectangle(0,0,800,800), Color.White);
-            spriteBatch.DrawString(font, "You Died!", new Vector2(285,200), Color.DarkRed);
-            spriteBatch.Draw(buttonTexture, new Vector2(250,310), new Rectangle(0, 0, 200, 200), Color.White, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(gameAssets.DeathScreenBackground, new Rectangle(0,0,800,800), Color.White);
+            spriteBatch.DrawString(gameAssets.Font, "You Died!", new Vector2(285,200), Color.DarkRed);
+            spriteBatch.Draw(gameAssets.ButtonTexture, new Vector2(250,310), new Rectangle(0, 0, 200, 200), Color.White, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
             spriteBatch.DrawString(font, "Reset", new Vector2(310, 340), Color.Black);
             spriteBatch.End();
                 

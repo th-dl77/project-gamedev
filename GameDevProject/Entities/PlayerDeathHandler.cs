@@ -1,4 +1,5 @@
-﻿using GameDevProject.GameStates;
+﻿using GameDevProject.Assets;
+using GameDevProject.GameStates;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -12,18 +13,21 @@ namespace GameDevProject.Entities
     {
         private readonly GameStateManager gameStateManager;
         private readonly GameResetHandler gameResetHandler;
-        public PlayerDeathHandler(GameStateManager gameStateManager, GameResetHandler gameResetHandler)
+
+        private GameAssets gameAssets;
+        public PlayerDeathHandler(GameStateManager gameStateManager, GameResetHandler gameResetHandler, GameAssets gameAssets)
         {
             this.gameStateManager = gameStateManager;
             this.gameResetHandler = gameResetHandler;
+            this.gameAssets = gameAssets;
         }
-        public void HandleDeath(Player player, Texture2D buttonTexture, SpriteFont font, Texture2D deathScreenBackground)
+        public void HandleDeath(Player player)
         {
-            player.OnDeath += () => OnDeath(buttonTexture, font, deathScreenBackground);
+            player.OnDeath += () => OnDeath();
         }
-        private void OnDeath(Texture2D buttonTexture, SpriteFont font, Texture2D deathScreenBackground)
+        private void OnDeath()
         {
-            gameStateManager.ChangeGameState(new GameOverState(buttonTexture, font, deathScreenBackground, gameStateManager, gameResetHandler));
+            gameStateManager.ChangeGameState(new GameOverState(gameAssets, gameStateManager, gameResetHandler));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using GameDevProject.Entities;
+﻿using GameDevProject.Assets;
+using GameDevProject.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -7,9 +8,11 @@ namespace GameDevProject.GameStates
 {
     public class PlayingState : IGameState
     {
-        public PlayingState(Game1 game)
+        public GameAssets gameAssets;
+        public PlayingState(Game1 game, GameAssets gameAssets)
         {
             camera = game._camera;
+            this.gameAssets = gameAssets;
         }
 
         private Camera camera;
@@ -36,7 +39,7 @@ namespace GameDevProject.GameStates
             }
             if (game.gameStateManager.AllEnemiesDead(game.entities))
             {
-                game.gameStateManager.ChangeGameState(new VictoryState(game.buttonTexture, game.font, game.mainMenuBackground, game.gameStateManager, game.gameResetHandler));
+                game.gameStateManager.ChangeGameState(new VictoryState(gameAssets, game.mainMenuBackground, game.gameStateManager, game.gameResetHandler));
             }
         }
         public void Draw(Game1 game, GameTime gameTime)
