@@ -21,7 +21,11 @@ namespace GameDevProject.Collisions
             {
                 if (newPlayerbounds.Intersects(collidable.GetBoundingBox()))
                 {
-                    return position;
+                    Vector2 pushDirection = position - proposedPosition;
+                    pushDirection.Normalize();
+
+                    proposedPosition += pushDirection * 5f;
+                    return proposedPosition;
                 }
             }
             return proposedPosition;
