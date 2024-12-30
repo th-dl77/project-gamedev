@@ -37,6 +37,8 @@ namespace GameDevProject.Entities
         private float accelerationRate = 50f;
         private float decelerationRate = 20f;
 
+        private MovementHandler movementHandler;
+
         private float hitCooldownTimer = 0f;
         private float hitCooldownDuration = 2f;
 
@@ -49,18 +51,7 @@ namespace GameDevProject.Entities
         public Vector2 Acceleration { get; set; } = Vector2.Zero;
 
         public event Action OnDeath;
-        public Rectangle Bounds
-        {
-            get
-            {
-                return new Rectangle(
-                    (int)Position.X + 25,
-                    (int)Position.Y + 45,
-                    (int)((SpriteWidth - 25) * Scale),
-                    (int)((SpriteHeight - 20) * Scale)
-                );
-            }
-        }
+        public Rectangle Bounds => movementHandler.Bounds;
 
         public Player(IInputStrategy inputStrategy, Dictionary<string, Animation> animations, Vector2 startPosition)
         {
@@ -68,6 +59,7 @@ namespace GameDevProject.Entities
             this.animations = animations;
             currentAnimation = animations["idle"];
             Position = startPosition;
+            movementHandler = new MovementHandler(56, 56, 2f);
         }
 
         public void Update(GameTime gameTime, CollisionManager collisionManager, List<IEntity> entities)
