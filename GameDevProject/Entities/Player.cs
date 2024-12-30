@@ -31,6 +31,7 @@ namespace GameDevProject.Entities
         private float delayTimer = 3f;
 
         public MovementHandler movementHandler;
+        private readonly AnimationManager animationManager;
 
         private float hitCooldownTimer = 0f;
         private float hitCooldownDuration = 2f;
@@ -43,13 +44,14 @@ namespace GameDevProject.Entities
         public event Action OnDeath;
         public Rectangle Bounds => movementHandler.Bounds;
 
-        public Player(IInputStrategy inputStrategy, Dictionary<string, Animation> animations, Vector2 startPosition)
+        public Player(IInputStrategy inputStrategy, Dictionary<string, Animation> animations, Vector2 startPosition, AnimationManager animationManager)
         {
             this._inputStrategy = inputStrategy;
             this.animations = animations;
             currentAnimation = animations["idle"];
             Position = startPosition;
-            movementHandler = new MovementHandler(new Vector2(800,800), _inputStrategy);
+            movementHandler = new MovementHandler(_inputStrategy, animationManager);
+            this.animationManager = animationManager;
         }
 
         public void Update(GameTime gameTime, CollisionManager collisionManager, List<IEntity> entities)
@@ -69,6 +71,8 @@ namespace GameDevProject.Entities
                     OnDeath?.Invoke();
                 }
             }
+
+            animationManager.Update(gameTime);
 
             if (hitCooldownTimer > 0f)
             {
@@ -176,15 +180,12 @@ namespace GameDevProject.Entities
         public void Die(GameTime gameTime)
         {
             isDead = true;
-            currentAnimation = animations["deathAnimation"];         
+            animationManager.PlayAnimation("deathAnimation");      
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (isVisible)
-            {
-                currentAnimation.Draw(spriteBatch, Position, _currentFlipEffect);
-            }
+            animationManager.Draw(spriteBatch, movementHandler.Position, Scale, isVisible);
         }
 
         public void DrawBounds(SpriteBatch spriteBatch, Texture2D debugTexture)
