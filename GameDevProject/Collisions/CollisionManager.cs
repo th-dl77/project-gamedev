@@ -48,7 +48,7 @@ namespace GameDevProject.Collisions
         {
             foreach (IEntity entity in entities)
             {
-                if (player.Bounds.Intersects(entity.GetBounds()))
+                if (player.movementHandler.Bounds.Intersects(entity.GetBounds()))
                 {
                     ResolveCollision(player, entity);
                 }
@@ -61,10 +61,10 @@ namespace GameDevProject.Collisions
             {
                 return;
             }
-            Vector2 pushDirection = player.Position - enemy.Position;
+            Vector2 pushDirection = player.movementHandler.Position - enemy.Position;
             pushDirection.Normalize();
-            player.Velocity = pushDirection * (player.Velocity.Length() / 2);
-            player.Position += pushDirection * 5f;
+            player.movementHandler.Velocity = pushDirection * (player.movementHandler.Velocity.Length() / 2);
+            player.movementHandler.Position += pushDirection * 5f;
         }
 
     }
