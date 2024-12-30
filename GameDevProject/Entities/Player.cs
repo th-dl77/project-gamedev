@@ -4,17 +4,19 @@ using Microsoft.Xna.Framework.Graphics;
 using GameDevProject.Collisions;
 using GameDevProject.Input;
 using System;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace GameDevProject.Entities
 {
     public class Player
     {
         private IInputStrategy _inputStrategy;
-
-        public int Health { get; private set; } = 5;
-        public int MaxHealth { get; private set; } = 5;d
         public bool IsHitting { get; private set; } = false;
-        public bool isDead { get; private set; } = false;
+        public bool IsDead => healthManager.IsDead;
+
+        public int Health => healthManager.Health;
+
+        public int MaxHealth => healthManager.MaxHealth;
 
         private float deathTimer { get; set; }
         
@@ -27,6 +29,9 @@ namespace GameDevProject.Entities
         public MovementHandler movementHandler;
         private readonly AnimationManager animationManager;
         public FightingHitboxHandler fightingHitboxHandler;
+        public HealthManager healthManager;
+
+        public PlayerDeathHandler DeathHandler { get; private set; }
 
         private float hitCooldownTimer = 0f;
         private float hitCooldownDuration = 2f;
@@ -39,60 +44,27 @@ namespace GameDevProject.Entities
         public event Action OnDeath;
         public Rectangle Bounds => movementHandler.Bounds;
 
-        public Player(IInputStrategy inputStrategy, Vector2 startPosition, AnimationManager animationManager)
+        public Player(IInputStrategy inputStrategy, Vector2 startPosition, AnimationManager animationManager, HealthManager healthManager)
         {
             this._inputStrategy = inputStrategy;
             Position = startPosition;
             movementHandler = new MovementHandler(_inputStrategy);
             this.animationManager = animationManager;
             fightingHitboxHandler = new FightingHitboxHandler(animationManager, movementHandler);
+            this.healthManager = healthManager;
+
+            this.healthManager.OnDeath += HandleDeath;
         }
+        
 
         public void Update(GameTime gameTime, CollisionManager collisionManager, List<IEntity> entities)
         {
             Vector2 inputDirection = _inputStrategy.GetMovementInput();
-            if (!isDead)
-            {
-                movementHandler.HandleMovement(gameTime, inputDirection);
-                Position = movementHandler.Position;
-                delayTimer = 3f;
-            }
-            else
-            {
-               delayTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds; // delay to let the death animation play
-               if (delayTimer<=0)
-                {
-                    OnDeath?.Invoke();
-                }
-            }
+            movementHandler.HandleMovement(gameTime, inputDirection);
+            Position = movementHandler.Position;
 
             animationManager.Update(gameTime, inputDirection);
             fightingHitboxHandler.GetSwordHitbox();
-
-            if (hitCooldownTimer > 0f)
-            {
-                hitCooldownTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-
-            if (flickerTimer > 0f)
-            {
-                flickerTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                // toggle visibility
-                if (flickerTimer % flickerInterval < flickerInterval / 2)
-                {
-                    isVisible = true;
-                }
-                else
-                {
-                    isVisible = false;
-                }
-                if (flickerTimer <= 0f)
-                {
-                    isVisible = true; 
-                }
-            }
-
 
             Vector2 resolvedPosition = collisionManager.CheckCollision(
                 movementHandler.Position,
@@ -103,79 +75,11 @@ namespace GameDevProject.Entities
             movementHandler.AdjustPosition(resolvedPosition - movementHandler.Position);
 
             collisionManager.ResolvePlayerCollisions(this, entities);
-            animationManager.Update(gameTime, inputDirection);
         }
-        //private void HandleInput(GameTime gameTime)
-        //{
-        //    Vector2 inputDirection = _inputStrategy.GetMovementInput();
-        //    float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-        //    if (_inputStrategy.IsActionPressed("fight"))
-        //    {
-        //        // stop movement while swinging
-        //        currentAnimation = animations["fighting"];
-        //        Velocity = Vector2.Zero; 
-        //        Acceleration = Vector2.Zero;
-        //        IsHitting = true;
-        //    }
-        //    else if (inputDirection != Vector2.Zero)
-        //    {
-        //        IsHitting = false;
-        //        inputDirection.Normalize();
-        //        Acceleration = inputDirection * accelerationRate;
-
-        //        // update velocity with acceleration
-        //        Velocity += Acceleration * deltaTime;
-
-        //        //ensure velocity is not faster than maxspeed
-        //        if (Velocity.Length() > maxSpeed)
-        //        {
-        //            Velocity.Normalize();
-        //            Velocity *= maxSpeed;
-        //        }
-        //        currentAnimation = animations["running"];
-        //        _currentFlipEffect = inputDirection.X < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-        //    }
-        //    else
-        //    {
-        //        if (Velocity.Length() > 0.1f)
-        //        {
-        //            // deceleration
-        //            Velocity -= Velocity * decelerationRate * deltaTime;
-        //        }
-        //        else
-        //        {
-        //            Velocity = Vector2.Zero;
-        //            currentAnimation = animations["idle"];
-        //        }
-        //    }
-
-        //    Position += Velocity * deltaTime;
-        //}
 
         public void TakeHit(int dmgAmount, GameTime gameTime)
         {
-            if (Health <= 0)
-            {
-                Die(gameTime);
-            }
-
-            if (hitCooldownTimer > 0f)
-            {
-                return;
-            }
-            Health -= dmgAmount;
-
-            flickerTimer = flickerDuration;
-            isVisible = true;
-
-            hitCooldownTimer = hitCooldownDuration;
-        }
-
-        public void Die(GameTime gameTime)
-        {
-            isDead = true;
-            animationManager.PlayAnimation("deathAnimation");      
+            healthManager.TakeDamage(dmgAmount);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -187,6 +91,11 @@ namespace GameDevProject.Entities
         {
             spriteBatch.Draw(debugTexture, Bounds, Color.Blue * 0.5f);
             spriteBatch.Draw(debugTexture, fightingHitboxHandler.GetSwordHitbox(), Color.Red * 0.5f);
+        }
+
+        private void HandleDeath()
+        {
+            OnDeath?.Invoke();
         }
     }
 }

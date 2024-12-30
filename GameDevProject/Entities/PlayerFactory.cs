@@ -26,7 +26,8 @@ namespace GameDevProject.Entities
                 { "deathAnimation", deathAnimation}
             };
             AnimationManager animationManager = new AnimationManager(animations);
-            return new Player(inputStrategy, initPos, animationManager);
+            HealthManager healthManager = new HealthManager(5);
+            return new Player(inputStrategy, initPos, animationManager, healthManager);
         }
     }
 }

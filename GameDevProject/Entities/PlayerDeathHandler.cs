@@ -7,15 +7,18 @@ namespace GameDevProject.Entities
     {
         private readonly GameStateManager gameStateManager;
         private readonly GameResetHandler gameResetHandler;
+        private HealthManager healthManager;
+        private Player player;
 
         private GameAssets gameAssets;
-        public PlayerDeathHandler(GameStateManager gameStateManager, GameResetHandler gameResetHandler, GameAssets gameAssets)
+        public PlayerDeathHandler(GameStateManager gameStateManager, GameResetHandler gameResetHandler, GameAssets gameAssets, Player player)
         {
             this.gameStateManager = gameStateManager;
             this.gameResetHandler = gameResetHandler;
             this.gameAssets = gameAssets;
+            this.player = player;
         }
-        public void HandleDeath(Player player)
+        public void HandleDeath()
         {
             player.OnDeath += () => OnDeath();
         }
