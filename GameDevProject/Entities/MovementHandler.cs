@@ -14,22 +14,19 @@ namespace GameDevProject.Entities
         private int spriteHeight = 56;
         private float scale = 2f;
 
-        private AnimationManager animationManager;
         private readonly IInputStrategy _inputStrategy;
 
         private float Speed { get; set; } = 10f;
         private float maxSpeed = 4f;
         private float accelerationRate = 50f;
         private float decelerationRate = 20f;
-        public MovementHandler(IInputStrategy inputStrategy, AnimationManager animationManager)
+        public MovementHandler(IInputStrategy inputStrategy)
         {
             _inputStrategy = inputStrategy;
-            this.animationManager = animationManager;
         }
 
-        public void HandleMovement(GameTime gameTime)
+        public void HandleMovement(GameTime gameTime, Vector2 inputDirection)
         {
-            Vector2 inputDirection = _inputStrategy.GetMovementInput();
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (inputDirection != Vector2.Zero)
@@ -39,16 +36,6 @@ namespace GameDevProject.Entities
 
                 // update velocity with acceleration
                 Velocity += Acceleration * deltaTime;
-                if (inputDirection.X < 0 )
-                {
-                    animationManager.PlayAnimation("running");
-                    animationManager.FlipAnimation(true);
-                }
-                else if (inputDirection.X > 0)
-                {
-                    animationManager.PlayAnimation("running");
-                    animationManager.FlipAnimation(false);
-                }
 
                 //ensure velocity is not faster than maxspeed
                 if (Velocity.LengthSquared() > maxSpeed * maxSpeed)
@@ -65,7 +52,6 @@ namespace GameDevProject.Entities
                 }
                 else
                 {
-                    animationManager.PlayAnimation("idle");
                     Velocity = Vector2.Zero;
                 }
             }

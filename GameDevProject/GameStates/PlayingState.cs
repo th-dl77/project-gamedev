@@ -45,7 +45,7 @@ namespace GameDevProject.GameStates
             game._camera.Update(game.player.Position, 1600, 1600);
             if (game.player.IsHitting)
             {
-                Rectangle swordHitbox = game.player.GetSwordHitbox();
+                Rectangle swordHitbox = game.player.fightingHitboxHandler.GetSwordHitbox();
 
                 foreach (var entity in game.entities)
                 {

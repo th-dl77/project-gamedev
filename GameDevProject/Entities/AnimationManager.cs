@@ -12,7 +12,7 @@ namespace GameDevProject.Entities
     {
         private readonly Dictionary<string, Animation> animations;
         private Animation currentAnimation;
-        private SpriteEffects currentFlipEffect;
+        public SpriteEffects currentFlipEffect { get; set; }
 
         public AnimationManager(Dictionary<string, Animation> animations)
         {
@@ -33,8 +33,25 @@ namespace GameDevProject.Entities
             currentFlipEffect = isFlipped ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, Vector2 inputDirection)
         {
+            bool isMoving = Math.Abs(inputDirection.X) > 0.1f || Math.Abs(inputDirection.Y) > 0.1f;
+            if (isMoving)
+            {
+                PlayAnimation("running");
+                if (inputDirection.X < 0)
+                {
+                    FlipAnimation(true);
+                }
+                else if (inputDirection.X > 0)
+                {
+                    FlipAnimation(false);
+                }
+            }
+            else
+            {
+                PlayAnimation("idle");
+            }
             currentAnimation?.Update(gameTime);
         }
 
