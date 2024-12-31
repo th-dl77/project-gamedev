@@ -12,7 +12,7 @@ namespace GameDevProject.Entities
         public int Health { get; private set; }
         public int MaxHealth { get; }
 
-        public bool IsDead { get; private set; } = false;
+        public bool IsDead { get; set; } = false;
 
         public event Action OnDeath;
 

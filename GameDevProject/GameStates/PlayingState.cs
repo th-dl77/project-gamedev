@@ -42,7 +42,6 @@ namespace GameDevProject.GameStates
             {
                 entity.Update(gameTime, game.player);
             }
-            game._camera.Update(game.player.Position, 1600, 1600);
             if (game.player.IsHitting)
             {
                 Rectangle swordHitbox = game.player.fightingHitboxHandler.GetSwordHitbox();
@@ -56,6 +55,7 @@ namespace GameDevProject.GameStates
                 }
             }
             game.collisionLoader.UpdateEnemyCollidables(game.entities);
+            game._camera.Update(game.player.Position, 1600, 1600);
         }
         public void Draw(Game1 game, GameTime gameTime)
         {

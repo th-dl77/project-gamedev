@@ -72,13 +72,13 @@ namespace GameDevProject
             entities = new List<IEntity>();
 
             gameStateManager = new GameStateManager(this, gameAssets);
-            gameResetHandler = new GameResetHandler(this, gameAssets, mapLoader, _collisionManager, collisionLoader, playerFactory, gameStateManager, enemySpawner, entities);
             healthRenderer = new HealthRenderer(gameAssets, new Vector2(600, 10));
 
             healthManager = new HealthManager(5);
 
             playerFactory = new PlayerFactory();
             player = playerFactory.CreatePlayer(gameAssets.GetTexture("player"), new Vector2(800, 800));
+            gameResetHandler = new GameResetHandler(this, gameAssets, mapLoader, _collisionManager, collisionLoader, playerFactory, gameStateManager, enemySpawner, entities);
             playerDeathHandler = new PlayerDeathHandler(gameStateManager, gameResetHandler, gameAssets, player);
 
             base.Initialize();

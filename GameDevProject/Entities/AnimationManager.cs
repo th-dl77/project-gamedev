@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameDevProject.Input;
 
 namespace GameDevProject.Entities
 {
@@ -33,10 +34,16 @@ namespace GameDevProject.Entities
             currentFlipEffect = isFlipped ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
         }
 
-        public void Update(GameTime gameTime, Vector2 inputDirection)
+        public void Update(GameTime gameTime, IInputStrategy inputStrategy)
         {
+            Vector2 inputDirection = inputStrategy.GetMovementInput();
+            bool isFighting = inputStrategy.IsActionPressed("fight");
             bool isMoving = Math.Abs(inputDirection.X) > 0.1f || Math.Abs(inputDirection.Y) > 0.1f;
-            if (isMoving)
+            if (isFighting)
+            {
+                PlayAnimation("fighting");
+            }
+            else if (isMoving)
             {
                 PlayAnimation("running");
                 if (inputDirection.X < 0)

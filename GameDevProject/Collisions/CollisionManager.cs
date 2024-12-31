@@ -48,6 +48,10 @@ namespace GameDevProject.Collisions
         {
             foreach (IEntity entity in entities)
             {
+                if (entity is BatEnemy)
+                {
+                    return;
+                }
                 if (player.movementHandler.Bounds.Intersects(entity.GetBounds()))
                 {
                     ResolveCollision(player, entity);

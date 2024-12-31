@@ -56,15 +56,20 @@ namespace GameDevProject.Entities
             this.healthManager.OnDeath += HandleDeath;
         }
         
-
         public void Update(GameTime gameTime, CollisionManager collisionManager, List<IEntity> entities)
         {
             Vector2 inputDirection = _inputStrategy.GetMovementInput();
             movementHandler.HandleMovement(gameTime, inputDirection);
             Position = movementHandler.Position;
 
-            animationManager.Update(gameTime, inputDirection);
-            fightingHitboxHandler.GetSwordHitbox();
+            animationManager.Update(gameTime, _inputStrategy);
+            if (_inputStrategy.IsActionPressed("fight"))
+            {
+                IsHitting = true;
+                fightingHitboxHandler.GetSwordHitbox();
+            }
+            else
+                IsHitting = false;
 
             Vector2 resolvedPosition = collisionManager.CheckCollision(
                 movementHandler.Position,
@@ -95,6 +100,8 @@ namespace GameDevProject.Entities
 
         private void HandleDeath()
         {
+            healthManager.IsDead = true;
+            animationManager.PlayAnimation("deathAnimation");
             OnDeath?.Invoke();
         }
     }

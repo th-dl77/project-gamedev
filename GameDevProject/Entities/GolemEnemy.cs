@@ -15,7 +15,7 @@ namespace GameDevProject.Entities
         public override void CheckRange(Player player, GameTime gameTime)
         {
             float distanceToPlayer = Vector2.Distance(player.Position, this.Position);
-            if (distanceToPlayer < 40 && !player.IsDead)
+            if (distanceToPlayer < 60 && !player.IsDead)
             {
                 if (!isHitting)
                 {
