@@ -55,5 +55,15 @@ namespace GameDevProject.Entities
             _currentAnimation.Draw(spriteBatch, Position, flip);
         }
 
+        public override void CheckRange(Player player, GameTime gameTime)
+        {
+            float distanceToPlayer = Vector2.Distance(player.Position, this.Position);
+            if (distanceToPlayer < 20 && !player.IsDead)
+            {
+                this.Die(gameTime);
+            }
+            base.CheckRange(player, gameTime);
+        }
+
     }
 }
