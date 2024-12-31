@@ -59,9 +59,7 @@ namespace GameDevProject.Entities
         public void Update(GameTime gameTime, CollisionManager collisionManager, List<IEntity> entities)
         {
             Vector2 inputDirection = _inputStrategy.GetMovementInput();
-            movementHandler.HandleMovement(gameTime, inputDirection);
             Position = movementHandler.Position;
-
             animationManager.Update(gameTime, _inputStrategy);
             if (_inputStrategy.IsActionPressed("fight"))
             {
@@ -70,6 +68,8 @@ namespace GameDevProject.Entities
             }
             else
                 IsHitting = false;
+
+            movementHandler.HandleMovement(gameTime, inputDirection, IsHitting);
 
             Vector2 resolvedPosition = collisionManager.CheckCollision(
                 movementHandler.Position,

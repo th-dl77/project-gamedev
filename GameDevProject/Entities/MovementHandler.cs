@@ -25,10 +25,15 @@ namespace GameDevProject.Entities
             _inputStrategy = inputStrategy;
         }
 
-        public void HandleMovement(GameTime gameTime, Vector2 inputDirection)
+        public void HandleMovement(GameTime gameTime, Vector2 inputDirection, bool isHitting)
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+            if (isHitting)
+            {
+                Velocity = new Vector2(0,0);
+                return;
+            }
             if (inputDirection != Vector2.Zero)
             {
                 inputDirection.Normalize();
