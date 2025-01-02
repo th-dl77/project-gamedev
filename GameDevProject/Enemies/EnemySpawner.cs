@@ -47,7 +47,7 @@ namespace GameDevProject.Enemies
             for (int i = 0; i < enemyCount; i++)
             {
                 entities.Add(enemyFactory.CreateSkeletonEnemy(GetRandomSpawnPosition(playerPos, 200)));
-                entities.Add(enemyFactory.CreateGolemEnemy(GetRandomSpawnPosition(playerPos, 400), new List<Vector2>() { new Vector2(100, 200), new Vector2(200, 100), new Vector2(240, 300) }));
+                entities.Add(enemyFactory.CreateGolemEnemy(GetRandomSpawnPosition(playerPos, 400)));
             }
             for (int i = 0; i < enemyCount / 2; i++)
             {

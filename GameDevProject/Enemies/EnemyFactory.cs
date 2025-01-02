@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using GameDevProject.Assets;
 using GameDevProject.Animations;
 using GameDevProject.Entities;
+using System;
 
 namespace GameDevProject.Enemies
 {
@@ -47,7 +48,7 @@ namespace GameDevProject.Enemies
                     };
             return new SkeletonEnemy(skeletonMeleeAnimations, position, 25f, gameAssets);
         }
-        public Enemy CreateGolemEnemy(Vector2 position, List<Vector2> patrolPoints)
+        public Enemy CreateGolemEnemy(Vector2 position)
         {
             Dictionary<string, Animation> golemMeleeAnimations = new Dictionary<string, Animation>()
             {
@@ -55,6 +56,7 @@ namespace GameDevProject.Enemies
                 { "fight", new Animation(new SpriteSheet(golemAttack,64,64),new int[] { 0,1,2,3,4,5,6,7,8,9,10,11},0.2f)},
                 { "death", new Animation(new SpriteSheet(golemDeath,64,64), new int[] { 0,1,2,3,4,5,6,7,8},0.2f,false)}
             };
+            List<Vector2> patrolPoints = GenerateRandomPatrolPoints(4, 0, 800, 0, 800);
             return new GolemEnemy(golemMeleeAnimations, position, 40f, patrolPoints);
         }
         public Enemy CreateSlimeEnemy(Vector2 position)
@@ -65,11 +67,7 @@ namespace GameDevProject.Enemies
                 { "death", new Animation(new SpriteSheet(slimeDeath,64,64), new int[] { 0,1,2,3,4},0.2f,false)},
                 { "fight", new Animation(new SpriteSheet(slimeFight,64,64), new int[] { 0,1,2,3},0.2f)}
             };
-            List<Vector2> patrolPoints = new List<Vector2>();
-            patrolPoints.Add(new Vector2(100, 200));
-            patrolPoints.Add(new Vector2(250, 300));
-            patrolPoints.Add(new Vector2(450, 425));
-            patrolPoints.Add(new Vector2(700, 500));
+            List<Vector2> patrolPoints = GenerateRandomPatrolPoints(4, 400, 800, 200, 800);
             return new SlimeEnemy(slimeEnemyAnimations, position, 40f, patrolPoints);
         }
         public Enemy CreateBatEnemy(Vector2 position)
@@ -80,13 +78,23 @@ namespace GameDevProject.Enemies
                 { "death", new Animation(new SpriteSheet(batDeath,64,64), new int[] { 0,1,2,3,4,5,6,7,8,9,10,11},0.2f,false)},
                 { "fight", new Animation(new SpriteSheet(batFight,64,64), new int[] { 0,1,2,3,4,5},0.2f)}
             };
-            List<Vector2> patrolPoints = new List<Vector2>();
-            patrolPoints.Add(new Vector2(80, 100));
-            patrolPoints.Add(new Vector2(150, 300));
-            patrolPoints.Add(new Vector2(100, 425));
-            patrolPoints.Add(new Vector2(150, 500));
+            List<Vector2> patrolPoints = GenerateRandomPatrolPoints(4,0,1600,0,1600);
             return new BatEnemy(batEnemyAnimations, position, 150f, patrolPoints);
         }
 
+        public List<Vector2> GenerateRandomPatrolPoints(int patrolPointCount, int minX, int maxX, int minY, int maxY)
+        {
+            List<Vector2> patrolPoints = new List<Vector2>();
+            Random random = new Random();
+
+            for (int i = 0; i < patrolPointCount; i++)
+            {
+                float x = random.Next(minX, maxX);
+                float y = random.Next(minY, maxY);
+                patrolPoints.Add(new Vector2(x, y));
+            }
+
+            return patrolPoints;
+        }
     }
 }
