@@ -29,6 +29,16 @@ namespace GameDevProject.Assets
             AddAsset("heartEmpty", new TextureAsset(content.Load<Texture2D>("heartEmpty")));
             AddAsset("mainMenuBackground", new TextureAsset(content.Load<Texture2D>("backgroundMenu")));
             AddAsset("font", new FontAsset(content.Load<SpriteFont>("Font1")));
+            AddAsset("skeleton", new TextureAsset(content.Load<Texture2D>("Skeleton enemy")));
+            AddAsset("golemRun", new TextureAsset(content.Load<Texture2D>("Golem_Run")));
+            AddAsset("golemAttack", new TextureAsset(content.Load<Texture2D>("Golem_AttackA")));
+            AddAsset("golemDeath", new TextureAsset(content.Load<Texture2D>("Golem_DeathB")));
+            AddAsset("slimeDeath", new TextureAsset(content.Load<Texture2D>("Slime_Spiked_Death")));
+            AddAsset("slimeRun", new TextureAsset(content.Load<Texture2D>("Slime_Spiked_Run")));
+            AddAsset("slimeFight", new TextureAsset(content.Load<Texture2D>("Slime_Spiked_Ability")));
+            AddAsset("batFight", new TextureAsset(content.Load<Texture2D>("Bat_Attack")));
+            AddAsset("batFly", new TextureAsset(content.Load<Texture2D>("Bat_Fly")));
+            AddAsset("batDeath", new TextureAsset(content.Load<Texture2D>("Bat_Death")));
         }
         public void AddAsset(string key, IAsset asset)
         {

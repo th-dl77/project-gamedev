@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using GameDevProject.Assets;
 using GameDevProject.Animations;
-using GameDevProject.Entities;
 using System;
 
 namespace GameDevProject.Enemies
@@ -12,30 +11,12 @@ namespace GameDevProject.Enemies
     public class EnemyFactory
     {
         private Texture2D skeletonTexture;
-        private Texture2D golemRun;
-        private Texture2D golemAttack;
-        private Texture2D golemDeath;
-        private Texture2D slimeDeath;
-        private Texture2D slimeRun;
-        private Texture2D slimeFight;
-        private Texture2D batFight;
-        private Texture2D batFly;
         private GameAssets gameAssets;
-        private Texture2D batDeath;
 
         public EnemyFactory(ContentManager content, GameAssets gameAssets)
         {
-            skeletonTexture = content.Load<Texture2D>("Skeleton enemy");
-            golemRun = content.Load<Texture2D>("Golem_Run");
-            golemAttack = content.Load<Texture2D>("Golem_AttackA");
-            golemDeath = content.Load<Texture2D>("Golem_DeathB");
-            slimeDeath = content.Load<Texture2D>("Slime_Spiked_Death");
-            slimeRun = content.Load<Texture2D>("Slime_Spiked_Run");
-            slimeFight = content.Load<Texture2D>("Slime_Spiked_Ability");
-            batFight = content.Load<Texture2D>("Bat_Attack");
-            batFly = content.Load<Texture2D>("Bat_Fly");
-            batDeath = content.Load<Texture2D>("Bat_Death");
             this.gameAssets = gameAssets;
+            skeletonTexture = gameAssets.GetTexture("skeleton");
         }
         public Enemy CreateSkeletonEnemy(Vector2 position)
         {
@@ -52,9 +33,9 @@ namespace GameDevProject.Enemies
         {
             Dictionary<string, Animation> golemMeleeAnimations = new Dictionary<string, Animation>()
             {
-                { "walk", new Animation(new SpriteSheet(golemRun,64,64), new int[] { 0,1,2,3},0.3f) },
-                { "fight", new Animation(new SpriteSheet(golemAttack,64,64),new int[] { 0,1,2,3,4,5,6,7,8,9,10,11},0.2f)},
-                { "death", new Animation(new SpriteSheet(golemDeath,64,64), new int[] { 0,1,2,3,4,5,6,7,8},0.2f,false)}
+                { "walk", new Animation(new SpriteSheet(gameAssets.GetTexture("golemRun"),64,64), new int[] { 0,1,2,3},0.3f) },
+                { "fight", new Animation(new SpriteSheet(gameAssets.GetTexture("golemAttack"),64,64),new int[] { 0,1,2,3,4,5,6,7,8,9,10,11},0.2f)},
+                { "death", new Animation(new SpriteSheet(gameAssets.GetTexture("golemDeath"),64,64), new int[] { 0,1,2,3,4,5,6,7,8},0.2f,false)}
             };
             List<Vector2> patrolPoints = GenerateRandomPatrolPoints(4, 0, 800, 0, 800);
             return new GolemEnemy(golemMeleeAnimations, position, 40f, patrolPoints);
@@ -63,9 +44,9 @@ namespace GameDevProject.Enemies
         {
             Dictionary<string, Animation> slimeEnemyAnimations = new Dictionary<string, Animation>()
             {
-                { "walk", new Animation(new SpriteSheet(slimeRun,64,64), new int[] { 0,1,2,3},0.2f) },
-                { "death", new Animation(new SpriteSheet(slimeDeath,64,64), new int[] { 0,1,2,3,4},0.2f,false)},
-                { "fight", new Animation(new SpriteSheet(slimeFight,64,64), new int[] { 0,1,2,3},0.2f)}
+                { "walk", new Animation(new SpriteSheet(gameAssets.GetTexture("slimeRun"),64,64), new int[] { 0,1,2,3},0.2f) },
+                { "death", new Animation(new SpriteSheet(gameAssets.GetTexture("slimeDeath"),64,64), new int[] { 0,1,2,3,4},0.2f,false)},
+                { "fight", new Animation(new SpriteSheet(gameAssets.GetTexture("slimeFight"),64,64), new int[] { 0,1,2,3},0.2f)}
             };
             List<Vector2> patrolPoints = GenerateRandomPatrolPoints(4, 400, 800, 200, 800);
             return new SlimeEnemy(slimeEnemyAnimations, position, 40f, patrolPoints);
@@ -74,9 +55,9 @@ namespace GameDevProject.Enemies
         {
             Dictionary<string, Animation> batEnemyAnimations = new Dictionary<string, Animation>()
             {
-                { "walk", new Animation(new SpriteSheet(batFly,64,64), new int[] { 0,1,2,3},0.2f) },
-                { "death", new Animation(new SpriteSheet(batDeath,64,64), new int[] { 0,1,2,3,4,5,6,7,8,9,10,11},0.2f,false)},
-                { "fight", new Animation(new SpriteSheet(batFight,64,64), new int[] { 0,1,2,3,4,5},0.2f)}
+                { "walk", new Animation(new SpriteSheet(gameAssets.GetTexture("batFly"),64,64), new int[] { 0,1,2,3},0.2f) },
+                { "death", new Animation(new SpriteSheet(gameAssets.GetTexture("batDeath"),64,64), new int[] { 0,1,2,3,4,5,6,7,8,9,10,11},0.2f,false)},
+                { "fight", new Animation(new SpriteSheet(gameAssets.GetTexture("batFight"),64,64), new int[] { 0,1,2,3,4,5},0.2f)}
             };
             List<Vector2> patrolPoints = GenerateRandomPatrolPoints(4,0,1600,0,1600);
             return new BatEnemy(batEnemyAnimations, position, 150f, patrolPoints);
