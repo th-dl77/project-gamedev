@@ -36,10 +36,10 @@ namespace GameDevProject.Enemies
         public virtual Rectangle GetBounds()
         {
             return new Rectangle(
-                (int)Position.X + 25,
+                (int)Position.X + 45,
                 (int)Position.Y + 45,
-                _currentAnimation._spriteSheet.FrameWidth,
-                _currentAnimation._spriteSheet.FrameHeight
+                _currentAnimation._spriteSheet.FrameWidth-20,
+                _currentAnimation._spriteSheet.FrameHeight-20
             );
         }
 

@@ -26,22 +26,12 @@ namespace GameDevProject.Enemies
                 {
                     Vector2 playerPosition = player.Position;
                     Vector2 direction = playerPosition - Position;
-                    if (direction.Length() > 0)
-                    {
-                        direction.Normalize();
-                    }
-                    if (direction.X < 0)
-                    {
-                        flip = SpriteEffects.FlipHorizontally; // Player is moving left
-                    }
-                    else if (direction.X > 0)
-                    {
-                        flip = SpriteEffects.None; // Player is moving right
-                    }
+                    direction.Normalize();
+                    flip = direction.X < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
                     Position += direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     _currentAnimation = _animations["walk"];
                 }
-                CheckRange(player, gameTime);
+                CheckRange(player, gameTime);   
                 CollidableObject.Bounds = GetBounds();
             }
             else

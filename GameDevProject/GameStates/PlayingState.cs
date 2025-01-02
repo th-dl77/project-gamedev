@@ -18,7 +18,7 @@ namespace GameDevProject.GameStates
             camera = game._camera;
             currentLevel = 0;
             this.gameAssets = gameAssets;
-            enemySpawner = new EnemySpawner(game.Content, 1600, 1600, game.player.Position, game.collisionLoader, gameAssets);
+            enemySpawner = new EnemySpawner(game.Content, 1600, 1600, game.player.Position, gameAssets);
         }
 
         private Camera camera;

@@ -34,30 +34,22 @@ namespace GameDevProject.Enemies
                         direction = playerPosition - Position;
                     }
                     else
-                    {
                         direction = targetPoint - Position;
-                    }
-                    if (direction.Length() > 0)
-                    {
-                        direction.Normalize();
-                    }
-                    if (direction.X < 0)
-                    {
-                        flip = SpriteEffects.FlipHorizontally; // Player is moving left
-                    }
-                    else if (direction.X > 0)
-                    {
-                        flip = SpriteEffects.None; // Player is moving right
-                    }
+                    direction.Normalize();
+                    flip = direction.X < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
                     Position += direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     if (Vector2.Distance(Position, targetPoint) < patrolThreshold)
-                    {
                         currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Count;
-                    }
                     _currentAnimation = _animations["walk"];
                 }
                 CheckRange(player, gameTime);
+            }
+            else
+            {
+                deathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (deathTimer >= 5)
+                    IsVisible = false;
             }
             _currentAnimation.Update(gameTime);
         }

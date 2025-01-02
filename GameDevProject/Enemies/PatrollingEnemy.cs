@@ -49,11 +49,22 @@ namespace GameDevProject.Enemies
                 }
                 CheckRange(player, gameTime);
             }
+            else
+            {
+                deathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (deathTimer >= 5)
+                {
+                    IsVisible = false;
+                }
+            }
             _currentAnimation.Update(gameTime);
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            _currentAnimation.Draw(spriteBatch, Position, flip);
+            if (IsVisible)
+            {
+                _currentAnimation.Draw(spriteBatch, Position, flip);
+            }
         }
     }
 }
