@@ -10,6 +10,14 @@ namespace GameDevProject.Entities
 {
     public class Player
     {
+
+        private float hitCooldownTimer = 0f;
+        private float hitCooldownDuration = 2f;
+
+        private float flickerTimer = 0f;
+        private float flickerDuration = 2f;
+        private float flickerInterval = 0.1f;
+
         private IInputStrategy _inputStrategy;
         public bool IsHitting { get; private set; } = false;
         public bool IsDead => healthManager.IsDead;
@@ -33,12 +41,6 @@ namespace GameDevProject.Entities
 
         public PlayerDeathHandler DeathHandler { get; private set; }
 
-        private float hitCooldownTimer = 0f;
-        private float hitCooldownDuration = 2f;
-
-        private float flickerTimer = 0f;
-        private float flickerDuration = 2f;
-        private float flickerInterval = 0.1f;
         private bool isVisible = true;
 
         public event Action OnDeath;
@@ -58,6 +60,27 @@ namespace GameDevProject.Entities
         
         public void Update(GameTime gameTime, CollisionManager collisionManager, List<IEntity> entities)
         {
+            if (hitCooldownTimer > 0)
+            {
+                hitCooldownTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            if (flickerTimer > 0)
+            {
+                flickerTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (flickerTimer % flickerInterval < flickerInterval / 2f)
+                {
+                    isVisible = true;
+                }
+                else
+                {
+                    isVisible = false;
+                }
+            }
+            else
+            {
+                isVisible = true;
+            }
             Vector2 inputDirection = _inputStrategy.GetMovementInput();
             Position = movementHandler.Position;
             animationManager.Update(gameTime, _inputStrategy);
@@ -84,7 +107,14 @@ namespace GameDevProject.Entities
 
         public void TakeHit(int dmgAmount, GameTime gameTime)
         {
-            healthManager.TakeDamage(dmgAmount);
+            if (hitCooldownTimer <= 0)
+            {
+                healthManager.TakeDamage(dmgAmount);
+
+                hitCooldownTimer = hitCooldownDuration;
+                flickerTimer = flickerDuration;
+                isVisible = true;
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
