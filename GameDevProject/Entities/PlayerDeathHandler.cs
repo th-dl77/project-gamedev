@@ -1,5 +1,6 @@
 ﻿using GameDevProject.Assets;
 using GameDevProject.GameStates;
+using System.Threading.Tasks;
 
 namespace GameDevProject.Entities
 {
@@ -22,8 +23,9 @@ namespace GameDevProject.Entities
         {
             player.OnDeath += () => OnDeath();
         }
-        private void OnDeath()
+        private async Task OnDeath()
         {
+            await Task.Delay(3000);
             gameStateManager.ChangeGameState(new GameOverState(gameAssets, gameStateManager, gameResetHandler));
         }
     }

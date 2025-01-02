@@ -34,12 +34,16 @@ namespace GameDevProject.Entities
             currentFlipEffect = isFlipped ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
         }
 
-        public void Update(GameTime gameTime, IInputStrategy inputStrategy)
+        public void Update(GameTime gameTime, IInputStrategy inputStrategy, bool isDead)
         {
             Vector2 inputDirection = inputStrategy.GetMovementInput();
             bool isFighting = inputStrategy.IsActionPressed("fight");
             bool isMoving = Math.Abs(inputDirection.X) > 0.1f || Math.Abs(inputDirection.Y) > 0.1f;
-            if (isFighting)
+            if (isDead)
+            {
+                PlayAnimation("deathAnimation");
+            }
+            else if (isFighting)
             {
                 PlayAnimation("fighting");
             }

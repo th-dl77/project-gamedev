@@ -83,7 +83,7 @@ namespace GameDevProject.Entities
             }
             Vector2 inputDirection = _inputStrategy.GetMovementInput();
             Position = movementHandler.Position;
-            animationManager.Update(gameTime, _inputStrategy);
+            animationManager.Update(gameTime, _inputStrategy, IsDead);
             if (_inputStrategy.IsActionPressed("fight"))
             {
                 IsHitting = true;
@@ -92,17 +92,20 @@ namespace GameDevProject.Entities
             else
                 IsHitting = false;
 
-            movementHandler.HandleMovement(gameTime, inputDirection, IsHitting);
+            if (!IsDead)
+            {
+                movementHandler.HandleMovement(gameTime, inputDirection, IsHitting);
 
-            Vector2 resolvedPosition = collisionManager.CheckCollision(
-                movementHandler.Position,
-                movementHandler.Position + movementHandler.Velocity,
-                movementHandler.Bounds.Height,
-                movementHandler.Bounds.Width
-            );
-            movementHandler.AdjustPosition(resolvedPosition - movementHandler.Position);
+                Vector2 resolvedPosition = collisionManager.CheckCollision(
+                    movementHandler.Position,
+                    movementHandler.Position + movementHandler.Velocity,
+                    movementHandler.Bounds.Height,
+                    movementHandler.Bounds.Width
+                );
+                movementHandler.AdjustPosition(resolvedPosition - movementHandler.Position);
 
-            collisionManager.ResolvePlayerCollisions(this, entities);
+                collisionManager.ResolvePlayerCollisions(this, entities);
+            }
         }
 
         public void TakeHit(int dmgAmount, GameTime gameTime)
@@ -130,8 +133,6 @@ namespace GameDevProject.Entities
 
         private void HandleDeath()
         {
-            healthManager.IsDead = true;
-            animationManager.PlayAnimation("deathAnimation");
             OnDeath?.Invoke();
         }
     }
