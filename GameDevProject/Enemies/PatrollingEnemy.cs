@@ -9,10 +9,9 @@ namespace GameDevProject.Enemies
 {
     public class PatrollingEnemy : EnemyMelee
     {
-        private SpriteEffects flip = SpriteEffects.None;
+        public SpriteEffects flip = SpriteEffects.None;
         private List<Vector2> patrolPoints;
         private int currentPatrolIndex;
-        private bool detected;
         private float patrolThreshold = 10f;
         public PatrollingEnemy(Dictionary<string, Animation> animations, Vector2 startPosition, float speed, List<Vector2> patrolPoints) : base(animations, startPosition, speed)
         {
@@ -23,39 +22,29 @@ namespace GameDevProject.Enemies
         {
             if (IsAlive)
             {
+                Vector2 targetPoint = patrolPoints[currentPatrolIndex];
+                Vector2 direction = Vector2.Zero;
+                direction = targetPoint - Position;
+                if (direction.Length() > 0)
+                {
+                    direction.Normalize();
+                }
+                if (direction.X < 0)
+                {
+                    flip = SpriteEffects.FlipHorizontally; // Player is moving left
+                }
+                else if (direction.X > 0)
+                {
+                    flip = SpriteEffects.None; // Player is moving right
+                }
+                Position += direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (Vector2.Distance(Position, targetPoint) < patrolThreshold)
+                {
+                    currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Count;
+                }
                 if (!isHitting)
                 {
-                    Vector2 targetPoint = patrolPoints[currentPatrolIndex];
-                    Vector2 playerPosition = player.Position;
-                    Vector2 direction = Vector2.Zero;
-                    float distanceToPlayer = Vector2.Distance(player.Position, Position);
-                    if (distanceToPlayer < 100 || detected)
-                    {
-                        detected = true;
-                        direction = playerPosition - Position;
-                    }
-                    else
-                    {
-                        direction = targetPoint - Position;
-                    }
-                    if (direction.Length() > 0)
-                    {
-                        direction.Normalize();
-                    }
-                    if (direction.X < 0)
-                    {
-                        flip = SpriteEffects.FlipHorizontally; // Player is moving left
-                    }
-                    else if (direction.X > 0)
-                    {
-                        flip = SpriteEffects.None; // Player is moving right
-                    }
-                    Position += direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                    if (Vector2.Distance(Position, targetPoint) < patrolThreshold)
-                    {
-                        currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Count;
-                    }
                     _currentAnimation = _animations["walk"];
                 }
                 CheckRange(player, gameTime);
