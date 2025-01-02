@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using GameDevProject.Animations;
+using GameDevProject.Entities;
 using Microsoft.Xna.Framework;
 
 
-namespace GameDevProject.Entities
+namespace GameDevProject.Enemies
 {
     public class GolemEnemy : PatrollingEnemy
     {
@@ -15,7 +16,7 @@ namespace GameDevProject.Entities
 
         public override void CheckRange(Player player, GameTime gameTime)
         {
-            float distanceToPlayer = Vector2.Distance(player.Position, this.Position);
+            float distanceToPlayer = Vector2.Distance(player.Position, Position);
             if (distanceToPlayer < 80 && !player.IsDead)
             {
                 if (!isHitting)

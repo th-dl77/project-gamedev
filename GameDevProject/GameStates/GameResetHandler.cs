@@ -4,6 +4,7 @@ using GameDevProject.Map;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using GameDevProject.Assets;
+using GameDevProject.Enemies;
 
 namespace GameDevProject.GameStates
 {

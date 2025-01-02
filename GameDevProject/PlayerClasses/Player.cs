@@ -6,6 +6,7 @@ using GameDevProject.Input;
 using System;
 using static System.Net.Mime.MediaTypeNames;
 using GameDevProject.Animations;
+using GameDevProject.Enemies;
 
 namespace GameDevProject.Entities
 {

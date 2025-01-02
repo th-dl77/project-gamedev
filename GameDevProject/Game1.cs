@@ -7,6 +7,8 @@ using GameDevProject.Entities;
 using GameDevProject.Map;
 using GameDevProject.GameStates;
 using GameDevProject.Assets;
+using GameDevProject.Enemies;
+using GameDevProject.PlayerClasses;
 
 namespace GameDevProject
 {

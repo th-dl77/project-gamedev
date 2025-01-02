@@ -1,5 +1,6 @@
 ﻿using GameDevProject.Assets;
-using GameDevProject.Entities;
+using GameDevProject.Enemies;
+using GameDevProject.PlayerClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
