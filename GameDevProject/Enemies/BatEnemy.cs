@@ -2,8 +2,10 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using GameDevProject.Assets;
+using GameDevProject.Animations;
+using GameDevProject.Entities;
 
-namespace GameDevProject.Entities
+namespace GameDevProject.Enemies
 {
     public class BatEnemy : PatrollingEnemy
     {
@@ -13,7 +15,7 @@ namespace GameDevProject.Entities
         private float patrolThreshold = 10f;
         public BatEnemy(Dictionary<string, Animation> animations, Vector2 startPosition, float speed, List<Vector2> patrolPoints) : base(animations, startPosition, speed, patrolPoints)
         {
-            this.currentPatrolIndex = 0;
+            currentPatrolIndex = 0;
             this.patrolPoints = patrolPoints;
         }
         public override void Update(GameTime gameTime, Player player)
@@ -45,7 +47,7 @@ namespace GameDevProject.Entities
                 {
                     _currentAnimation = _animations["walk"];
                 }
-                this.CheckRange(player, gameTime);
+                CheckRange(player, gameTime);
             }
             _currentAnimation.Update(gameTime);
         }

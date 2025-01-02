@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GameDevProject.Animations;
 using Microsoft.Xna.Framework;
 
 

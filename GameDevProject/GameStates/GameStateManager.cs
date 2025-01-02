@@ -1,5 +1,5 @@
 ﻿using GameDevProject.Assets;
-using GameDevProject.Entities;
+using GameDevProject.Enemies;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Diagnostics;

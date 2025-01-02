@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-namespace GameDevProject
+namespace GameDevProject.PlayerClasses
 {
     public class Camera
     {

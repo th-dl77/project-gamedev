@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using GameDevProject.Assets;
 
 
-namespace GameDevProject.Entities
+namespace GameDevProject.Enemies
 {
     public class EnemySpawner
     {
@@ -37,7 +37,7 @@ namespace GameDevProject.Entities
                 case 3:
                     return SpawnLevel(30);
                 default:
-                    throw new System.Exception();
+                    throw new Exception();
             }
         }
         private List<IEntity> SpawnLevel(int enemyCount)
@@ -49,7 +49,7 @@ namespace GameDevProject.Entities
                 entities.Add(enemyFactory.CreateSkeletonEnemy(GetRandomSpawnPosition(playerPos, 200)));
                 entities.Add(enemyFactory.CreateGolemEnemy(GetRandomSpawnPosition(playerPos, 400), new List<Vector2>() { new Vector2(100, 200), new Vector2(200, 100), new Vector2(240, 300) }));
             }
-            for (int i = 0; i < enemyCount/2; i++)
+            for (int i = 0; i < enemyCount / 2; i++)
             {
                 entities.Add(enemyFactory.CreateSlimeEnemy(GetRandomSpawnPosition(playerPos, 200)));
                 entities.Add(enemyFactory.CreateBatEnemy(GetRandomSpawnPosition(playerPos, 400)));

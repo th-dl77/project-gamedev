@@ -1,18 +1,22 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using GameDevProject.Assets;
+using GameDevProject.Animations;
+using GameDevProject.Entities;
 
-namespace GameDevProject.Entities
+namespace GameDevProject.Enemies
 {
-    public class SlimeEnemy : GolemEnemy
+    public class PatrollingEnemy : EnemyMelee
     {
         private SpriteEffects flip = SpriteEffects.None;
         private List<Vector2> patrolPoints;
         private int currentPatrolIndex;
+        private bool detected;
         private float patrolThreshold = 10f;
-        public SlimeEnemy(Dictionary<string, Animation> animations, Vector2 startPosition, float speed, List<Vector2> patrolPoints) : base(animations, startPosition, speed, patrolPoints)
+        public PatrollingEnemy(Dictionary<string, Animation> animations, Vector2 startPosition, float speed, List<Vector2> patrolPoints) : base(animations, startPosition, speed)
         {
-            this.currentPatrolIndex = 0;
+            currentPatrolIndex = 0;
             this.patrolPoints = patrolPoints;
         }
         public override void Update(GameTime gameTime, Player player)
@@ -24,8 +28,16 @@ namespace GameDevProject.Entities
                     Vector2 targetPoint = patrolPoints[currentPatrolIndex];
                     Vector2 playerPosition = player.Position;
                     Vector2 direction = Vector2.Zero;
-                    float distanceToPlayer = Vector2.Distance(player.Position, this.Position);
-                    direction = targetPoint - Position;
+                    float distanceToPlayer = Vector2.Distance(player.Position, Position);
+                    if (distanceToPlayer < 100 || detected)
+                    {
+                        detected = true;
+                        direction = playerPosition - Position;
+                    }
+                    else
+                    {
+                        direction = targetPoint - Position;
+                    }
                     if (direction.Length() > 0)
                     {
                         direction.Normalize();
@@ -46,7 +58,7 @@ namespace GameDevProject.Entities
                     }
                     _currentAnimation = _animations["walk"];
                 }
-                this.CheckRange(player, gameTime);
+                CheckRange(player, gameTime);
             }
             _currentAnimation.Update(gameTime);
         }
@@ -54,16 +66,5 @@ namespace GameDevProject.Entities
         {
             _currentAnimation.Draw(spriteBatch, Position, flip);
         }
-
-        public override void CheckRange(Player player, GameTime gameTime)
-        {
-            float distanceToPlayer = Vector2.Distance(player.Position, this.Position);
-            if (distanceToPlayer < 20 && !player.IsDead)
-            {
-                this.Die(gameTime);
-            }
-            base.CheckRange(player, gameTime);
-        }
-
     }
 }

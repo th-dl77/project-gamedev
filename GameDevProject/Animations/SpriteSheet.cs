@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameDevProject
+namespace GameDevProject.Animations
 {
     public class SpriteSheet
     {
@@ -12,9 +12,9 @@ namespace GameDevProject
 
         public SpriteSheet(Texture2D texture, int frameWidth, int frameHeight, int yOffset = 0)
         {
-            this._texture = texture;
-            this.FrameWidth = frameWidth;
-            this.FrameHeight = frameHeight;
+            _texture = texture;
+            FrameWidth = frameWidth;
+            FrameHeight = frameHeight;
             this.yOffset = yOffset;
         }
 
@@ -22,8 +22,8 @@ namespace GameDevProject
         {
             int columns = _texture.Width / FrameWidth;
             Rectangle sourceRectangle = new Rectangle(
-                (index % columns) * FrameWidth,
-                (index / columns) * FrameHeight + yOffset,
+                index % columns * FrameWidth,
+                index / columns * FrameHeight + yOffset,
                 FrameWidth,
                 FrameHeight
             );
@@ -36,7 +36,7 @@ namespace GameDevProject
                 Color.White,
                 0f,
                 new Vector2(0, 0),
-                new Vector2(2f,2f),
+                new Vector2(2f, 2f),
                 flip,
                 0f
             );

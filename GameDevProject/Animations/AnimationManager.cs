@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GameDevProject.Input;
 
-namespace GameDevProject.Entities
+namespace GameDevProject.Animations
 {
     public class AnimationManager
     {

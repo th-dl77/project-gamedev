@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using GameDevProject.Animations;
 using GameDevProject.Collisions;
+using GameDevProject.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameDevProject.Entities
+namespace GameDevProject.Enemies
 {
     public abstract class Enemy : IEntity
     {
@@ -21,7 +23,7 @@ namespace GameDevProject.Entities
         {
             CollidableObject.Bounds = GetBounds();
         }
-        
+
         public Enemy(Dictionary<string, Animation> animations, Vector2 startPosition, float speed)
         {
             _animations = animations;
@@ -34,10 +36,10 @@ namespace GameDevProject.Entities
         public virtual Rectangle GetBounds()
         {
             return new Rectangle(
-                (int)Position.X+25,
-                (int)Position.Y+45,
-                (int)_currentAnimation._spriteSheet.FrameWidth,
-                (int)_currentAnimation._spriteSheet.FrameHeight
+                (int)Position.X + 25,
+                (int)Position.Y + 45,
+                _currentAnimation._spriteSheet.FrameWidth,
+                _currentAnimation._spriteSheet.FrameHeight
             );
         }
 

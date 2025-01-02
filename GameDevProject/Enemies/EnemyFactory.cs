@@ -3,8 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using GameDevProject.Assets;
+using GameDevProject.Animations;
+using GameDevProject.Entities;
 
-namespace GameDevProject.Entities
+namespace GameDevProject.Enemies
 {
     public class EnemyFactory
     {

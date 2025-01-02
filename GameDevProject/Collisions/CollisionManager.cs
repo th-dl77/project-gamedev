@@ -1,4 +1,5 @@
-﻿using GameDevProject.Entities;
+﻿using GameDevProject.Enemies;
+using GameDevProject.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;

@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using GameDevProject.Animations;
 using GameDevProject.Assets;
+using GameDevProject.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameDevProject.Entities
+namespace GameDevProject.Enemies
 {
     public class EnemyMelee : Enemy
     {
@@ -39,13 +41,13 @@ namespace GameDevProject.Entities
                     Position += direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     _currentAnimation = _animations["walk"];
                 }
-                this.CheckRange(player, gameTime);
+                CheckRange(player, gameTime);
                 CollidableObject.Bounds = GetBounds();
             }
             else
             {
                 deathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (deathTimer >=5)
+                if (deathTimer >= 5)
                 {
                     IsVisible = false;
                 }
@@ -54,8 +56,8 @@ namespace GameDevProject.Entities
         }
         public override void CheckRange(Player player, GameTime gameTime)
         {
-            float distanceToPlayer = Vector2.Distance(player.Position,this.Position);
-            if (distanceToPlayer <90 && !player.IsDead)
+            float distanceToPlayer = Vector2.Distance(player.Position, Position);
+            if (distanceToPlayer < 90 && !player.IsDead)
             {
                 if (!isHitting)
                 {

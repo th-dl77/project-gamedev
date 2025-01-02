@@ -2,8 +2,9 @@
 using Microsoft.Xna.Framework;
 using System.Collections;
 using GameDevProject.Collisions;
+using GameDevProject.Entities;
 
-namespace GameDevProject.Entities
+namespace GameDevProject.Enemies
 {
     public interface IEntity
     {

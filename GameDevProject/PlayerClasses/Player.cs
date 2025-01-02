@@ -5,6 +5,7 @@ using GameDevProject.Collisions;
 using GameDevProject.Input;
 using System;
 using static System.Net.Mime.MediaTypeNames;
+using GameDevProject.Animations;
 
 namespace GameDevProject.Entities
 {

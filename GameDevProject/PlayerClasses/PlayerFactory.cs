@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using GameDevProject.Input;
+using GameDevProject.Animations;
 
 namespace GameDevProject.Entities
 {
