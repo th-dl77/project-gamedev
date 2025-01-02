@@ -82,7 +82,7 @@ namespace GameDevProject.Entities
             else
                 IsHitting = false;
 
-            if (!IsDead)
+            if (!IsDead && !IsHitting)
             {
                 movementHandler.HandleMovement(gameTime, inputDirection, IsHitting);
 
