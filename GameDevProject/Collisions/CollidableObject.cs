@@ -5,11 +5,11 @@ namespace GameDevProject.Collisions
     public class CollidableObject : ICollidable
     {
         public Rectangle Bounds { get; set; }
-        private readonly bool _isSolid;
+        private readonly bool isSolid;
         public CollidableObject(Rectangle boundingBox, bool isSolid)
         {
             Bounds = boundingBox;
-            _isSolid = isSolid;
+            this.isSolid = isSolid;
         }
         public Rectangle GetBoundingBox()
         {
@@ -17,7 +17,7 @@ namespace GameDevProject.Collisions
         }
         public bool IsSolid()
         {
-            return _isSolid;
+            return isSolid;
         }
     }
 

@@ -45,25 +45,25 @@ namespace GameDevProject.Enemies
                 }
                 if (!isHitting)
                 {
-                    _currentAnimation = _animations["walk"];
+                    currentAnimation = animations["walk"];
                 }
                 CheckRange(player, gameTime);
             }
             else
             {
-                deathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (deathTimer >= 5)
+                DeathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (DeathTimer >= 5)
                 {
                     IsVisible = false;
                 }
             }
-            _currentAnimation.Update(gameTime);
+            currentAnimation.Update(gameTime);
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (IsVisible)
             {
-                _currentAnimation.Draw(spriteBatch, Position, flip);
+                currentAnimation.Draw(spriteBatch, Position, flip);
             }
         }
     }

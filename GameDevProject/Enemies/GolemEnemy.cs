@@ -41,17 +41,17 @@ namespace GameDevProject.Enemies
 
                     if (Vector2.Distance(Position, targetPoint) < patrolThreshold)
                         currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Count;
-                    _currentAnimation = _animations["walk"];
+                    currentAnimation = animations["walk"];
                 }
                 CheckRange(player, gameTime);
             }
             else
             {
-                deathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (deathTimer >= 5)
+                DeathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (DeathTimer >= 5)
                     IsVisible = false;
             }
-            _currentAnimation.Update(gameTime);
+            currentAnimation.Update(gameTime);
         }
         public override void CheckRange(Player player, GameTime gameTime)
         {
@@ -62,7 +62,7 @@ namespace GameDevProject.Enemies
                 {
                     isHitting = true;
                     swingTimer = 0f;
-                    _currentAnimation = _animations["fight"];
+                    currentAnimation = animations["fight"];
                 }
                 else
                 {

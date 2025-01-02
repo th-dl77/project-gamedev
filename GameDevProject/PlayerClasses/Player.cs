@@ -26,7 +26,7 @@ namespace GameDevProject.Entities
 
         public int MaxHealth => healthManager.MaxHealth;
 
-        public Vector2 Velocity;
+        public Vector2 Velocity { get; set; }
         public Vector2 Position { get; set; }
         public float Scale { get; private set; } = 2f;
 

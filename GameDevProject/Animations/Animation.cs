@@ -5,16 +5,16 @@ namespace GameDevProject.Animations
 {
     public class Animation
     {
-        public SpriteSheet _spriteSheet;
         private int[] frames;
         private float frameTime;
         private float timer;
         private int currentFrame;
         public bool IsLooping { get; set; }
+        public SpriteSheet SpriteSheet { get; set; }
 
         public Animation(SpriteSheet spriteSheet, int[] frames, float frameTime, bool isLooping = true)
         {
-            _spriteSheet = spriteSheet;
+            this.SpriteSheet = spriteSheet;
             this.frames = frames;
             this.frameTime = frameTime;
             IsLooping = isLooping;
@@ -39,11 +39,11 @@ namespace GameDevProject.Animations
         }
         public void Draw(SpriteBatch spriteBatch, Vector2 position)
         {
-            _spriteSheet.DrawFrame(spriteBatch, frames[currentFrame], position);
+            SpriteSheet.DrawFrame(spriteBatch, frames[currentFrame], position);
         }
         public void Draw(SpriteBatch spriteBatch, Vector2 position, SpriteEffects flip)
         {
-            _spriteSheet.DrawFrame(spriteBatch, frames[currentFrame], position, flip);
+            SpriteSheet.DrawFrame(spriteBatch, frames[currentFrame], position, flip);
         }
     }
 }

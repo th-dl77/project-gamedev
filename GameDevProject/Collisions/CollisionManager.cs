@@ -8,17 +8,17 @@ namespace GameDevProject.Collisions
 {
     public class CollisionManager
     {
-        public List<ICollidable> collidables = new List<ICollidable>();
+        public List<ICollidable> Collidables { get; set; } = new List<ICollidable>();
         public void AddCollidable(ICollidable collidable)
         {
-            collidables.Add(collidable);
+            Collidables.Add(collidable);
         }
 
         public Vector2 CheckCollision(Vector2 position, Vector2 proposedPosition, int boundsHeight, int boundsWidth)
         {
             Rectangle newPlayerbounds = new Rectangle((int)proposedPosition.X, (int)proposedPosition.Y, boundsWidth, boundsHeight);
 
-            foreach (var collidable in collidables)
+            foreach (var collidable in Collidables)
             {
                 if (newPlayerbounds.Intersects(collidable.GetBoundingBox()))
                 {
@@ -39,7 +39,7 @@ namespace GameDevProject.Collisions
 
         public void DrawCollidables(SpriteBatch spriteBatch, Texture2D debugTexture)
         {
-            foreach (var collidable in collidables)
+            foreach (var collidable in Collidables)
             {
                 spriteBatch.Draw(debugTexture, collidable.GetBoundingBox(), Color.Green*0.5f);
             }

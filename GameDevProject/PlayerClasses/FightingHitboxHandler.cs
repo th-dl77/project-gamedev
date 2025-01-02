@@ -21,7 +21,7 @@ namespace GameDevProject.Entities
 
             Rectangle swordHitbox = new Rectangle();
 
-            if (animationManager.currentFlipEffect == SpriteEffects.FlipHorizontally)
+            if (animationManager.CurrentFlipEffect == SpriteEffects.FlipHorizontally)
             {
                 swordHitbox = new Rectangle((int)movementHandler.Position.X + 25 - swordWidth, (int)movementHandler.Position.Y + 45, swordWidth, swordHeight);
             }

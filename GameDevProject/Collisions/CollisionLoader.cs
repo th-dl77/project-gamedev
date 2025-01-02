@@ -6,13 +6,13 @@ namespace GameDevProject.Collisions
 {
     public class CollisionLoader
     {
-        private readonly CollisionManager _collisionManager;
-        private readonly int _tileSize;
+        private readonly CollisionManager collisionManager;
+        private readonly int tileSize;
 
         public CollisionLoader(CollisionManager collisionManager, int tileSize)
         {
-            _collisionManager = collisionManager;
-            _tileSize = tileSize;
+            this.collisionManager = collisionManager;
+            this.tileSize = tileSize;
         }
 
         public void LoadCollidables(string[,] tileMap)
@@ -24,8 +24,8 @@ namespace GameDevProject.Collisions
                     string tile = tileMap[x, y];
                     if (tile == "1" || tile == "4" || tile == "2")
                     {
-                        Rectangle tileBoundingBox = new Rectangle(x * _tileSize, y * _tileSize, _tileSize, _tileSize);
-                        _collisionManager.AddCollidable(new CollidableObject(tileBoundingBox, true));
+                        Rectangle tileBoundingBox = new Rectangle(x * tileSize, y * tileSize, tileSize, tileSize);
+                        collisionManager.AddCollidable(new CollidableObject(tileBoundingBox, true));
                     }
                 }
             }
@@ -37,7 +37,7 @@ namespace GameDevProject.Collisions
             {
                 if (enemy.IsAlive)
                 {
-                    _collisionManager.UpdateCollidable(enemy.CollidableObject, enemy.GetBounds());
+                    collisionManager.UpdateCollidable(enemy.CollidableObject, enemy.GetBounds());
                 }
             }
         }

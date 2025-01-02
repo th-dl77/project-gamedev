@@ -5,14 +5,14 @@ namespace GameDevProject.Animations
 {
     public class SpriteSheet
     {
-        public Texture2D _texture;
+        public Texture2D texture;
         public int FrameWidth;
         public int FrameHeight;
         private int yOffset;
 
         public SpriteSheet(Texture2D texture, int frameWidth, int frameHeight, int yOffset = 0)
         {
-            _texture = texture;
+            this.texture = texture;
             FrameWidth = frameWidth;
             FrameHeight = frameHeight;
             this.yOffset = yOffset;
@@ -20,7 +20,7 @@ namespace GameDevProject.Animations
 
         public void DrawFrame(SpriteBatch spriteBatch, int index, Vector2 position, SpriteEffects flip = SpriteEffects.None)
         {
-            int columns = _texture.Width / FrameWidth;
+            int columns = texture.Width / FrameWidth;
             Rectangle sourceRectangle = new Rectangle(
                 index % columns * FrameWidth,
                 index / columns * FrameHeight + yOffset,
@@ -30,7 +30,7 @@ namespace GameDevProject.Animations
 
 
             spriteBatch.Draw(
-                _texture,
+                texture,
                 position,
                 sourceRectangle,
                 Color.White,

@@ -12,13 +12,13 @@ namespace GameDevProject.Enemies
         public bool IsAlive { get; set; } = true;
         public ICollidable CollidableObject { get; private set; }
         public bool IsVisible { get; set; } = true;
-
-        protected bool isHitting;
-        protected Animation _currentAnimation;
-        protected Dictionary<string, Animation> _animations;
         public Vector2 Position { get; protected set; }
         public float Speed { get; protected set; }
         public Rectangle Bounds => GetBounds();
+
+        protected bool isHitting;
+        protected Animation currentAnimation;
+        protected Dictionary<string, Animation> animations;
         public virtual void Update(GameTime gameTime, Player player)
         {
             CollidableObject.Bounds = GetBounds();
@@ -26,8 +26,8 @@ namespace GameDevProject.Enemies
 
         public Enemy(Dictionary<string, Animation> animations, Vector2 startPosition, float speed)
         {
-            _animations = animations;
-            _currentAnimation = _animations["walk"];
+            this.animations = animations;
+            currentAnimation = this.animations["walk"];
             Position = startPosition;
             Speed = speed;
             CollidableObject = new CollidableObject(GetBounds(), false);
@@ -38,8 +38,8 @@ namespace GameDevProject.Enemies
             return new Rectangle(
                 (int)Position.X + 45,
                 (int)Position.Y + 45,
-                _currentAnimation._spriteSheet.FrameWidth-20,
-                _currentAnimation._spriteSheet.FrameHeight-20
+                currentAnimation.SpriteSheet.FrameWidth-20,
+                currentAnimation.SpriteSheet.FrameHeight-20
             );
         }
 

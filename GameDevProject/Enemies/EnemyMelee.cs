@@ -11,7 +11,7 @@ namespace GameDevProject.Enemies
     {
         private SpriteEffects flip = SpriteEffects.None;
         public GameAssets gameAssets;
-        public float deathTimer = 0f;
+        public float DeathTimer { get; set; } = 0f;
         protected float swingTimer = 0f;
         protected const float swingDuration = 1f;
         public EnemyMelee(Dictionary<string, Animation> animations, Vector2 startPosition, float speed, GameAssets gameAssets = null) : base(animations, startPosition, speed)
@@ -29,20 +29,20 @@ namespace GameDevProject.Enemies
                     direction.Normalize();
                     flip = direction.X < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
                     Position += direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    _currentAnimation = _animations["walk"];
+                    currentAnimation = animations["walk"];
                 }
                 CheckRange(player, gameTime);   
                 CollidableObject.Bounds = GetBounds();
             }
             else
             {
-                deathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (deathTimer >= 5)
+                DeathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (DeathTimer >= 5)
                 {
                     IsVisible = false;
                 }
             }
-            _currentAnimation.Update(gameTime);
+            currentAnimation.Update(gameTime);
         }
         public override void CheckRange(Player player, GameTime gameTime)
         {
@@ -53,7 +53,7 @@ namespace GameDevProject.Enemies
                 {
                     isHitting = true;
                     swingTimer = 0f;
-                    _currentAnimation = _animations["fight"];
+                    currentAnimation = animations["fight"];
                 }
                 else
                 {
@@ -73,14 +73,14 @@ namespace GameDevProject.Enemies
         }
         public override void Die(GameTime gameTime)
         {
-            _currentAnimation = _animations["death"];
+            currentAnimation = animations["death"];
             IsAlive = false;
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (IsVisible)
             {
-                _currentAnimation.Draw(spriteBatch, Position, flip);
+                currentAnimation.Draw(spriteBatch, Position, flip);
             }
         }
     }

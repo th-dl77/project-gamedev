@@ -18,7 +18,7 @@ namespace GameDevProject.Enemies
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            _currentAnimation.Draw(spriteBatch, Position, flip);
+            currentAnimation.Draw(spriteBatch, Position, flip);
         }
 
     }

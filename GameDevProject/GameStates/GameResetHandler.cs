@@ -35,7 +35,7 @@ namespace GameDevProject.GameStates
         public Player ResetGame()
         {
             game.entities.Clear();
-            collisionManager.collidables.Clear();
+            collisionManager.Collidables.Clear();
 
             string[,] tileMap = mapLoader.Load("Content/Tilemap.txt");
             collisionLoader.LoadCollidables(tileMap);

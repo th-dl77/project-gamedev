@@ -83,6 +83,7 @@ namespace GameDevProject
             gameResetHandler = new GameResetHandler(this, gameAssets, mapLoader, _collisionManager, collisionLoader, playerFactory, gameStateManager, enemySpawner, entities);
             playerDeathHandler = new PlayerDeathHandler(gameStateManager, gameResetHandler, gameAssets, player);
 
+            playerDeathHandler.HandleDeath();
             base.Initialize();
         }
 
@@ -97,8 +98,6 @@ namespace GameDevProject
             }
             tileMap = mapLoader.Load("Content/Tilemap.txt");
             collisionLoader.LoadCollidables(tileMap);
-
-            playerDeathHandler.HandleDeath();
 
             #region debug 
             _debugTexture = new Texture2D(GraphicsDevice, 1, 1);

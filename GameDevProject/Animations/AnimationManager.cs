@@ -2,9 +2,6 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GameDevProject.Input;
 
 namespace GameDevProject.Animations
@@ -13,7 +10,7 @@ namespace GameDevProject.Animations
     {
         private readonly Dictionary<string, Animation> animations;
         private Animation currentAnimation;
-        public SpriteEffects currentFlipEffect { get; set; }
+        public SpriteEffects CurrentFlipEffect { get; set; }
 
         public AnimationManager(Dictionary<string, Animation> animations)
         {
@@ -31,7 +28,7 @@ namespace GameDevProject.Animations
 
         public void FlipAnimation(bool isFlipped)
         {
-            currentFlipEffect = isFlipped ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            CurrentFlipEffect = isFlipped ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
         }
 
         public void Update(GameTime gameTime, IInputStrategy inputStrategy, bool isDead)
@@ -70,7 +67,7 @@ namespace GameDevProject.Animations
         {
             if (isVisible)
             {
-                currentAnimation?.Draw(spriteBatch, position, currentFlipEffect);
+                currentAnimation?.Draw(spriteBatch, position, CurrentFlipEffect);
             }
         }
     }
