@@ -15,12 +15,12 @@ namespace GameDevProject.GameStates
         private IMapLoader mapLoader;
         private CollisionManager collisionManager;
         private CollisionLoader collisionLoader;
-        private List<IEntity> enemies;
+        private List<IEnemy> enemies;
         private EnemySpawner enemySpawner;
         private Game1 game;
 
         private GameAssets gameAssets;
-        public GameResetHandler(Game1 game, GameAssets gameAssets, IMapLoader mapLoader, CollisionManager collisionManager, CollisionLoader collisionLoader, PlayerFactory playerFactory, GameStateManager gameStateManager, EnemySpawner enemySpawner, List<IEntity> entities)
+        public GameResetHandler(Game1 game, GameAssets gameAssets, IMapLoader mapLoader, CollisionManager collisionManager, CollisionLoader collisionLoader, PlayerFactory playerFactory, GameStateManager gameStateManager, EnemySpawner enemySpawner, List<IEnemy> entities)
         {
             this.playerFactory = playerFactory;
             this.mapLoader = mapLoader;

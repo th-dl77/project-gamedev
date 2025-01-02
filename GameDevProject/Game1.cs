@@ -37,7 +37,7 @@ namespace GameDevProject
 
         public GameAssets gameAssets;
 
-        public List<IEntity> entities;
+        public List<IEnemy> entities;
 
         public GameStateManager gameStateManager;
         private PlayerFactory playerFactory;
@@ -71,7 +71,7 @@ namespace GameDevProject
             mapLoader = new TextFileMapLoader(tilemapReader);
 
             collisionLoader = new CollisionLoader(_collisionManager, 32);
-            entities = new List<IEntity>();
+            entities = new List<IEnemy>();
 
             gameStateManager = new GameStateManager(this, gameAssets);
             healthRenderer = new HealthRenderer(gameAssets, new Vector2(600, 10));

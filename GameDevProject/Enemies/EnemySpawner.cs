@@ -26,7 +26,7 @@ namespace GameDevProject.Enemies
             this.collisionLoader = collisionLoader;
             this.playerPos = playerPos;
         }
-        public List<IEntity> Spawn(int level)
+        public List<IEnemy> Spawn(int level)
         {
             switch (level)
             {
@@ -40,9 +40,9 @@ namespace GameDevProject.Enemies
                     throw new Exception();
             }
         }
-        private List<IEntity> SpawnLevel(int enemyCount)
+        private List<IEnemy> SpawnLevel(int enemyCount)
         {
-            List<IEntity> entities = new List<IEntity>();
+            List<IEnemy> entities = new List<IEnemy>();
 
             for (int i = 0; i < enemyCount; i++)
             {

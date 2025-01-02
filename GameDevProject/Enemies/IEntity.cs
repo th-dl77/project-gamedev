@@ -6,7 +6,7 @@ using GameDevProject.Entities;
 
 namespace GameDevProject.Enemies
 {
-    public interface IEntity
+    public interface IEnemy
     {
         Vector2 Position { get; }
         ICollidable CollidableObject { get; }

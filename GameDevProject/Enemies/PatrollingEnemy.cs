@@ -7,7 +7,7 @@ using GameDevProject.Entities;
 
 namespace GameDevProject.Enemies
 {
-    public class PatrollingEnemy : EnemyMelee
+    public class PatrollingEnemy : EnemyMelee, IEnemy
     {
         public SpriteEffects flip = SpriteEffects.None;
         private List<Vector2> patrolPoints;

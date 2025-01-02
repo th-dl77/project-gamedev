@@ -6,7 +6,7 @@ using GameDevProject.Entities;
 
 namespace GameDevProject.Enemies
 {
-    public class SlimeEnemy : GolemEnemy
+    public class SlimeEnemy : GolemEnemy, IEnemy
     {
         private SpriteEffects flip = SpriteEffects.None;
         private List<Vector2> patrolPoints;

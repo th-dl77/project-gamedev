@@ -7,10 +7,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevProject.Enemies
 {
-    public class EnemyMelee : Enemy
+    public class EnemyMelee : Enemy, IEnemy
     {
         private SpriteEffects flip = SpriteEffects.None;
-        private GameAssets gameAssets;
+        public GameAssets gameAssets;
         public float deathTimer = 0f;
         protected float swingTimer = 0f;
         protected const float swingDuration = 1f;

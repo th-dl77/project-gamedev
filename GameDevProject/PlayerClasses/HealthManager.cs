@@ -1,9 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace GameDevProject.Entities
 {
@@ -15,9 +10,6 @@ namespace GameDevProject.Entities
         public bool IsDead { get; set; } = false;
 
         public event Action OnDeath;
-
-        private float _hitCooldownTimer;
-        private readonly float _hitCooldownDuration;
 
         public HealthManager(int maxHealth)
         {
@@ -33,8 +25,6 @@ namespace GameDevProject.Entities
                 IsDead = true;
                 OnDeath?.Invoke();
             }
-
-            _hitCooldownTimer = _hitCooldownDuration;
         }
     }
 }

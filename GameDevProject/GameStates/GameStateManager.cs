@@ -30,7 +30,7 @@ namespace GameDevProject.GameStates
             Debug.Write($"Changing state to {newGameState}");
             currentGameState = newGameState;
         }
-        public bool AllEnemiesDead(List<IEntity> enemies)
+        public bool AllEnemiesDead(List<IEnemy> enemies)
         {
             foreach (var enemy in enemies)
             {

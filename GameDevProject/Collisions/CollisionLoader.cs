@@ -31,7 +31,7 @@ namespace GameDevProject.Collisions
             }
         }
 
-        public void UpdateEnemyCollidables(List<IEntity> enemies)
+        public void UpdateEnemyCollidables(List<IEnemy> enemies)
         {
             foreach (var enemy in enemies)
             {

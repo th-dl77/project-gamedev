@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using GameDevProject.Collisions;
 using GameDevProject.Input;
 using System;
-using static System.Net.Mime.MediaTypeNames;
 using GameDevProject.Animations;
 using GameDevProject.Enemies;
 
@@ -12,7 +11,6 @@ namespace GameDevProject.Entities
 {
     public class Player
     {
-
         private float hitCooldownTimer = 0f;
         private float hitCooldownDuration = 2f;
 
@@ -28,13 +26,9 @@ namespace GameDevProject.Entities
 
         public int MaxHealth => healthManager.MaxHealth;
 
-        private float deathTimer { get; set; }
-        
         public Vector2 Velocity;
         public Vector2 Position { get; set; }
         public float Scale { get; private set; } = 2f;
-
-        private float delayTimer = 3f;
 
         public MovementHandler movementHandler;
         private readonly AnimationManager animationManager;
@@ -52,7 +46,7 @@ namespace GameDevProject.Entities
         {
             this._inputStrategy = inputStrategy;
             Position = startPosition;
-            movementHandler = new MovementHandler(_inputStrategy);
+            movementHandler = new MovementHandler();
             this.animationManager = animationManager;
             fightingHitboxHandler = new FightingHitboxHandler(animationManager, movementHandler);
             this.healthManager = healthManager;
@@ -60,29 +54,23 @@ namespace GameDevProject.Entities
             this.healthManager.OnDeath += HandleDeath;
         }
         
-        public void Update(GameTime gameTime, CollisionManager collisionManager, List<IEntity> entities)
+        public void Update(GameTime gameTime, CollisionManager collisionManager, List<IEnemy> entities)
         {
             if (hitCooldownTimer > 0)
-            {
                 hitCooldownTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
+
             if (flickerTimer > 0)
             {
                 flickerTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                 if (flickerTimer % flickerInterval < flickerInterval / 2f)
-                {
                     isVisible = true;
-                }
                 else
-                {
                     isVisible = false;
-                }
             }
             else
-            {
                 isVisible = true;
-            }
+
             Vector2 inputDirection = _inputStrategy.GetMovementInput();
             Position = movementHandler.Position;
             animationManager.Update(gameTime, _inputStrategy, IsDead);

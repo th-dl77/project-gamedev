@@ -1,6 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using GameDevProject.Input;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevProject.Entities
 {
@@ -14,16 +12,10 @@ namespace GameDevProject.Entities
         private int spriteHeight = 56;
         private float scale = 2f;
 
-        private readonly IInputStrategy _inputStrategy;
-
         private float Speed { get; set; } = 10f;
         private float maxSpeed = 4f;
         private float accelerationRate = 50f;
         private float decelerationRate = 20f;
-        public MovementHandler(IInputStrategy inputStrategy)
-        {
-            _inputStrategy = inputStrategy;
-        }
 
         public void HandleMovement(GameTime gameTime, Vector2 inputDirection, bool isHitting)
         {
@@ -51,14 +43,10 @@ namespace GameDevProject.Entities
             else
             {
                 if (Velocity.Length() > 0.1f)
-                {
                     // deceleration
                     Velocity -= Velocity * decelerationRate * deltaTime;
-                }
                 else
-                {
                     Velocity = Vector2.Zero;
-                }
             }
             Position += Velocity * deltaTime;
             UpdateBounds();

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevProject.Enemies
 {
-    public abstract class Enemy : IEntity
+    public abstract class Enemy : IEnemy
     {
         public bool IsAlive { get; set; } = true;
         public ICollidable CollidableObject { get; private set; }

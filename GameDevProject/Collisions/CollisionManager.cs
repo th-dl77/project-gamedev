@@ -45,9 +45,9 @@ namespace GameDevProject.Collisions
             }
         }
 
-        public void ResolvePlayerCollisions(Player player, List<IEntity> entities)
+        public void ResolvePlayerCollisions(Player player, List<IEnemy> entities)
         {
-            foreach (IEntity entity in entities)
+            foreach (IEnemy entity in entities)
             {
                 if (entity is BatEnemy)
                 {
@@ -60,7 +60,7 @@ namespace GameDevProject.Collisions
             }
         }
 
-        private void ResolveCollision(Player player, IEntity enemy)
+        private void ResolveCollision(Player player, IEnemy enemy)
         {
             if (!enemy.IsAlive)
             {

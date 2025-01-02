@@ -8,7 +8,6 @@ namespace GameDevProject.Entities
     {
         private readonly GameStateManager gameStateManager;
         private readonly GameResetHandler gameResetHandler;
-        private HealthManager healthManager;
         private Player player;
 
         private GameAssets gameAssets;
