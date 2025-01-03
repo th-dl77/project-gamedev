@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevProject.Animations
 {
-    public class SpriteSheet
+    public class SpriteSheet : ISpriteSheet
     {
         public Texture2D texture;
         public int FrameWidth;

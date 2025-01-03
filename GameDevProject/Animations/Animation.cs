@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevProject.Animations
 {
-    public class Animation
+    public class Animation : IAnimation
     {
         private int[] frames;
         private float frameTime;
@@ -14,7 +14,7 @@ namespace GameDevProject.Animations
 
         public Animation(SpriteSheet spriteSheet, int[] frames, float frameTime, bool isLooping = true)
         {
-            this.SpriteSheet = spriteSheet;
+            this.SpriteSheet = spriteSheet; 
             this.frames = frames;
             this.frameTime = frameTime;
             IsLooping = isLooping;
