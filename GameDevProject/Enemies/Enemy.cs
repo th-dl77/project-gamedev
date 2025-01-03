@@ -42,7 +42,8 @@ namespace GameDevProject.Enemies
                 currentAnimation.SpriteSheet.FrameHeight-20
             );
         }
-
+        public abstract void HandleMovement(GameTime gameTime, Player player);
+        public abstract void HandleDeathTimer(GameTime gameTime);
         public abstract void Draw(SpriteBatch spriteBatch);
 
         public abstract void CheckRange(Player player, GameTime gameTime);

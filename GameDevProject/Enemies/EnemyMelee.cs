@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GameDevProject.Animations;
 using GameDevProject.Assets;
 using GameDevProject.Entities;
@@ -22,27 +23,35 @@ namespace GameDevProject.Enemies
         {
             if (IsAlive)
             {
-                if (!isHitting)
-                {
-                    Vector2 playerPosition = player.Position;
-                    Vector2 direction = playerPosition - Position;
-                    direction.Normalize();
-                    flip = direction.X < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-                    Position += direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    currentAnimation = animations["walk"];
-                }
+                HandleMovement(gameTime, player);
                 CheckRange(player, gameTime);   
                 CollidableObject.Bounds = GetBounds();
             }
             else
             {
-                DeathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (DeathTimer >= 5)
-                {
-                    IsVisible = false;
-                }
+                HandleDeathTimer(gameTime);
             }
             currentAnimation.Update(gameTime);
+        }
+        public override void HandleMovement(GameTime gameTime, Player player)
+        {
+            if (!isHitting)
+            {
+                Vector2 playerPosition = player.Position;
+                Vector2 direction = playerPosition - Position;
+                direction.Normalize();
+                flip = direction.X < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+                Position += direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                currentAnimation = animations["walk"];
+            }
+        }
+        public override void HandleDeathTimer(GameTime gameTime)
+        {
+            DeathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (DeathTimer >= 5)
+            {
+                IsVisible = false;
+            }
         }
         public override void CheckRange(Player player, GameTime gameTime)
         {

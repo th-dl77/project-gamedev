@@ -12,14 +12,5 @@ namespace GameDevProject.Enemies
         public BatEnemy(Dictionary<string, Animation> animations, Vector2 startPosition, float speed, List<Vector2> patrolPoints) : base(animations, startPosition, speed, patrolPoints)
         {
         }
-        public override void Update(GameTime gameTime, Player player)
-        {
-            base.Update(gameTime, player);
-        }
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            currentAnimation.Draw(spriteBatch, Position, flip);
-        }
-
     }
 }

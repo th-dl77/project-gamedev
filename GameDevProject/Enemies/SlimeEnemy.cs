@@ -16,36 +16,23 @@ namespace GameDevProject.Enemies
             currentPatrolIndex = 0;
             this.patrolPoints = patrolPoints;
         }
-        public override void Update(GameTime gameTime, Player player)
+        public override void HandleMovement(GameTime gameTime, Player player)
         {
-            if (IsAlive)
+            if (!isHitting)
             {
-                if (!isHitting)
-                {
-                    Vector2 targetPoint = patrolPoints[currentPatrolIndex];
-                    Vector2 playerPosition = player.Position;
-                    Vector2 direction = Vector2.Zero;
-                    float distanceToPlayer = Vector2.Distance(player.Position, Position);
-                    direction = targetPoint - Position;
-                    direction.Normalize();
-                    flip = direction.X < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-                    Position += direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                Vector2 targetPoint = patrolPoints[currentPatrolIndex];
+                Vector2 playerPosition = player.Position;
+                Vector2 direction = Vector2.Zero;
+                float distanceToPlayer = Vector2.Distance(player.Position, Position);
+                direction = targetPoint - Position;
+                direction.Normalize();
+                flip = direction.X < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+                Position += direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                    if (Vector2.Distance(Position, targetPoint) < patrolThreshold)
-                        currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Count;
-                    currentAnimation = animations["walk"];
-                }
-                CheckRange(player, gameTime);
+                if (Vector2.Distance(Position, targetPoint) < patrolThreshold)
+                    currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Count;
+                currentAnimation = animations["walk"];
             }
-            else
-            {
-                DeathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (DeathTimer >= 5)
-                {
-                    IsVisible = false;
-                }
-            }
-            currentAnimation.Update(gameTime);
         }
         public override void CheckRange(Player player, GameTime gameTime)
         {
