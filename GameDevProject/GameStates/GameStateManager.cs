@@ -6,10 +6,10 @@ using System.Diagnostics;
 
 namespace GameDevProject.GameStates
 {
-    public class GameStateManager
+    public class GameStateManager : IGameStateManager
     {
-        private Game1 game;
-        public IGameState currentGameState;
+        private readonly Game1 game;
+        public IGameState currentGameState { get; private set; };
 
         public GameStateManager(Game1 game, GameAssets gameAssets)
         {
