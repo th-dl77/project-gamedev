@@ -9,7 +9,7 @@ namespace GameDevProject.GameStates
     public class GameStateManager : IGameStateManager
     {
         private readonly Game1 game;
-        public IGameState currentGameState { get; private set; };
+        public IGameState currentGameState { get; private set; }
 
         public GameStateManager(Game1 game, GameAssets gameAssets)
         {
