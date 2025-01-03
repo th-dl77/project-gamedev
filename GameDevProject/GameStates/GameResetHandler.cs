@@ -8,7 +8,7 @@ using GameDevProject.Enemies;
 
 namespace GameDevProject.GameStates
 {
-    public class GameResetHandler
+    public class GameResetHandler : IResetHandler
     {
         private PlayerFactory playerFactory;
         private GameStateManager gameStateManager;
@@ -34,14 +34,30 @@ namespace GameDevProject.GameStates
         }
         public Player ResetGame()
         {
-            game.entities.Clear();
-            collisionManager.Collidables.Clear();
-
-            string[,] tileMap = mapLoader.Load("Content/Tilemap.txt");
-            collisionLoader.LoadCollidables(tileMap);
-            Player player = playerFactory.CreatePlayer(gameAssets.GetTexture("player"), new Vector2(800, 800));
+            ClearEntities();
+            ClearCollidables();
+            LoadMapCollidables();
+            Player player = CreatePlayer();
             player.OnDeath += () => gameStateManager.ChangeGameState(new GameOverState(gameAssets, gameStateManager, this));
             return player;
+        }
+        private void ClearEntities()
+        {
+            game.entities.Clear();
+        }
+        private void ClearCollidables()
+        {
+            collisionManager.Collidables.Clear();
+        }
+
+        private void LoadMapCollidables()
+        {
+            string[,] tileMap = mapLoader.Load("Content/Tilemap.txt");
+            collisionLoader.LoadCollidables(tileMap);
+        }
+        private Player CreatePlayer()
+        {
+            return playerFactory.CreatePlayer(gameAssets.GetTexture("player"), new Vector2(800, 800));
         }
     }
 }
