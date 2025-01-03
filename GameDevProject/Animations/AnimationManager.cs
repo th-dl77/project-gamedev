@@ -10,12 +10,15 @@ namespace GameDevProject.Animations
     {
         private readonly Dictionary<string, Animation> animations;
         private Animation currentAnimation;
+        private AnimationSelector animationSelector;
+        private bool wasLastDirectionLeft;
         public SpriteEffects CurrentFlipEffect { get; set; }
 
         public AnimationManager(Dictionary<string, Animation> animations)
         {
             this.animations = animations;
             currentAnimation = this.animations["idle"];
+            animationSelector = new AnimationSelector();
         }
 
         public void PlayAnimation(string animationKey)
@@ -35,31 +38,13 @@ namespace GameDevProject.Animations
         {
             Vector2 inputDirection = inputStrategy.GetMovementInput();
             bool isFighting = inputStrategy.IsActionPressed("fight");
-            bool isMoving = Math.Abs(inputDirection.X) > 0.1f || Math.Abs(inputDirection.Y) > 0.1f;
-            if (isDead)
-            {
-                PlayAnimation("deathAnimation");
-            }
-            else if (isFighting)
-            {
-                PlayAnimation("fighting");
-            }
-            else if (isMoving)
-            {
-                PlayAnimation("running");
-                if (inputDirection.X < 0)
-                {
-                    FlipAnimation(true);
-                }
-                else if (inputDirection.X > 0)
-                {
-                    FlipAnimation(false);
-                }
-            }
-            else
-            {
-                PlayAnimation("idle");
-            }
+
+            var (selectedAnimationKey, isFlipped) = animationSelector.SelectAnimation(isDead, isFighting, inputDirection, ref wasLastDirectionLeft);
+            FlipAnimation(isFlipped);
+
+            if (currentAnimation != animations[selectedAnimationKey])
+                currentAnimation = animations[selectedAnimationKey];
+
             currentAnimation?.Update(gameTime);
         }
 

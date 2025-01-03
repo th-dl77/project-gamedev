@@ -12,7 +12,6 @@ namespace GameDevProject.Entities
         private int spriteHeight = 56;
         private float scale = 2f;
 
-        private float Speed { get; set; } = 10f;
         private float maxSpeed = 4f;
         private float accelerationRate = 50f;
         private float decelerationRate = 20f;
