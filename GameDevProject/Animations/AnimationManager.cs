@@ -11,6 +11,7 @@ namespace GameDevProject.Animations
         private readonly Dictionary<string, Animation> animations;
         private Animation currentAnimation;
         private AnimationSelector animationSelector;
+        private AnimationRenderer animationRenderer;
         private bool wasLastDirectionLeft;
         public SpriteEffects CurrentFlipEffect { get; set; }
 
@@ -19,6 +20,7 @@ namespace GameDevProject.Animations
             this.animations = animations;
             currentAnimation = this.animations["idle"];
             animationSelector = new AnimationSelector();
+            animationRenderer = new AnimationRenderer();
         }
 
         public void PlayAnimation(string animationKey)
@@ -40,7 +42,8 @@ namespace GameDevProject.Animations
             bool isFighting = inputStrategy.IsActionPressed("fight");
 
             var (selectedAnimationKey, isFlipped) = animationSelector.SelectAnimation(isDead, isFighting, inputDirection, ref wasLastDirectionLeft);
-            FlipAnimation(isFlipped);
+
+            CurrentFlipEffect = isFlipped ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
             if (currentAnimation != animations[selectedAnimationKey])
                 currentAnimation = animations[selectedAnimationKey];
@@ -50,10 +53,7 @@ namespace GameDevProject.Animations
 
         public void Draw(SpriteBatch spriteBatch, Vector2 position, float scale = 1f, bool isVisible = true)
         {
-            if (isVisible)
-            {
-                currentAnimation?.Draw(spriteBatch, position, CurrentFlipEffect);
-            }
+            animationRenderer.Render(spriteBatch, currentAnimation, position, CurrentFlipEffect, isVisible);
         }
     }
 }
