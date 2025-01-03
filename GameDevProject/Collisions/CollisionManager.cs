@@ -16,11 +16,11 @@ namespace GameDevProject.Collisions
 
         public Vector2 CheckCollision(Vector2 position, Vector2 proposedPosition, int boundsHeight, int boundsWidth)
         {
-            Rectangle newPlayerbounds = new Rectangle((int)proposedPosition.X, (int)proposedPosition.Y, boundsWidth, boundsHeight);
+            Rectangle newPlayerBounds = new Rectangle((int)proposedPosition.X, (int)proposedPosition.Y, boundsWidth, boundsHeight);
 
             foreach (var collidable in Collidables)
             {
-                if (newPlayerbounds.Intersects(collidable.GetBoundingBox()))
+                if (newPlayerBounds.Intersects(collidable.GetBoundingBox()))
                 {
                     Vector2 pushDirection = position - proposedPosition;
                     pushDirection.Normalize();
@@ -41,7 +41,7 @@ namespace GameDevProject.Collisions
         {
             foreach (var collidable in Collidables)
             {
-                spriteBatch.Draw(debugTexture, collidable.GetBoundingBox(), Color.Green*0.5f);
+                spriteBatch.Draw(debugTexture, collidable.GetBoundingBox(), Color.Green * 0.5f);
             }
         }
 
@@ -71,6 +71,5 @@ namespace GameDevProject.Collisions
             player.movementHandler.Velocity = pushDirection * (player.movementHandler.Velocity.Length() / 2);
             player.movementHandler.Position += pushDirection * 5f;
         }
-
     }
 }

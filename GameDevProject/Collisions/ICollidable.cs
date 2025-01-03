@@ -8,6 +8,4 @@ namespace GameDevProject.Collisions
         Rectangle GetBoundingBox();
         bool IsSolid();
     }
-
-
 }

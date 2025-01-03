@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevProject.Enemies
 {
-    public class GolemEnemy : PatrollingEnemy, IEnemy
+    public class GolemEnemy : PatrollingEnemy
     {
         private List<Vector2> patrolPoints;
         private bool detected;

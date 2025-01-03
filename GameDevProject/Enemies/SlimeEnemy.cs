@@ -6,7 +6,7 @@ using GameDevProject.Entities;
 
 namespace GameDevProject.Enemies
 {
-    public class SlimeEnemy : PatrollingEnemy, IEnemy
+    public class SlimeEnemy : PatrollingEnemy
     {
         private List<Vector2> patrolPoints;
         private int currentPatrolIndex;

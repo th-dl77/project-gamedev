@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevProject.Enemies
 {
-    public class EnemyMelee : Enemy, IEnemy
+    public class EnemyMelee : Enemy
     {
         private SpriteEffects flip = SpriteEffects.None;
         public GameAssets gameAssets;
