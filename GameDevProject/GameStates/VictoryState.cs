@@ -33,22 +33,37 @@ namespace GameDevProject.GameStates
             MouseState mouseState = Mouse.GetState();
             if (uiManager.IsButtonClicked(resetButtonHitBox, mouseState))
             {
-                newPlayer = gameResetHandler.ResetGame();
-                game.player = newPlayer;
-                gameStateManager.ChangeGameState(new PlayingState(game,gameAssets));
+                HandleResetButton(game);
             }
+        }
+        private void HandleResetButton(Game1 game)
+        {
+            newPlayer = gameResetHandler.ResetGame();
+            game.player = newPlayer;
+            gameStateManager.ChangeGameState(new PlayingState(game, gameAssets));
         }
         public void Draw(Game1 game, GameTime gameTime)
         {
             SpriteBatch spriteBatch = game._spriteBatch;
             spriteBatch.Begin();
+            DrawBackground(spriteBatch);
+            DrawResetButton(spriteBatch);
+            //DrawDebug(spriteBatch);
+            spriteBatch.End();
+        }
+        private void DrawBackground(SpriteBatch spriteBatch)
+        {
             spriteBatch.Draw(backGround, new Rectangle(0, 0, 800, 800), Color.White);
             spriteBatch.DrawString(gameAssets.GetFont("font"), "Victory!", new Vector2(285, 200), Color.DarkRed);
+        }
+        private void DrawResetButton(SpriteBatch spriteBatch)
+        {
             spriteBatch.Draw(gameAssets.GetTexture("buttonTexture"), new Vector2(250, 310), new Rectangle(0, 0, 200, 200), Color.White, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
             spriteBatch.DrawString(gameAssets.GetFont("font"), "Reset", new Vector2(310, 340), Color.Black);
-            //spriteBatch.Draw(gameAssets.GetTexture("debug"), resetButtonHitBox, Color.Aqua);
-            spriteBatch.End();
-
+        }
+        private void DrawDebug(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(gameAssets.GetTexture("debug"), resetButtonHitBox, Color.Aqua);
         }
     }
 }
